@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 
-const CreateEvent = ({ auth, setAuth, setEvents, events, headers }) => {
+const CreateEventWithInvite = ({
+  auth,
+  setAuth,
+  setEvents,
+  events,
+  headers,
+}) => {
   // const [seen, setSeen] = useState(false);
   const [cancelMessage, setCancelMessage] = useState('');
   const [error, setError] = useState('');
+  const [isInvited, setIsInvited] = useState(false);
   const [event, setEvent] = useState({
     name: '',
     date: moment().format('YYYY-MM-DDTHH:mm'),
@@ -15,6 +22,9 @@ const CreateEvent = ({ auth, setAuth, setEvents, events, headers }) => {
     isPublic: true,
     userId: auth.id,
   });
+  //once event is created go to a specific page
+  const history = useHistory();
+  const goToFreinds = () => history.push('/friends');
 
   const onChange = (ev) => {
     const change = {};
@@ -26,8 +36,20 @@ const CreateEvent = ({ auth, setAuth, setEvents, events, headers }) => {
   const createEvent = (activity) => {
     axios.post(`/api/events`, activity).then((response) => {
       console.log(response.data, 'response data');
+      const newEvent = response.data;
       setEvent(response.data);
+      const createUserEvent = {
+        joinedUserId: '', //invitee.id,
+        eventId: newEvent.id,
+        status: 'invited',
+      };
+      if (isInvited) {
+        axios.post(`/api/user_events`, createUserEvent).then((response) => {
+          console.log(response.data);
+        });
+      }
     });
+    //do I need this?
     axios
       .get('/api/events', headers())
       .then((response) => setEvents(response.data));
@@ -41,7 +63,7 @@ const CreateEvent = ({ auth, setAuth, setEvents, events, headers }) => {
   //console.log(new Date().toLocaleString(), 'event');
   return (
     <div className="container-sm">
-      <h1>Create Event</h1>
+      <h1>Create Event with Invite</h1>
       <form className="w-50" onSubmit={onSubmit}>
         <div className="row form-group">
           <div className="col">
@@ -100,6 +122,30 @@ const CreateEvent = ({ auth, setAuth, setEvents, events, headers }) => {
             Make it public
           </label>
         </div>
+        <div className="form-group form-check">
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id="exampleCheck1"
+            //name="isInvited"
+            checked={isInvited}
+            onChange={() => setIsInvited(true)}
+          />
+          <label className="form-check-label" htmlFor="exampleCheck1">
+            Invite user
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="defaultCheck1"
+          />
+          <label class="form-check-label" for="defaultCheck1">
+            Default checkbox
+          </label>
+        </div>
         <button
           //type="button"
           className="btn btn-primary"
@@ -108,14 +154,13 @@ const CreateEvent = ({ auth, setAuth, setEvents, events, headers }) => {
         >
           Create Event
         </button>
+        {/* Change link once you know where it will go */}
         <Link to="/meetups" className="btn">
           Cancel
         </Link>
       </form>
-      {/* <UpdatePopUp onSubmit={onSubmit} setCancelMessage={setCancelMessage} /> */}
-      {/* {!seen ? <UpdatePopUp onSubmit={onSubmit} setSeen={setSeen} /> : null} */}
     </div>
   );
 };
 
-export default CreateEvent;
+export default CreateEventWithInvite;
