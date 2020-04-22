@@ -19,7 +19,10 @@ export default function Invitations({ headers, auth, userEvents }) {
   if (inviteDetail) {
     return (
       <div>
-        <InvitationDetail inviteDetail={inviteDetail} />
+        <InvitationDetail
+          inviteDetail={inviteDetail}
+          setInviteDetail={setInviteDetail}
+        />
       </div>
     );
   } else {
