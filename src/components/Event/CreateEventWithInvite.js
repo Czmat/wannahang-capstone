@@ -60,7 +60,7 @@ const CreateEventWithInvite = ({
     console.log(event, 'event');
     createEvent(event);
   };
-  //console.log(new Date().toLocaleString(), 'event');
+  console.log(isInvited, 'isInvited');
   return (
     <div className="container-sm">
       <h1>Create Event with Invite</h1>
@@ -122,28 +122,18 @@ const CreateEventWithInvite = ({
             Make it public
           </label>
         </div>
-        <div className="form-group form-check">
+        <div className="custom-control custom-checkbox my-1 mr-sm-2">
           <input
             type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-            //name="isInvited"
+            className="custom-control-input"
+            id="invite"
+            value={isInvited}
+            name="isInvited"
             checked={isInvited}
-            onChange={() => setIsInvited(true)}
+            onChange={(ev) => setIsInvited(ev.target.checked)}
           />
-          <label className="form-check-label" htmlFor="exampleCheck1">
-            Invite user
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="defaultCheck1"
-          />
-          <label class="form-check-label" for="defaultCheck1">
-            Default checkbox
+          <label className="custom-control-label" htmlFor="invite">
+            Invite User
           </label>
         </div>
         <button
