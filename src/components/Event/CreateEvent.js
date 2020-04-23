@@ -9,12 +9,16 @@ const CreateEvent = ({ auth, setAuth, setEvents, events, headers }) => {
   const [error, setError] = useState('');
   const [event, setEvent] = useState({
     name: '',
-    date: moment().format('YYYY-MM-DDTHH:mm'),
+    date: new Date(), //moment().format('MMMM Do YYYY, h:mm:ss a'),
     location: '',
     description: '',
     isPublic: true,
     userId: auth.id,
   });
+
+  // useEffect(() => {
+  //   console.log('use effect');
+  // }, [auth]);
 
   const onChange = (ev) => {
     const change = {};

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const SearchResults = ({ auth }) => {
   const [users, setUsers] = useState([]);
@@ -15,7 +15,7 @@ const SearchResults = ({ auth }) => {
   useEffect(() => {
     // gets zip code of current user
     axios
-      .get('/api/profiles')
+      .get("/api/profiles")
       .then((response) =>
         setProfile(response.data.find(({ userId }) => userId === auth.id))
       );
@@ -23,7 +23,7 @@ const SearchResults = ({ auth }) => {
   const userZip = profile.zipcode;
   useEffect(() => {
     // find userids of profiles with same zip code
-    axios.get('/api/profiles').then((response) => setProfiles(response.data));
+    axios.get("/api/profiles").then((response) => setProfiles(response.data));
   }, []);
 
   const userProfiles = profiles.filter(
@@ -31,7 +31,7 @@ const SearchResults = ({ auth }) => {
   );
 
   useEffect(() => {
-    axios.get('/api/users').then((response) => setUsers(response.data));
+    axios.get("/api/users").then((response) => setUsers(response.data));
   }, []);
 
   const getUsername = (id) => {
@@ -40,7 +40,7 @@ const SearchResults = ({ auth }) => {
   };
 
   useEffect(() => {
-    axios.get('/api/careers').then((response) => setCareers(response.data));
+    axios.get("/api/careers").then((response) => setCareers(response.data));
   }, []);
 
   const getCareerName = (cid) => {
@@ -60,20 +60,20 @@ const SearchResults = ({ auth }) => {
   };
 
   useEffect(() => {
-    axios.get('/api/photos').then((response) => setPhotos(response.data));
+    axios.get("/api/photos").then((response) => setPhotos(response.data));
   }, []);
 
   const getProfilePic = (friendId) => {
     const profilePic = photos.find((photo) => photo.userId === friendId);
     const filename = profilePic.filename;
     const filepath = profilePic.filepath;
-    const src = filepath + '/' + filename;
+    const src = filepath + "/" + filename;
     return src;
   };
 
   const saveAsFavorite = async (fave) => {
     await axios
-      .post('/api/createFavorite', fave)
+      .post("/api/createFavorite", fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
 
@@ -92,26 +92,31 @@ const SearchResults = ({ auth }) => {
       <h3>
         Users in your zip code {userZip} ({userProfiles.length})
       </h3>
-      <div>
+      <div className="card-group">
         {userProfiles.map((userProfile) => {
           return (
             <div
               className="card"
+              style={{ width: "18rem" }}
               key={userProfile.id}
-              style={{ width: '18rem' }}
             >
+              <img
+                src={getProfilePic(userProfile.userId)}
+                className="card-img-top"
+                alt="..."
+              />
               <div className="card-body">
-                <img
-                  className="userPhoto"
-                  src={getProfilePic(userProfile.userId)}
-                />
                 <h5 className="card-title">
                   {getUsername(userProfile.userId)}
                 </h5>
-                <h6 className="card-subtitle mb-2 text-muted">
-                  Age {findAge(userProfile.birthdate)}
-                </h6>
-                <p className="card-text">{userProfile.gender}</p>
+                <p className="card-text">
+                  {findAge(userProfile.birthdate)}
+                  {userProfile.gender}
+                  {findAge(userProfile.birthdate)}
+                </p>
+                <p className="card-text">
+                  <small className="text-muted">Last updated 3 mins ago</small>
+                </p>
                 <button
                   type="button"
                   className="btn btn-primary"
@@ -121,120 +126,115 @@ const SearchResults = ({ auth }) => {
                 >
                   Save as Favorite
                 </button>
+              </div>
+
+              <div
+                className="modal fade"
+                id="exampleModalCenter"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+              >
                 <div
-                  className="modal fade"
-                  id="exampleModalCenter"
-                  tabIndex="-1"
-                  role="dialog"
-                  aria-labelledby="exampleModalCenterTitle"
-                  aria-hidden="true"
+                  className="modal-dialog modal-dialog-centered"
+                  role="document"
                 >
-                  <div
-                    className="modal-dialog modal-dialog-centered"
-                    role="document"
-                  >
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5
-                          className="modal-title"
-                          id="exampleModalCenterTitle"
-                        >
-                          Save this user as a favorite?
-                        </h5>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div className="modal-body">
-                        {getUsername(userProfile.userId)}
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          data-dismiss="modal"
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          type="submit"
-                          className="btn btn-primary"
-                          onClick={() => onSubmit(userProfile.userId)}
-                        >
-                          Save
-                        </button>
-                      </div>
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalCenterTitle">
+                        Save this user as a favorite?
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body">
+                      {getUsername(userProfile.userId)}
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        onClick={() => onSubmit(userProfile.userId)}
+                      >
+                        Save
+                      </button>
                     </div>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#exampleModalCenter2"
-                >
-                  View details
-                </button>
+              </div>
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-toggle="modal"
+                data-target="#exampleModalCenter2"
+              >
+                View details
+              </button>
+              <div
+                className="modal fade"
+                id="exampleModalCenter2"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+              >
                 <div
-                  className="modal fade"
-                  id="exampleModalCenter2"
-                  tabIndex="-1"
-                  role="dialog"
-                  aria-labelledby="exampleModalCenterTitle"
-                  aria-hidden="true"
+                  className="modal-dialog modal-dialog-centered"
+                  role="document"
                 >
-                  <div
-                    className="modal-dialog modal-dialog-centered"
-                    role="document"
-                  >
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5
-                          className="modal-title"
-                          id="exampleModalCenterTitle"
-                        >
-                          Details of user {getUsername(userProfile.userId)}
-                        </h5>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="modal"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div className="modal-body">
-                        <li>Politics: {userProfile.politicalaffiliation}</li>
-                        <li>Religion: {userProfile.religiousaffiliation}</li>
-                        <li>Education: {userProfile.education}</li>
-                        <li>Career: {getCareerName(userProfile.careerid)}</li>
-                        <li>Pets: {userProfile.pets}</li>
-                        <li>Employment: {userProfile.employmentstatus}</li>
-                        <li>About: {userProfile.about}</li>
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          data-dismiss="modal"
-                        >
-                          Close
-                        </button>
-                        <button
-                          type="submit"
-                          className="btn btn-primary"
-                          onClick={() => onSubmit(userProfile.userId)}
-                          data-dismiss="modal"
-                        >
-                          Save as favorite?
-                        </button>
-                      </div>
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalCenterTitle">
+                        Details of user {getUsername(userProfile.userId)}
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body">
+                      <li>Politics: {userProfile.politicalaffiliation}</li>
+                      <li>Religion: {userProfile.religiousaffiliation}</li>
+                      <li>Education: {userProfile.education}</li>
+                      <li>Career: {getCareerName(userProfile.careerid)}</li>
+                      <li>Pets: {userProfile.pets}</li>
+                      <li>Employment: {userProfile.employmentstatus}</li>
+                      <li>About: {userProfile.about}</li>
+                    </div>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        onClick={() => onSubmit(userProfile.userId)}
+                        data-dismiss="modal"
+                      >
+                        Save as favorite?
+                      </button>
                     </div>
                   </div>
                 </div>
