@@ -34,7 +34,45 @@ h3 {
   height: 200px;
   border: #000 1px solid;
 }
-.card {
-  margin: 30px;
-  width: 18rem;
+.profile-card {
+  margin: 10px;
+}
+.profile-photo {
+  width: 100%;
+}
+.fa {
+  font-size: 50px;
+  cursor: pointer;
+  user-select: none;
+}
+/* unvisited link */
+.fa:link {
+  color: green;
+}
+
+/* visited link */
+.fa:visited {
+  color: red;
+}
+/* .far:hover {
+  color: red;
+} */
+/* unvisited link */
+.far:link {
+  color: green;
+}
+
+/* visited link */
+.far:visited {
+  color: red;
+}
+
+/* mouse over link */
+.far:hover {
+  color: red;
+}
+
+/* selected link */
+.far:active {
+  color: yellow;
 }

@@ -86,157 +86,171 @@ const SearchResults = ({ auth }) => {
     };
     saveAsFavorite(faveUser);
   };
-
+  function myFunction(x) {
+    x.classList.toggle("fa-thumbs-down");
+  }
   return (
-    <div>
+    <div className="container">
+      <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
+
       <h3>
-        Users in your zip code {userZip} ({userProfiles.length})
+        Future Friends Nearby (There are {userProfiles.length} in your zip:{" "}
+        {userZip} )
       </h3>
-      <div className="card-group">
+      <div className="row">
         {userProfiles.map((userProfile) => {
           return (
-            <div
-              className="card"
-              style={{ width: "18rem" }}
-              key={userProfile.id}
-            >
-              <img
-                src={getProfilePic(userProfile.userId)}
-                className="card-img-top"
-                alt="..."
-              />
-              <div className="card-body">
-                <h5 className="card-title">
-                  {getUsername(userProfile.userId)}
-                </h5>
-                <p className="card-text">
-                  {findAge(userProfile.birthdate)}
-                  {userProfile.gender}
-                  {findAge(userProfile.birthdate)}
-                </p>
-                <p className="card-text">
-                  <small className="text-muted">Last updated 3 mins ago</small>
-                </p>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#exampleModalCenter"
-                  data-dismiss="modal"
-                >
-                  Save as Favorite
-                </button>
-              </div>
+            <div key={userProfile.id} className="col-sm-4">
+              <div className="card profile-card">
+                <div className="card-body">
+                  <div>
+                    <img
+                      className="profile-photo"
+                      src={getProfilePic(userProfile.userId)}
+                      alt={getUsername(userProfile.userId)}
+                    />
+                  </div>
+                  <h5 className="card-title">
+                    {getUsername(userProfile.userId)}
+                  </h5>
+                  <p className="card-text">
+                    Age {findAge(userProfile.birthdate)}{" "}
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    data-dismiss="modal"
+                  >
+                    Save as Favorite
+                  </button>
 
-              <div
-                className="modal fade"
-                id="exampleModalCenter"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true"
-              >
-                <div
-                  className="modal-dialog modal-dialog-centered"
-                  role="document"
-                >
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="exampleModalCenterTitle">
-                        Save this user as a favorite?
-                      </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body">
-                      {getUsername(userProfile.userId)}
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-primary"
-                        onClick={() => onSubmit(userProfile.userId)}
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button
-                type="button"
-                className="btn btn-primary"
-                data-toggle="modal"
-                data-target="#exampleModalCenter2"
-              >
-                View details
-              </button>
-              <div
-                className="modal fade"
-                id="exampleModalCenter2"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true"
-              >
-                <div
-                  className="modal-dialog modal-dialog-centered"
-                  role="document"
-                >
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="exampleModalCenterTitle">
-                        Details of user {getUsername(userProfile.userId)}
-                      </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="modal-body">
-                      <li>Politics: {userProfile.politicalaffiliation}</li>
-                      <li>Religion: {userProfile.religiousaffiliation}</li>
-                      <li>Education: {userProfile.education}</li>
-                      <li>Career: {getCareerName(userProfile.careerid)}</li>
-                      <li>Pets: {userProfile.pets}</li>
-                      <li>Employment: {userProfile.employmentstatus}</li>
-                      <li>About: {userProfile.about}</li>
-                    </div>
-                    <div className="modal-footer">
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-dismiss="modal"
-                      >
-                        Close
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-primary"
-                        onClick={() => onSubmit(userProfile.userId)}
-                        data-dismiss="modal"
-                      >
-                        Save as favorite?
-                      </button>
+                  <a href="#" className="btn btn-primary">
+                    Go somewhere
+                  </a>
+                  {/* TESTING */}
+
+                  <div
+                    className="modal fade"
+                    id="exampleModalCenter"
+                    tabIndex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true"
+                  >
+                    <div
+                      className="modal-dialog modal-dialog-centered"
+                      role="document"
+                    >
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h5
+                            className="modal-title"
+                            id="exampleModalCenterTitle"
+                          >
+                            Save this user as a favorite?
+                          </h5>
+                          <button
+                            type="button"
+                            className="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body">
+                          {getUsername(userProfile.userId)}
+                        </div>
+                        <div className="modal-footer">
+                          <button
+                            type="button"
+                            className="btn btn-secondary"
+                            data-dismiss="modal"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="submit"
+                            className="btn btn-primary"
+                            onClick={() => onSubmit(userProfile.userId)}
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter2"
+                  >
+                    View details
+                  </button>
+
+                  <div
+                    className="modal fade"
+                    id="exampleModalCenter2"
+                    tabIndex="-1"
+                    role="dialog"
+                    aria-labelledby="exampleModalCenterTitle"
+                    aria-hidden="true"
+                  >
+                    <div
+                      className="modal-dialog modal-dialog-centered"
+                      role="document"
+                    >
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h5
+                            className="modal-title"
+                            id="exampleModalCenterTitle"
+                          >
+                            Details of user {getUsername(userProfile.userId)}
+                          </h5>
+                          <button
+                            type="button"
+                            className="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div className="modal-body">
+                          <li>Politics: {userProfile.politicalaffiliation}</li>
+                          <li>Religion: {userProfile.religiousaffiliation}</li>
+                          <li>Education: {userProfile.education}</li>
+                          <li>Career: {getCareerName(userProfile.careerid)}</li>
+                          <li>Pets: {userProfile.pets}</li>
+                          <li>Employment: {userProfile.employmentstatus}</li>
+                          <li>About: {userProfile.about}</li>
+                        </div>
+                        <div className="modal-footer">
+                          <button
+                            type="button"
+                            className="btn btn-secondary"
+                            data-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          <button
+                            type="submit"
+                            className="btn btn-primary"
+                            onClick={() => onSubmit(userProfile.userId)}
+                            data-dismiss="modal"
+                          >
+                            Save as favorite?
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* TESTING */}
                 </div>
               </div>
             </div>
