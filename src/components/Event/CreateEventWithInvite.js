@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 const CreateEventWithInvite = ({
+  users,
   auth,
   setAuth,
   setEvents,
@@ -22,9 +23,12 @@ const CreateEventWithInvite = ({
     isPublic: false,
     userId: auth.id,
   });
+
+  const userToInvite = users.find((user) => user.username === 'moe');
+  console.log(userToInvite);
   //once event is created go to a specific page
   const history = useHistory();
-  const goToFreinds = () => history.push('/friends');
+  const goToFreinds = () => history.push('/search/results');
 
   const onChange = (ev) => {
     const change = {};
@@ -39,13 +43,13 @@ const CreateEventWithInvite = ({
       const newEvent = response.data;
       setEvent(response.data);
       const createUserEvent = {
-        joinedUserId: '', //invitee.id,
+        joinedUserId: userToInvite.id, //this needs to be changed to the user that erica gives me
         eventId: newEvent.id,
         status: 'invited',
       };
       if (isInvited) {
         axios.post(`/api/user_events`, createUserEvent).then((response) => {
-          console.log(response.data);
+          console.log(response.data, 'user ivent created');
         });
       }
     });
@@ -57,10 +61,12 @@ const CreateEventWithInvite = ({
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    console.log(event, 'event');
+    //console.log(event, 'event');
     createEvent(event);
+    //need to have page working
+    //goToFreinds();
   };
-  console.log(isInvited, 'isInvited');
+  //console.log(isInvited, 'isInvited');
   return (
     <div className="container-sm">
       <h1>Create Event with Private Invite</h1>
