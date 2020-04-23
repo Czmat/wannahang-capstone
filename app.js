@@ -307,6 +307,16 @@ app.post('/api/userEvents/array/delete', (req, res, next) => {
   );
 });
 
+app.get('/api/invites/:id', (req, res, next) => {
+  const userEvents = req.body;
+  console.log(req.params.id, 'invites', req.body);
+
+  models.invites
+    .read(req.params.id)
+    .then((items) => res.send(items))
+    .catch(next);
+});
+
 Object.keys(models).forEach((key) => {
   //console.log(models);
   app.get(`/api/${key}`, isLoggedIn, (req, res, next) => {
