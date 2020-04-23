@@ -24,6 +24,7 @@ import EventDetail from './components/Event/EventDetatil';
 import UserProfileEdit from './UserProfileEdit';
 import SearchFilter from './SearchFilter';
 import Invitations from './components/Invites/Invitations';
+import CreateEventWithInvite from './components/Event/CreateEventWithInvite';
 
 const headers = () => {
   const token = window.localStorage.getItem('token');
@@ -218,6 +219,15 @@ const App = () => {
           </Route>
           <Route path="/create/event">
             <CreateEvent
+              auth={auth}
+              setAuth={setAuth}
+              setEvents={setEvents}
+              events={events}
+              headers={headers}
+            />
+          </Route>
+          <Route path="/create/invite/event">
+            <CreateEventWithInvite
               auth={auth}
               setAuth={setAuth}
               setEvents={setEvents}
