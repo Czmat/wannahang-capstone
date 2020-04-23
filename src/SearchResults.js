@@ -97,12 +97,12 @@ const SearchResults = ({ auth }) => {
           return (
             <div
               className="card"
-              style={{ width: "18rem" }}
+              // style={{ width: "18rem" }}
               key={userProfile.id}
             >
               <img
                 src={getProfilePic(userProfile.userId)}
-                className="card-img-top"
+                className="card-img-top profilephoto"
                 alt="..."
               />
               <div className="card-body">

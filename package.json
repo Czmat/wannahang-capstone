@@ -43,7 +43,6 @@
     "moment": "^2.24.0",
     "pg": "^7.18.2",
     "qs": "^6.9.1",
-    "react-bootstrap": "^1.0.0",
     "react-router-dom": "^5.1.2"
   },
   "description": ""
