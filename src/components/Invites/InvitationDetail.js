@@ -2,26 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
-import UserDetailPopUp from '../User/UserDetailPopUp';
 
-export default function InvitationDetail({ inviteDetail, setInviteDetail }) {
+export default function InvitationDetail({ inviteDetail }) {
   return (
     <div>
       <h5>Invite Detail</h5>
 
       <div className="card border-light mb-3" style={{ maxWidth: '20rem' }}>
-        <div className="card-header">
-          {inviteDetail.name}{' '}
-          <button
-            type="button"
-            className="close"
-            aria-label="Close"
-            onClick={() => setInviteDetail('')}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
+        <div className="card-header">{inviteDetail.name}</div>
         <div className="card-body">
           <h5 className="card-title">Location: {inviteDetail.location}</h5>
           <p className="card-text">
@@ -30,20 +18,7 @@ export default function InvitationDetail({ inviteDetail, setInviteDetail }) {
           <p className="card-text">Detail: {inviteDetail.description}</p>
           <p className="card-text">
             Invited by{' '}
-            {/* <button
-              type="button"
-              className="card-link"
-              data-toggle="modal"
-              data-target="#exampleModalCenter"
-            >
-              {inviteDetail.username}
-            </button> */}
-            <Link
-              to="/invites"
-              data-toggle="modal"
-              data-target="#exampleModalCenter"
-              onClick={() => console.log('user')}
-            >
+            <Link to="/invites" onClick={() => console.log('user')}>
               {inviteDetail.username}
             </Link>{' '}
           </p>
@@ -59,7 +34,6 @@ export default function InvitationDetail({ inviteDetail, setInviteDetail }) {
           </button>
         </div>
       </div>
-      <UserDetailPopUp inviteDetail={inviteDetail} />
     </div>
   );
 }
