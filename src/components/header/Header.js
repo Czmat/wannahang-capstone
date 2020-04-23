@@ -27,15 +27,15 @@ const Header = ({ login }) => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/Account">
-              Account
+            <Link className="nav-link" to="/register">
+              Create New Account
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link className="nav-link" to="/profile">
               profile
             </Link>
-          </li>
+          </li> */}
           {/* <li className="nav-item">
             <Link className="nav-link" to="/search/criteria">
               Search
