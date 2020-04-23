@@ -404,6 +404,33 @@ const sync = async () => {
       password: "MARCIE",
       role: "USER",
     },
+    will: {
+      firstname: "Will",
+      lastname: "Smith",
+      username: "will",
+      phone: "904-326-4200",
+      email: "will@gmail.com",
+      password: "WILL",
+      role: "USER",
+    },
+    daniel: {
+      firstname: "Daniel",
+      lastname: "Lucas",
+      username: "daniel",
+      phone: "904-444-5210",
+      email: "daniel@gmail.com",
+      password: "DANIEL",
+      role: "USER",
+    },
+    georgia: {
+      firstname: "Georgia",
+      lastname: "Williams",
+      username: "georgia",
+      phone: "904-555-8820",
+      email: "georgia@gmail.com",
+      password: "GEORGIA",
+      role: "USER",
+    },
   };
 
   const [lucy, moe, curly] = await Promise.all(
@@ -513,7 +540,7 @@ const sync = async () => {
       joinedUserId: moe.id,
       eventId: beach.id,
       isFavorite: false,
-      status: 'invited',
+      status: "invited",
     },
   };
   const [unap, usoccer, usoccercurly, ujoke, udog] = await Promise.all(
@@ -573,10 +600,17 @@ const sync = async () => {
   const marcieid = await users
     .findUserId("marcie")
     .then((response) => response.id);
+  const willid = await users.findUserId("will").then((response) => response.id);
+  const danielid = await users
+    .findUserId("daniel")
+    .then((response) => response.id);
+  const georgiaid = await users
+    .findUserId("georgia")
+    .then((response) => response.id);
 
   Promise.all([
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads",
       fileName: "chick.JPG",
       userId: lucyid,
     }),
@@ -617,12 +651,42 @@ const sync = async () => {
     }),
     photos.createPhoto({
       filePath: "/uploads/",
-      fileName: "pony.PNG",
+      fileName: "Marcie.jpg",
       userId: marcieid,
+    }),
+    photos.createPhoto({
+      filePath: "/uploads/",
+      fileName: "Will.jpg",
+      userId: willid,
+    }),
+    photos.createPhoto({
+      filePath: "/uploads/",
+      fileName: "Daniel.jpg",
+      userId: danielid,
+    }),
+    photos.createPhoto({
+      filePath: "/uploads/",
+      fileName: "Georgia.jpg",
+      userId: georgiaid,
     }),
   ]);
 
   Promise.all([
+    profiles.createProfile({
+      userId: willid,
+      gender: "Male",
+      politicalAffiliation: "Independant",
+      religiousAffiliation: "Christianity",
+      careerId: eduid,
+      education: "College educated",
+      pets: "Dogs",
+      birthdate: "2/2/1996",
+      zipCode: "32207",
+      employmentStatus: "Full time",
+      about:
+        "I am an extrovert. I totally love to travel. My travel-buddy got married and now I need a new person who wants to see the world.",
+      communicationPreference: "Email",
+    }),
     profiles.createProfile({
       userId: lucyid,
       gender: "Female",
@@ -748,6 +812,36 @@ const sync = async () => {
       zipCode: "32207",
       employmentStatus: "Part time",
       about: "Glasses",
+      communicationPreference: "Email",
+    }),
+    profiles.createProfile({
+      userId: danielid,
+      gender: "Male",
+      politicalAffiliation: "Democrat",
+      religiousAffiliation: "Christian",
+      careerId: compid,
+      education: "High school",
+      pets: "Dogs",
+      birthdate: "12/01/1984",
+      zipCode: "32207",
+      employmentStatus: "Part time",
+      about:
+        "I am kind of science nerd. I like sci-fi movies, I read sci-fi books and I go to WorldCon every year. Star Wars is my favorite movie and Ender's Game is my favorite book. Anybody want to go to sci-fi stuff with me?",
+      communicationPreference: "Email",
+    }),
+    profiles.createProfile({
+      userId: georgiaid,
+      gender: "Female",
+      politicalAffiliation: "Republican",
+      religiousAffiliation: "Christian",
+      careerId: compid,
+      education: "High school",
+      pets: "Birds",
+      birthdate: "12/01/1960",
+      zipCode: "32207",
+      employmentStatus: "Part time",
+      about:
+        "I have just recently been widowed and want to get back out there - I just don't know how. I'd like to find some girl friends to have dinner with, visit a few vineyards, maybe go shopping with...",
       communicationPreference: "Email",
     }),
   ]);
