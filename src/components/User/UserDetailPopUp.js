@@ -47,9 +47,9 @@ export default function UserDetailPopUp({ inviteDetail }) {
                 <li className="list-group-item">Vestibulum at eros</li>
               </ul>
               <div className="card-body">
-                <a href="#" className="card-link">
-                  Card link
-                </a>
+                <button href="#" className="card-link">
+                  Add to favorite
+                </button>
                 <a href="#" className="card-link">
                   Another link
                 </a>
