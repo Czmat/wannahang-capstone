@@ -32,15 +32,9 @@ const UserProfile = ({ logout, auth, params }) => {
   if (photo == undefined) {
     myPhotoPath = "/uploads/avatar-1577909_1280.png";
   } else {
-    myPhotoPath = photo.filepath;
+    myPhotoPath = photo.filepath + "/" + photo.filename;
   }
-  // if (photo == null) {
-  //   setPhoto({
-  //     filename: "No Photo",
-  //     filepath: "/uploads/avatar-1577909_1280.png",
-  //     userId: auth.id,
-  //   });
-  // }
+
   console.log("photo", photo);
   // console.log("profile", profile);
 
