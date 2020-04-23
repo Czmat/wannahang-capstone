@@ -228,6 +228,7 @@ const App = () => {
           </Route>
           <Route path="/create/invite/event">
             <CreateEventWithInvite
+              users={users}
               auth={auth}
               setAuth={setAuth}
               setEvents={setEvents}
