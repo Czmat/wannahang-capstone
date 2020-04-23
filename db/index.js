@@ -4,6 +4,7 @@ const fs = require('fs');
 const { authenticate, compare, findUserFromToken, hash } = require('./auth');
 
 const models = ({
+  invites,
   user_events,
   users,
   profiles,
@@ -507,6 +508,12 @@ const sync = async () => {
       eventId: dog.id,
       isFavorite: true,
       status: 'accepted',
+    },
+    beach: {
+      joinedUserId: moe.id,
+      eventId: beach.id,
+      isFavorite: false,
+      status: 'invited',
     },
   };
   const [unap, usoccer, usoccercurly, ujoke, udog] = await Promise.all(
