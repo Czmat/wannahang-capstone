@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const SearchResults = ({ auth }) => {
   const [users, setUsers] = useState([]);
@@ -15,7 +15,7 @@ const SearchResults = ({ auth }) => {
   useEffect(() => {
     // gets zip code of current user
     axios
-      .get("/api/profiles")
+      .get('/api/profiles')
       .then((response) =>
         setProfile(response.data.find(({ userId }) => userId === auth.id))
       );
@@ -23,7 +23,7 @@ const SearchResults = ({ auth }) => {
   const userZip = profile.zipcode;
   useEffect(() => {
     // find userids of profiles with same zip code
-    axios.get("/api/profiles").then((response) => setProfiles(response.data));
+    axios.get('/api/profiles').then((response) => setProfiles(response.data));
   }, []);
 
   const userProfiles = profiles.filter(
@@ -31,7 +31,7 @@ const SearchResults = ({ auth }) => {
   );
 
   useEffect(() => {
-    axios.get("/api/users").then((response) => setUsers(response.data));
+    axios.get('/api/users').then((response) => setUsers(response.data));
   }, []);
 
   const getUsername = (id) => {
@@ -40,7 +40,7 @@ const SearchResults = ({ auth }) => {
   };
 
   useEffect(() => {
-    axios.get("/api/careers").then((response) => setCareers(response.data));
+    axios.get('/api/careers').then((response) => setCareers(response.data));
   }, []);
 
   const getCareerName = (cid) => {
@@ -60,20 +60,20 @@ const SearchResults = ({ auth }) => {
   };
 
   useEffect(() => {
-    axios.get("/api/photos").then((response) => setPhotos(response.data));
+    axios.get('/api/photos').then((response) => setPhotos(response.data));
   }, []);
 
   const getProfilePic = (friendId) => {
     const profilePic = photos.find((photo) => photo.userId === friendId);
     const filename = profilePic.filename;
     const filepath = profilePic.filepath;
-    const src = filepath + "/" + filename;
+    const src = filepath + '/' + filename;
     return src;
   };
 
   const saveAsFavorite = async (fave) => {
     await axios
-      .post("/api/createFavorite", fave)
+      .post('/api/createFavorite', fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
 
@@ -87,14 +87,14 @@ const SearchResults = ({ auth }) => {
     saveAsFavorite(faveUser);
   };
   function myFunction(x) {
-    x.classList.toggle("fa-thumbs-down");
+    x.classList.toggle('fa-thumbs-down');
   }
   return (
     <div className="container">
       <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
 
       <h3>
-        Future Friends Nearby (There are {userProfiles.length} in your zip:{" "}
+        Future Friends Nearby (There are {userProfiles.length} in your zip:{' '}
         {userZip} )
       </h3>
       <div className="row">
@@ -114,7 +114,7 @@ const SearchResults = ({ auth }) => {
                     {getUsername(userProfile.userId)}
                   </h5>
                   <p className="card-text">
-                    Age {findAge(userProfile.birthdate)}{" "}
+                    Age {findAge(userProfile.birthdate)}{' '}
                   </p>
                   <button
                     type="button"
@@ -175,6 +175,7 @@ const SearchResults = ({ auth }) => {
                             type="submit"
                             className="btn btn-primary"
                             onClick={() => onSubmit(userProfile.userId)}
+                            data-dismiss="modal"
                           >
                             Save
                           </button>

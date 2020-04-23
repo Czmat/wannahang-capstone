@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import axios from "axios";
-import DeleteAccountPopUp from "./components/User/DeleteAccountPopUp";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import axios from 'axios';
+import DeleteAccountPopUp from './components/User/DeleteAccountPopUp';
 
 const UserProfileEdit = ({ logout, auth, params }) => {
   const deleteAccount = () => {
@@ -11,36 +11,36 @@ const UserProfileEdit = ({ logout, auth, params }) => {
 
   useEffect(() => {
     axios
-      .get("/api/profiles")
+      .get('/api/profiles')
       .then((response) =>
         setProfile(response.data.find(({ userId }) => userId === auth.id))
       );
   }, []);
   useEffect(() => {
     axios
-      .get("/api/political_parties")
+      .get('/api/political_parties')
       .then((response) => setPoliticalParties(response.data));
   }, []);
   useEffect(() => {
-    axios.get("/api/genders").then((response) => setGenders(response.data));
+    axios.get('/api/genders').then((response) => setGenders(response.data));
   }, []);
   useEffect(() => {
-    axios.get("/api/religions").then((response) => setReligions(response.data));
+    axios.get('/api/religions').then((response) => setReligions(response.data));
   }, []);
   useEffect(() => {
     axios
-      .get("/api/education")
+      .get('/api/education')
       .then((response) => setEducations(response.data));
   }, []);
   useEffect(() => {
-    axios.get("/api/pets").then((response) => setPet(response.data));
+    axios.get('/api/pets').then((response) => setPet(response.data));
   }, []);
   useEffect(() => {
     axios
-      .get("/api/employment_status")
+      .get('/api/employment_status')
       .then((response) => setEmployment(response.data));
   }, []);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [profile, setProfile] = useState([]);
   // console.log("GP", profile.gender);
   // console.log("ID", auth.id);
@@ -65,34 +65,31 @@ const UserProfileEdit = ({ logout, auth, params }) => {
     communicationpreference: profile.communicationPreference,
   });
 
+  const profId = profile.id;
+
   const onChange = (ev) => {
     const change = {};
     change[ev.target.name] = ev.target.value;
     setEditedUserProfile({ ...editedUserProfile, ...change });
   };
-  console.log("editedUserProfile", editedUserProfile);
+  console.log('editedUserProfile', editedUserProfile);
 
-  const updateProfile = (profile) => {
-    axios
-      .put(`/api/profiles/${auth.id}`, profile)
-      .then((response) => {
-        console.log(response.data, "response data");
-        //setAuth(response.data);
-        setError(ex.response.data.message);
-      })
-      .catch((ex) => setError(ex.response.data.message));
+  const updateProfile = (profile, profileId) => {
+    axios.put(`/api/updateProfile/:${profileId}`, profile).then((response) => {
+      console.log('response data', response);
+      // setAuth(response.data);
+      // setError(ex.response.data.message);
+    });
+    // .catch((ex) => setError(ex.response.data.message));
   };
-  // updateUser(editedUser);
 
   const onSubmit = (ev) => {
-    console.log("click");
-    // ev.preventDefault();
-    updateProfile(editedUserProfile);
+    updateProfile(editedUserProfile, profId);
   };
   return (
     <div className="container">
       <h3 className="userName">
-        All About {auth.username}{" "}
+        All About {auth.username}{' '}
         <button
           type="button"
           className="btn btn-primary btn-sm"
@@ -122,7 +119,7 @@ const UserProfileEdit = ({ logout, auth, params }) => {
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">
-            Would you like to reset your password?{" "}
+            Would you like to reset your password?{' '}
             <Link to="/useraccount/password" className="btn btn-primary btn-sm">
               Change password
             </Link>
@@ -196,7 +193,7 @@ const UserProfileEdit = ({ logout, auth, params }) => {
 
             <div className="col">
               <label htmlFor="religiousAffiliation">
-                Religious Affiliation:{" "}
+                Religious Affiliation:{' '}
               </label>
               <select
                 className="form-control"
@@ -205,7 +202,7 @@ const UserProfileEdit = ({ logout, auth, params }) => {
                 onChange={onChange}
               >
                 <option value={editedUserProfile.religiousAffiliation}>
-                  {profile.religiousaffiliation}{" "}
+                  {profile.religiousaffiliation}{' '}
                 </option>
                 {religions.map((religion) => {
                   return (
@@ -227,8 +224,8 @@ const UserProfileEdit = ({ logout, auth, params }) => {
               onChange={onChange}
             >
               <option value={editedUserProfile.education}>
-                {" "}
-                {profile.education}{" "}
+                {' '}
+                {profile.education}{' '}
               </option>
               {educations.map((school) => {
                 return (
@@ -323,7 +320,7 @@ const UserProfileEdit = ({ logout, auth, params }) => {
             onChange={onChange}
           /> */}
           {/* careerid: "7196afea-99c0-46b5-8bcf-f33e526a5467" */}
-          <button type="submit" className="btn btn-primary" onSubmit={onSubmit}>
+          <button type="submit" className="btn btn-primary" onClick={onSubmit}>
             Submit
           </button>
 
@@ -335,7 +332,7 @@ const UserProfileEdit = ({ logout, auth, params }) => {
           >
             Submit
           </Link> */}
-        </div>{" "}
+        </div>{' '}
       </div>
     </div>
   );
