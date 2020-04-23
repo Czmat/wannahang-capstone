@@ -10,7 +10,7 @@ const DeleteAccountPopUp = ({ deleteAccount, logout }) => {
       className="modal fade"
       id="staticBackdrop"
       data-backdrop="static"
-      tabIndex="-1"
+      tabindex="-1"
       role="dialog"
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"

@@ -168,15 +168,6 @@ const Nav = ({ params, logout, auth, login }) => {
                   Create Event
                 </Link>
               </div>
-              <div className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/create/invite/event"
-                  label="CreateEventWithInvite"
-                >
-                  Create Event With Invite
-                </Link>
-              </div>
 
               {/* <div className="dropdown-divider"></div> */}
 
