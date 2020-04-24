@@ -9,9 +9,9 @@ const SearchResults = ({ auth }) => {
   const [photos, setPhotos] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
-  //console.log(users, 'users');
+  //console.log(users, 'users', careers);
 
-  const usersId = auth.id;
+  //const usersId = auth.id;
 
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
@@ -60,7 +60,9 @@ const SearchResults = ({ auth }) => {
   //console.log(getUsername())
   const getCareerName = (cid) => {
     const career = careers.find((c) => c.id === cid);
-    return career.career_name;
+    if (career) {
+      return career.career_name;
+    }
   };
 
   const findAge = (birthday) => {
@@ -75,11 +77,14 @@ const SearchResults = ({ auth }) => {
   };
 
   const getProfilePic = (friendId) => {
+    // if (photos) {
     const profilePic = photos.find((photo) => photo.userId === friendId);
-    const filename = profilePic.filename;
-    const filepath = profilePic.filepath;
-    const src = filepath + '/' + filename;
-    return src;
+    if (profilePic) {
+      const filename = profilePic.filename;
+      const filepath = profilePic.filepath;
+      const src = filepath + '/' + filename;
+      return src;
+    }
   };
 
   const saveAsFavorite = async (fave) => {
@@ -110,6 +115,10 @@ const SearchResults = ({ auth }) => {
   //     property.style.backgroundColor = "red";
   //     count = 0;
   //   }
+  // }
+
+  // if (users) {
+  //   console.log('nice');
   // }
   return (
     <div className="container">
@@ -261,7 +270,7 @@ const SearchResults = ({ auth }) => {
                           <li>Politics: {userProfile.politicalaffiliation}</li>
                           <li>Religion: {userProfile.religiousaffiliation}</li>
                           <li>Education: {userProfile.education}</li>
-                          {/* <li>Career: {getCareerName(userProfile.careerid)}</li> */}
+                          <li>Career: {getCareerName(userProfile.careerid)}</li>
                           <li>Pets: {userProfile.pets}</li>
                           <li>Employment: {userProfile.employmentstatus}</li>
                           <li>About: {userProfile.about}</li>
