@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 const UpdatePopUp = ({ onSubmit }) => {
   const history = useHistory();
-  const goEdited = () => history.push('/useraccount');
+  const goEdited = () => history.push('/UserProfile');
   return (
     <div
       className="modal fade"
