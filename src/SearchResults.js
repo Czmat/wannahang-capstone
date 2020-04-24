@@ -122,15 +122,22 @@ const SearchResults = ({ auth }) => {
     saveAsFavorite(faveUser);
   };
   function myFunction(x) {
-    x.classList.toggle('fa-thumbs-down');
+    x.classList.toggle('fa fa-heart');
   }
+  // function setColor(button, color) {
+  //   let count = 1;
+  //   let property = document.getElementById("heart");
+  //   if (count == 0) {
+  //     property.style.backgroundColor = "gray";
+  //     count = 1;
+  //   } else {
+  //     property.style.backgroundColor = "red";
+  //     count = 0;
+  //   }
+  // }
   return (
     <div className="container">
-      <i
-        // onClick="myFunction(this)"
-        className="fa fa-thumbs-up"
-      ></i>
-
+      {/* <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i> */}
       <h3>
         Future Friends Nearby (There are {userProfiles.length} in your zip:{' '}
         {userZip} )
@@ -156,17 +163,23 @@ const SearchResults = ({ auth }) => {
                   </p>
                   <button
                     type="button"
-                    className="btn btn-primary"
+                    id="heart"
+                    className="fas fa-heart"
+                    // onClick={myFunction}
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
                     data-dismiss="modal"
                   >
-                    Save as Favorite
+                    {' '}
+                    Friend
                   </button>
+                  <p className="card-text">
+                    Age {findAge(userProfile.birthdate)}{' '}
+                  </p>
 
-                  <a href="#" className="btn btn-primary">
+                  {/* <a href="#" className="btn btn-primary">
                     Go somewhere
-                  </a>
+                  </a> */}
                   {/* TESTING */}
 
                   <div
