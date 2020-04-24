@@ -5,7 +5,6 @@ import moment from 'moment';
 import UpdatePopUp from './UpdatePopUp';
 
 const EditUserAccount = ({ auth, setAuth }) => {
-  // const [seen, setSeen] = useState(false);
   const [cancelMessage, setCancelMessage] = useState('');
   const [error, setError] = useState('');
   const [editedUser, setEditedUser] = useState({
@@ -14,14 +13,7 @@ const EditUserAccount = ({ auth, setAuth }) => {
     username: auth.username,
     email: auth.email,
     phone: auth.phone,
-    // zipcode: auth.zipcode,
-    // birthday: auth.birthday,
-    // gender: auth.gender,
   });
-
-  // useEffect(() => {
-  //   console.log('use effect');
-  // }, [auth]);
 
   const onChange = (ev) => {
     const change = {};
@@ -43,10 +35,9 @@ const EditUserAccount = ({ auth, setAuth }) => {
     // ev.preventDefault();
     updateUser(editedUser);
   };
-  console.log(auth, 'auth');
+
   return (
     <div className="container-sm">
-      <hr />
       {cancelMessage}
       <h1>Edit your profile</h1>
       <form className="w-50">
@@ -82,16 +73,6 @@ const EditUserAccount = ({ auth, setAuth }) => {
             onChange={onChange}
           />
         </div>
-        {/* <div className="form-group">
-          <input
-            name="zipcode"
-            value={editedUser.zipcode}
-            className="form-control"
-            type="text"
-            placeholder="Zipcode"
-            onChange={onChange}
-          />
-        </div> */}
         <div className="form-group">
           <input
             name="email"
@@ -116,38 +97,6 @@ const EditUserAccount = ({ auth, setAuth }) => {
             onChange={onChange}
           />
         </div>
-        {/* <div className="form-group">
-          <input
-            name="birthday"
-            value={moment(editedUser.birthday).format('YYYY-MM-DD')}
-            className="form-control"
-            type="date"
-            placeholder="Birthday"
-            onChange={onChange}
-          />
-        </div> */}
-        {/* <div className="form-group">
-          <select
-            name="gender"
-            value={editedUser.gender}
-            className="form-control"
-            placeholder="Gender"
-            onChange={onChange}
-          >
-            <option></option>
-            <option>Male</option>
-            <option>Female</option>
-          </select>
-        </div> */}
-        {/* <Link
-          type="button"
-          className="btn btn-primary"
-          data-toggle="modal"
-          data-target="#exampleModal"
-          to="/useraccount"
-        >
-          Edit Account
-        </Link> */}
         <button
           type="button"
           className="btn btn-primary"
@@ -156,12 +105,11 @@ const EditUserAccount = ({ auth, setAuth }) => {
         >
           Edit Account
         </button>
-        <Link to="/useraccount" className="btn">
+        <Link to="/UserProfile" className="btn">
           Cancel
         </Link>
       </form>
       <UpdatePopUp onSubmit={onSubmit} setCancelMessage={setCancelMessage} />
-      {/* {!seen ? <UpdatePopUp onSubmit={onSubmit} setSeen={setSeen} /> : null} */}
     </div>
   );
 };

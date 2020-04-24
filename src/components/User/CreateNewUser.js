@@ -21,7 +21,6 @@ const CreateNewUser = ({ login }) => {
 
   const createUser = (user) => {
     axios.post('/api/users', user).then((response) => {
-      console.log('resp', response.data);
       login({ email, password }).catch((ex) =>
         setError(ex.response.data.message)
       );
@@ -31,7 +30,7 @@ const CreateNewUser = ({ login }) => {
   const onSubmit = (ev) => {
     ev.preventDefault();
     if (confirmPassword !== password) {
-      return setPasswordError('Please confirm correct password');
+      return setPasswordError("Confirm password doesn't match");
     } else {
       createUser({
         firstname,
@@ -52,7 +51,7 @@ const CreateNewUser = ({ login }) => {
       <hr />
       <h1>Join the Fam!</h1>
       <form className="w-50" onSubmit={onSubmit}>
-        <div className="row ">
+        <div className="row form-group">
           <div className="col">
             <input
               value={firstname}
@@ -73,7 +72,6 @@ const CreateNewUser = ({ login }) => {
           </div>
         </div>
         <div className="form-group">
-          <label>Username</label>
           <input
             value={username}
             className="form-control"
@@ -82,34 +80,23 @@ const CreateNewUser = ({ login }) => {
             onChange={(ev) => setUsername(ev.target.value)}
           />
         </div>
-        {/* <div className="form-group">
-          <label>Zipcode</label>
-          <input
-            value={zipcode}
-            className="form-control"
-            type="text"
-            placeholder="Zipcode"
-            onChange={(ev) => setZipcode(ev.target.value)}
-          />
-        </div> */}
         <div className="form-group">
-          <label>Phone number</label>
           <input
             value={phone}
             className="form-control"
             type="text"
-            placeholder="Phone number"
+            placeholder="phone number"
             onChange={(ev) => setPhone(ev.target.value)}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="inputEmail1">Email address</label>
           <input
             value={email}
             type="email"
             className="form-control"
             id="inputEmail1"
             aria-describedby="emailHelp"
+            placeholder="email address"
             onChange={(ev) => setEmail(ev.target.value)}
           />
           <small id="emailHelp" className="form-text text-muted">
@@ -117,50 +104,39 @@ const CreateNewUser = ({ login }) => {
           </small>
         </div>
         <div className="form-group">
-          <label htmlFor="inputPassword1">Password</label>
           <input
             value={password}
             type="password"
             className="form-control"
             id="inputPassword1"
+            placeholder="password"
             onChange={(ev) => setPassword(ev.target.value)}
           />
-          <label htmlFor="inputConfirmPassword1">Confirm password</label>
+        </div>
+        <div className="form-group">
           <input
             value={confirmPassword}
             type="password"
             className="form-control"
             id="inputConfirmPassword1"
+            placeholder="confirm password"
             onChange={(ev) => setConfirmPassword(ev.target.value)}
           />
           <div>{passwordError}</div>
         </div>
-        {/* <div className="form-group">
-          <label>Birthday</label>
-          <input
-            value={birthday}
-            className="form-control"
-            type="date"
-            placeholder="Birthday"
-            onChange={(ev) => setBirthday(ev.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label>Gender</label>
-          <select
-            value={gender}
-            className="form-control"
-            placeholder="Gender"
-            onChange={(ev) => setGender(ev.target.value)}
-          >
-            <option></option>
-            <option>Male</option>
-            <option>Female</option>
-          </select>
-          {gender}
-        </div> */}
-
-        <button className="btn btn-primary">Create Account</button>
+        <button
+          className="btn btn-primary"
+          disabled={
+            !firstname ||
+            !lastname ||
+            !email ||
+            !phone ||
+            !username ||
+            !password
+          }
+        >
+          Create Account
+        </button>
       </form>
     </div>
   );

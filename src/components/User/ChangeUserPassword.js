@@ -13,7 +13,7 @@ const ChangeUserPassword = ({
   const [error, setError] = useState('');
 
   const history = useHistory();
-  const goToUserAccount = () => history.push('/useraccount');
+  const goToUserAccount = () => history.push('/UserProfile');
 
   const validatePassword = async (credentials) => {
     const creds = {
@@ -82,7 +82,11 @@ const ChangeUserPassword = ({
               onChange={(ev) => setNewPassword(ev.target.value)}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary"
+            disabled={!currentPassword || !newPassword}
+          >
             Change password
           </button>
         </form>
