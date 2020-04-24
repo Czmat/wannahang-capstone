@@ -248,6 +248,15 @@ app.get('/api/hobbies', (req, res, next) => {
     .catch(next);
 });
 
+app.get('/api/user_hobbies', (req, res, next) => {
+  models.hobbies
+    .readUserHobbies()
+    .then((hobbies) => {
+      res.send(hobbies);
+    })
+    .catch(next);
+});
+
 app.get('/api/usernamepprofiles', (req, res, next) => {
   db.readUsernameProfiles()
     .then((usernamepprofiles) => {

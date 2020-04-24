@@ -9,6 +9,8 @@ const SearchResults = ({ auth }) => {
   const [photos, setPhotos] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
+  const [usersHobbies, setUsersHobbies] = useState([]);
+  const [hobbies, setHobbies] = useState([]);
 
   const usersId = auth.id;
 
@@ -47,6 +49,27 @@ const SearchResults = ({ auth }) => {
     const career = careers.find((c) => c.id === cid);
     return career.career_name;
   };
+  useEffect(() => {
+    axios
+      .get('/api/user_hobbies')
+      .then((response) => setUsersHobbies(response.data));
+  }, []);
+
+  useEffect(() => {
+    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
+  }, []);
+
+  const getUserHobbies = (uid) => {
+    console.log('uh', usersHobbies);
+    const uHobs = usersHobbies.find((h) => h.user_id === uid);
+    return uHobs;
+  };
+
+  const getHobbyName = (hobbyId) => {
+    console.log('hobbyid', hobbyId);
+    const hobNm = hobbies.find((b) => b.id === hobbyId.hobby_id);
+    return hobNm.hobby_name;
+  };
 
   const findAge = (birthday) => {
     var today = new Date();
@@ -63,6 +86,12 @@ const SearchResults = ({ auth }) => {
     axios.get('/api/photos').then((response) => setPhotos(response.data));
   }, []);
 
+  // useEffect(() => {
+  //   axios
+  //     .get('/api/user_hobbies')
+  //     .then((response) => setUserHobbies(response.data));
+  // }, []);
+
   const getProfilePic = (friendId) => {
     const profilePic = photos.find((photo) => photo.userId === friendId);
     const filename = profilePic.filename;
@@ -76,6 +105,12 @@ const SearchResults = ({ auth }) => {
       .post('/api/createFavorite', fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
+
+  // const getHobbies = () => {
+  //   axios
+  //     .get('/api/user_hobbies')
+  //     .then((response) => setUserHobbies(response.data));
+  // };
 
   const onSubmit = (fav) => {
     const user1 = usersId;
@@ -91,7 +126,10 @@ const SearchResults = ({ auth }) => {
   }
   return (
     <div className="container">
-      <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
+      <i
+        // onClick="myFunction(this)"
+        className="fa fa-thumbs-up"
+      ></i>
 
       <h3>
         Future Friends Nearby (There are {userProfiles.length} in your zip:{' '}
@@ -228,6 +266,7 @@ const SearchResults = ({ auth }) => {
                           <li>Career: {getCareerName(userProfile.careerid)}</li>
                           <li>Pets: {userProfile.pets}</li>
                           <li>Employment: {userProfile.employmentstatus}</li>
+                          {/* <li>Hobbies: {getUserHobbies(userProfile.userId)}</li> */}
                           <li>About: {userProfile.about}</li>
                         </div>
                         <div className="modal-footer">
