@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 let clicks = 0;
 const UserHobbies = (auth) => {
   const [hobbies, setHobbies] = useState([]);
@@ -21,6 +21,10 @@ const UserHobbies = (auth) => {
   //     }
   //   }
   // });
+  const checkArray = (array) => {
+    array.filter((element) => element % 2 !== 0);
+    return array;
+  };
 
   const toggleImage = (hobby) => {
     let img1 = `http://www.terribailey.com/images/${hobby.hobby_image}`;
@@ -29,20 +33,18 @@ const UserHobbies = (auth) => {
     //console.log("WHAT", imgElement);
     imgElement.src = imgElement.src === img1 ? img2 : img1;
     clicks = clicks + 1;
-    setSelected({
-      ...selected,
-      [hobby.id]: clicks,
-    });
-    console.log("DD", Object.values(selected));
+    setSelected(...selected, { [hobby.id]: clicks });
+    console.log('DD', Object.values(selected));
     let nums = Object.values(selected);
 
-    let selectedGroup = [];
-    for (let i = 0; i < selected.length; i++) {
-      if (selected[i].clicks % 2) {
-        selectedGroup.push(selected[i]);
-      }
-    }
-    console.log("SG", selectedGroup);
+    // let selectedGroup = [];
+    // for (let i = 0; i < selected.length; i++) {
+    //   console.log('hobbie', selected[i]);
+    //   if (selected[i].clicks % 2) {
+    //     selectedGroup.push(selected[i]);
+    //   }
+    // }
+    // console.log('SG', selectedGroup);
 
     // if (Object.values(selected) % 2) {
     //   console.log(Object.keys(selected));
@@ -51,11 +53,21 @@ const UserHobbies = (auth) => {
 
     // let x = selected.filter((numClicks) => numClicks % 2);
     // console.log("x", x);
-    // }
+    // };
+    // console.log(checkArray(selected));
   };
   const numClicks = Object.values(selected);
+  console.log('nc', numClicks);
   const eachHobbyid = Object.keys(selected);
-  console.log("Selected", selected);
+  console.log('eH', eachHobbyid);
+  console.log('Selected', selected);
+  console.log(typeof selected);
+  let selectedGroup = [];
+  for (let i = 0; i < selected.length; i++) {
+    if (selected[i].clicks % 2) {
+      selectedGroup.push(selected[i]);
+    }
+  }
   // console.log("numClicks", numClicks);
   // console.log("eachHobbyid", eachHobbyid);
 
@@ -65,21 +77,21 @@ const UserHobbies = (auth) => {
   const userId = auth.auth.id;
 
   useEffect(() => {
-    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
+    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
   }, []);
 
   const createUserHobbies = (user) => {
-    axios.post("/api/createUserHobbies", user).then((response) => {
-      console.log("USERHobby", response);
+    axios.post('/api/createUserHobbies', user).then((response) => {
+      console.log('USERHobby', response);
     });
   };
 
   const onSubmit = (ev) => {
     ev.preventDefault();
     const eachHobby = Object.keys(userHobbies);
-    console.log("ARR", eachHobby);
+    console.log('ARR', eachHobby);
     eachHobby.forEach((hobbyId) => {
-      console.log("EACH ID", hobbyId);
+      console.log('EACH ID', hobbyId);
 
       createUserHobbies({
         userId,

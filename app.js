@@ -116,9 +116,13 @@ app.get('/api/profiles', (req, res, next) => {
     })
     .catch(next);
 });
+//PUT
 app.put('/api/updateProfile/:id', (req, res, next) => {
   console.log(req.body, 'user put');
-  models.profiles.then(() => res.send(204)).catch(next);
+  models.profiles
+    .updateProfile({ ...req.body, id: req.body.id })
+    .then((profile) => res.send(profile))
+    .catch(next);
 });
 app.post('/api/users/zipCode', (req, res, next) => {
   models.profiles
