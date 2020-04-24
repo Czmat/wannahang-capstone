@@ -4,6 +4,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 const CreateEventWithInvite = ({
+  users,
   auth,
   setAuth,
   setEvents,
@@ -19,12 +20,15 @@ const CreateEventWithInvite = ({
     date: moment().format('YYYY-MM-DDTHH:mm'),
     location: '',
     description: '',
-    isPublic: true,
+    isPublic: false,
     userId: auth.id,
   });
+
+  const userToInvite = users.find((user) => user.username === 'moe');
+  console.log(userToInvite);
   //once event is created go to a specific page
   const history = useHistory();
-  const goToFreinds = () => history.push('/friends');
+  const goToFreinds = () => history.push('/search/results');
 
   const onChange = (ev) => {
     const change = {};
@@ -39,13 +43,13 @@ const CreateEventWithInvite = ({
       const newEvent = response.data;
       setEvent(response.data);
       const createUserEvent = {
-        joinedUserId: '', //invitee.id,
+        joinedUserId: userToInvite.id, //this needs to be changed to the user that erica gives me
         eventId: newEvent.id,
         status: 'invited',
       };
       if (isInvited) {
         axios.post(`/api/user_events`, createUserEvent).then((response) => {
-          console.log(response.data);
+          console.log(response.data, 'user ivent created');
         });
       }
     });
@@ -57,13 +61,15 @@ const CreateEventWithInvite = ({
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    console.log(event, 'event');
+    //console.log(event, 'event');
     createEvent(event);
+    //need to have page working
+    //goToFreinds();
   };
-  console.log(isInvited, 'isInvited');
+  //console.log(isInvited, 'isInvited');
   return (
     <div className="container-sm">
-      <h1>Create Event with Invite</h1>
+      <h1>Create Event with Private Invite</h1>
       <form className="w-50" onSubmit={onSubmit}>
         <div className="row form-group">
           <div className="col">
@@ -109,7 +115,7 @@ const CreateEventWithInvite = ({
             onChange={onChange}
           ></textarea>
         </div>
-        <div className="custom-control custom-checkbox my-1 mr-sm-2">
+        {/* <div className="custom-control custom-checkbox my-1 mr-sm-2">
           <input
             type="checkbox"
             className="custom-control-input"
@@ -121,7 +127,7 @@ const CreateEventWithInvite = ({
           <label className="custom-control-label" htmlFor="customControlInline">
             Make it public
           </label>
-        </div>
+        </div> */}
         <div className="custom-control custom-checkbox my-1 mr-sm-2">
           <input
             type="checkbox"
@@ -137,10 +143,8 @@ const CreateEventWithInvite = ({
           </label>
         </div>
         <button
-          //type="button"
           className="btn btn-primary"
-          // data-toggle="modal"
-          // data-target="#exampleModal"
+          disabled={!event.name || !event.location}
         >
           Create Event
         </button>

@@ -30,14 +30,6 @@ export default function InvitationDetail({ inviteDetail, setInviteDetail }) {
           <p className="card-text">Detail: {inviteDetail.description}</p>
           <p className="card-text">
             Invited by{' '}
-            {/* <button
-              type="button"
-              className="card-link"
-              data-toggle="modal"
-              data-target="#exampleModalCenter"
-            >
-              {inviteDetail.username}
-            </button> */}
             <Link
               to="/invites"
               data-toggle="modal"

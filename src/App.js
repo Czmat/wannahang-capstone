@@ -161,15 +161,15 @@ const App = () => {
           <Route path="/UserInfo">
             <UserInfo auth={auth} login={login} />
           </Route>
-          <Route path="/search/criteria">
+          {/* <Route path="/search/criteria">
             <SearchCriteria auth={auth} />
-          </Route>
+          </Route> */}
           <Route path="/search/results">
             <SearchResults auth={auth} users={users} />
           </Route>
-          <Route path="/search/filter">
+          {/* <Route path="/search/filter">
             <SearchFilter auth={auth} />
-          </Route>
+          </Route> */}
           <Route path="/UserHobbies">
             <UserHobbies auth={auth} />
           </Route>
@@ -228,6 +228,7 @@ const App = () => {
           </Route>
           <Route path="/create/invite/event">
             <CreateEventWithInvite
+              users={users}
               auth={auth}
               setAuth={setAuth}
               setEvents={setEvents}

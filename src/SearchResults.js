@@ -123,6 +123,9 @@ const SearchResults = ({ auth }) => {
                   <h5 className="card-title">
                     {getUsername(userProfile.userId)}
                   </h5>
+                  <p className="card-text">
+                    Age {findAge(userProfile.birthdate)}{" "}
+                  </p>
                   <button
                     type="button"
                     id="heart"
