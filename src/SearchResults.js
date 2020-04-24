@@ -13,6 +13,26 @@ const SearchResults = ({ auth }) => {
 
   //const usersId = auth.id;
 
+  console.log(favorite);
+  // let fave = favorites.data.find(({ userId }) => userId === favoriteId);
+  // console.log(fave);
+
+  const findFave = (friendId) => {
+    console.log('FI', friendId);
+    // for (let i = 0; i <= favorite.length; i++) {
+    //   if (favorite[i].userId === friendId) {
+    //     console.log("UF", favorites[i]);
+    //   }
+    // }
+    const userFave = favorite.find((fave) => fave.userId === friendId);
+    console.log('UF', userFave);
+  };
+
+  // const redHeart = () => {
+  //   // document.getElementsByClassName("gray")[0].style.backgroundColor = "red";
+  //   document.getElementById("heart").style.backgroundColor = "red";
+  //   //  = favorites.find(findFave);
+  // };
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
@@ -92,7 +112,9 @@ const SearchResults = ({ auth }) => {
       .post('/api/createFavorite', fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
-
+  useEffect(() => {
+    axios.get('/api/favorites').then((response) => setFavorite(response.data));
+  }, []);
   const onSubmit = (fav) => {
     const user1 = auth.id;
     const user2 = fav;
@@ -102,24 +124,10 @@ const SearchResults = ({ auth }) => {
     };
     saveAsFavorite(faveUser);
   };
-  function myFunction(x) {
-    x.classList.toggle('fa fa-heart');
-  }
-  // function setColor(button, color) {
-  //   let count = 1;
-  //   let property = document.getElementById("heart");
-  //   if (count == 0) {
-  //     property.style.backgroundColor = "gray";
-  //     count = 1;
-  //   } else {
-  //     property.style.backgroundColor = "red";
-  //     count = 0;
-  //   }
+  // function myFunction(x) {
+  //   x.classList.toggle("fa fa-heart");
   // }
 
-  // if (users) {
-  //   console.log('nice');
-  // }
   return (
     <div className="container">
       {/* <i onclick="myFunction(this)" className="fa fa-thumbs-up"></i> */}
@@ -138,6 +146,7 @@ const SearchResults = ({ auth }) => {
           // console.log(userProfile.userId, 'username');
           //console.log(profilePic, 'profile pic');
 
+          console.log('ID', userProfile.userId);
           return (
             <div key={userProfile.id} className="col-sm-4">
               <div className="card profile-card">
@@ -158,8 +167,8 @@ const SearchResults = ({ auth }) => {
                   <button
                     type="button"
                     id="heart"
-                    className="fas fa-heart"
-                    // onClick={myFunction}
+                    className="fas fa-heart gray"
+                    onClick={(e) => findFave(userProfile.userId)}
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
                     data-dismiss="modal"
