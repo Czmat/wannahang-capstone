@@ -35,12 +35,6 @@ const Nav = ({ params, logout, auth, login }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarText">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item active">
-            <Link className="nav-link" to="/#">
-              Home <span className="sr-only">(current)</span>
-            </Link>
-          </li>
-
           <li className="nav-item dropdown">
             <Link
               to="/userinfo"
@@ -189,7 +183,7 @@ const Nav = ({ params, logout, auth, login }) => {
             </div>
           </li>
         </ul>
-        <i class="fas fa-envelope-open-text"></i>
+        <i className="fas fa-envelope-open-text fa-lg"></i>
 
         <form className="form-inline my-2 my-lg-0">
           <Link
