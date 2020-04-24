@@ -45,34 +45,12 @@ h3 {
   cursor: pointer;
   user-select: none;
 }
-/* unvisited link */
-.fa:link {
-  color: green;
-}
-
-/* visited link */
 .fa:visited {
-  color: red;
-}
-/* .far:hover {
-  color: red;
-} */
-/* unvisited link */
-.far:link {
   color: green;
 }
-
-/* visited link */
-.far:visited {
-  color: red;
+.fa:hover {
+  color: darkblue;
 }
-
-/* mouse over link */
-.far:hover {
-  color: red;
-}
-
-/* selected link */
-.far:active {
-  color: yellow;
+.fa-envelope-open-text {
+  margin-right: 15px;
 }
