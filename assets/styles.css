@@ -54,3 +54,9 @@ h3 {
 .fa-envelope-open-text {
   margin-right: 15px;
 }
+.gray {
+  color: gray;
+}
+.red {
+  color: red;
+}
