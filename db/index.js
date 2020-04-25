@@ -595,7 +595,7 @@ const sync = async () => {
     .findUserId('curly')
     .then((response) => response.id);
   const larryid = await users
-    .findUserId('lucy')
+    .findUserId('larry')
     .then((response) => response.id);
   const shempid = await users
     .findUserId('shemp')

@@ -241,7 +241,48 @@ app.post('/api/search/employment_status', (req, res, next) => {
     .then((users) => res.send(users))
     .catch(next);
 });
-
+app.post('/api/search/career', (req, res, next) => {
+  models.searches
+    .searchUsersByCareer(req.body.careerid)
+    .then((users) => res.send(users))
+    .catch(next);
+});
+app.post('/api/search/pets', (req, res, next) => {
+  models.searches
+    .searchUsersByPets(req.body.pets)
+    .then((users) => res.send(users))
+    .catch(next);
+});
+app.post('/api/search/age', (req, res, next) => {
+  models.searches
+    .searchUsersByAge(req.body.birthdate)
+    .then((users) => res.send(users))
+    .catch(next);
+});
+app.post('/api/search/gender', (req, res, next) => {
+  models.searches
+    .searchUsersByGender(req.body.gender)
+    .then((users) => res.send(users))
+    .catch(next);
+});
+app.post('/api/search/politics', (req, res, next) => {
+  models.searches
+    .searchUsersByPoliticalAffiliation(req.body.politicalaffiliation)
+    .then((users) => res.send(users))
+    .catch(next);
+});
+app.post('/api/search/religion', (req, res, next) => {
+  models.searches
+    .searchUsersByReligiousAffiliation(req.body.religiousaffiliation)
+    .then((users) => res.send(users))
+    .catch(next);
+});
+app.post('/api/search/hobbies', (req, res, next) => {
+  models.searches
+    .searchUsersByHobbies(req.body.hobby_name)
+    .then((users) => res.send(users))
+    .catch(next);
+});
 app.get('/api/political_parties', (req, res, next) => {
   db.readPoliticalParties()
     .then((party) => res.send(party))
