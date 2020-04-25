@@ -14,7 +14,7 @@ const SearchResults = ({ auth }) => {
 
   const usersId = auth.id;
 
-  console.log(favorite);
+  // console.log(favorite);
   // let fave = favorites.data.find(({ userId }) => userId === favoriteId);
   // console.log(fave);
 

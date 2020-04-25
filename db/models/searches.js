@@ -1,13 +1,5 @@
 const client = require('../client');
 
-const searchZipCode = async ({ criteria }) => {
-  const SQL = `SELECT users.username FROM user_profiles
-  JOIN users ON user_profiles."userId" = users.id
-  WHERE zipCode = ($1)`;
-  const response = await client.query(SQL, [criteria.zipCode]);
-  return response.rows;
-};
-
 const searchPerfectMatch = async (criteria) => {
   const SQL = `SELECT users.username FROM user_profiles 
   JOIN users ON user_profiles."userId" = users.id
@@ -67,6 +59,13 @@ const searchEmploymentStatus = async (employmentStatus) => {
   const SQL = `SELECT users.username FROM user_profiles 
   JOIN users ON user_profiles."userId" = users.id
   WHERE status_name = $1 returning *`;
+  return (await client.query(SQL, [employmentStatus.employmentstatus])).rows[0];
+};
+
+const searchUsersByEmploymentStatus = async (employmentStatus) => {
+  const SQL = `SELECT users.username FROM user_profiles 
+  JOIN users ON user_profiles."userId" = users.id
+  WHERE employmentstatus = $1`;
   return (await client.query(SQL, [employmentStatus])).rows[0];
 };
 
@@ -105,7 +104,6 @@ const createUserSearchCriteria = async (searchCriteria) => {
   ).rows[0];
 };
 module.exports = {
-  searchZipCode,
   searchPerfectMatch,
   searchCareer,
   searchPets,
@@ -116,4 +114,5 @@ module.exports = {
   searchReligiousAffiliation,
   searchAgeRange,
   createUserSearchCriteria,
+  searchUsersByEmploymentStatus,
 };

@@ -234,6 +234,14 @@ app.get('/api/employment_status', (req, res, next) => {
     .then((employ) => res.send(employ))
     .catch(next);
 });
+
+app.post('/api/search/employment_status', (req, res, next) => {
+  models.searches
+    .searchUsersByEmploymentStatus(req.body.employmentstatus)
+    .then((users) => res.send(users))
+    .catch(next);
+});
+
 app.get('/api/political_parties', (req, res, next) => {
   db.readPoliticalParties()
     .then((party) => res.send(party))
