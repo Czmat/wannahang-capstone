@@ -58,9 +58,8 @@ const UserInfo = ({ login, auth }) => {
     axios.post("/api/createProfile", profile).then((response) => {
       console.log("USERINFO", response);
       console.log("USER", profile);
-      // login({ email, password }).catch((ex) =>
-      setError(ex.response.data.message);
-      // );
+      // .catch((ex) =>
+      // setError(ex.response.data.message))
     });
   };
 
@@ -88,11 +87,19 @@ const UserInfo = ({ login, auth }) => {
 
   return (
     <div className="container">
-      <h3>Tell Us All About You</h3>
+      <h3>
+        Tell Us All About You <br />
+        <span className="smallType">
+          <span className="red">*</span> Items Are Required
+        </span>
+      </h3>
+
       <form onSubmit={onSubmit}>
         <div className="row">
           <div className="col">
-            <label htmlFor="zipCode">Where do you live?</label>
+            <label htmlFor="zipCode">
+              Where do you live? <span className="red">*</span>
+            </label>
             <br />
             <input
               placeholder=" -- enter zip code --"
@@ -124,7 +131,9 @@ const UserInfo = ({ login, auth }) => {
         </div>
         <div className="row  mt-3">
           <div className="col">
-            <label htmlFor="career">What is your occupation?</label>
+            <label htmlFor="career">
+              What is your occupation? <span className="red">*</span>
+            </label>
             <select
               className="form-control"
               id="career"
@@ -181,7 +190,10 @@ const UserInfo = ({ login, auth }) => {
         </div>
         <div className="row">
           <div className="col">
-            <label htmlFor="birthdate">When is your birthday?</label>
+            <label htmlFor="birthdate">
+              When is your birthday? <span className="red">*</span>{" "}
+              <span className="smallType">(Must be 18 and older)</span>
+            </label>
             <input
               className="form-control"
               type="date"
