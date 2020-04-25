@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { Player } from "video-react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import qs from "qs";
+import React from "react";
 
 const Chat = () => {
   return <div></div>;

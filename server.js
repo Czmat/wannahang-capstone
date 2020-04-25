@@ -4,7 +4,7 @@ const path = require("path");
 const db = require("./db");
 const app = require("./app");
 
-const port = process.env.PORT || 3090;
+const port = process.env.PORT || 3080;
 
 db.sync().then(() => {
   app.listen(port, () => {
