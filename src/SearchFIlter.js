@@ -53,6 +53,7 @@ const SearchFIlter = ({ auth }) => {
   const userPolitics = profile.politicalaffiliation;
   const userReligion = profile.religiousaffiliation;
   const userOccupation = getCareerName(profile.careerid);
+  const userBirthday = profile.birthdate;
 
   const searchCriteria = (input) => {
     setFilter(...filter, input);
@@ -71,7 +72,7 @@ const SearchFIlter = ({ auth }) => {
             setFilteredProfiles([response.data, ...filteredProfiles])
           );
         break;
-      case userAge:
+      case userBirthday:
         axios
           .post('/api/search/age', { birthdate: input })
           .then((response) =>
@@ -104,13 +105,7 @@ const SearchFIlter = ({ auth }) => {
         axios
           .post('/api/search/employment_status', { employmentstatus: input })
           .then((response) => {
-            setFilteredProfiles([response.data, ...filteredProfiles]);
-            // setFilteredProfiles([...filteredProfiles, response.data]);
-            // setFilteredProfiles(...filteredProfiles, {
-            //   username: response.data.username,
-            // });
-            // setFilteredProfiles(response.data);
-            // setFilteredProfiles([response.data]);
+            setFilteredProfiles([...filteredProfiles, response.data]);
             console.log('resp', response.data);
           });
         console.log('filtered?', filteredProfiles);
@@ -161,7 +156,7 @@ const SearchFIlter = ({ auth }) => {
                 Employment Status
               </option>
               <option value={profile.pets}>Pets </option>
-              {/* <option value="age">Age(DNU)</option> */}
+              <option value={userBirthday}>Age</option>
               <option value={profile.gender}>Gender</option>
               <option value={profile.politicalaffiliation}>
                 Political affiliation
@@ -169,7 +164,6 @@ const SearchFIlter = ({ auth }) => {
               <option value={profile.religiousaffiliation}>
                 Religious affiliation
               </option>
-              {/* <option value="hobbies">Hobbies(DNU)</option> */}
             </select>
           </div>
           <button type="submit">Submit</button>
