@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const SearchResults = ({ auth }) => {
   const [users, setUsers] = useState([]);
@@ -9,22 +9,23 @@ const SearchResults = ({ auth }) => {
   const [photos, setPhotos] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
+  //console.log(users, 'users', careers);
 
-  const usersId = auth.id;
+  //const usersId = auth.id;
 
   console.log(favorite);
   // let fave = favorites.data.find(({ userId }) => userId === favoriteId);
   // console.log(fave);
 
   const findFave = (friendId) => {
-    console.log("FI", friendId);
+    console.log('FI', friendId);
     // for (let i = 0; i <= favorite.length; i++) {
     //   if (favorite[i].userId === friendId) {
     //     console.log("UF", favorites[i]);
     //   }
     // }
     const userFave = favorite.find((fave) => fave.userId === friendId);
-    console.log("UF", userFave);
+    console.log('UF', userFave);
   };
 
   // const redHeart = () => {
@@ -33,39 +34,55 @@ const SearchResults = ({ auth }) => {
   //   //  = favorites.find(findFave);
   // };
   useEffect(() => {
+    axios.get('/api/users').then((response) => setUsers(response.data));
+
+    axios.get('/api/photos').then((response) => setPhotos(response.data));
     // gets zip code of current user
-    axios
-      .get("/api/profiles")
-      .then((response) =>
-        setProfile(response.data.find(({ userId }) => userId === auth.id))
+    axios.get('/api/profiles').then((response) => {
+      const findProfile = response.data.find(
+        ({ userId }) => userId === auth.id
       );
-  }, []);
-  const userZip = profile.zipcode;
-  useEffect(() => {
-    // find userids of profiles with same zip code
-    axios.get("/api/profiles").then((response) => setProfiles(response.data));
+      setProfile(findProfile);
+      setProfiles(response.data);
+    });
+    axios.get('/api/careers').then((response) => setCareers(response.data));
   }, []);
 
+  const userZip = profile.zipcode;
+
+  // useEffect(() => {
+  //   axios.get('/api/careers').then((response) => setCareers(response.data));
+  // }, []);
+
+  // useEffect(() => {
+  //   // find userids of profiles with same zip code
+  //   axios.get('/api/profiles').then((response) => setProfiles(response.data));
+  // }, []);
+
+  //need to rename this to userProfilesInZip
   const userProfiles = profiles.filter(
     (p) => p.zipcode === userZip && p.userId !== auth.id
   );
 
-  useEffect(() => {
-    axios.get("/api/users").then((response) => setUsers(response.data));
-  }, []);
+  // console.log(
+  //   profile,
+  //   'profile',
+  //   userZip,
+  //   'user zip',
+  //   userProfiles,
+  //   'user profiles'
+  // );
 
   const getUsername = (id) => {
     const user = users.find((u) => u.id === id);
     return user.username;
   };
-
-  useEffect(() => {
-    axios.get("/api/careers").then((response) => setCareers(response.data));
-  }, []);
-
+  //console.log(getUsername())
   const getCareerName = (cid) => {
     const career = careers.find((c) => c.id === cid);
-    return career.career_name;
+    if (career) {
+      return career.career_name;
+    }
   };
 
   const findAge = (birthday) => {
@@ -79,28 +96,27 @@ const SearchResults = ({ auth }) => {
     return age;
   };
 
-  useEffect(() => {
-    axios.get("/api/photos").then((response) => setPhotos(response.data));
-  }, []);
-
   const getProfilePic = (friendId) => {
+    // if (photos) {
     const profilePic = photos.find((photo) => photo.userId === friendId);
-    const filename = profilePic.filename;
-    const filepath = profilePic.filepath;
-    const src = filepath + "/" + filename;
-    return src;
+    if (profilePic) {
+      const filename = profilePic.filename;
+      const filepath = profilePic.filepath;
+      const src = filepath + '/' + filename;
+      return src;
+    }
   };
 
   const saveAsFavorite = async (fave) => {
     await axios
-      .post("/api/createFavorite", fave)
+      .post('/api/createFavorite', fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
   useEffect(() => {
-    axios.get("/api/favorites").then((response) => setFavorite(response.data));
+    axios.get('/api/favorites').then((response) => setFavorite(response.data));
   }, []);
   const onSubmit = (fav) => {
-    const user1 = usersId;
+    const user1 = auth.id;
     const user2 = fav;
     const faveUser = {
       userId: user1,
@@ -114,14 +130,23 @@ const SearchResults = ({ auth }) => {
 
   return (
     <div className="container">
-      {/* <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i> */}
+      {/* <i onclick="myFunction(this)" className="fa fa-thumbs-up"></i> */}
       <h3>
-        Future Friends Nearby (There are {userProfiles.length} in your zip:{" "}
+        Future Friends Nearby (There are {userProfiles.length} in your zip:{' '}
         {userZip} )
       </h3>
       <div className="row">
         {userProfiles.map((userProfile) => {
-          console.log("ID", userProfile.userId);
+          // const use = users.find((u) => u.id === userProfile.userId);
+
+          // const profilePic = photos.find(
+          //   (photo) => photo.userId === userProfile.userId
+          // );
+
+          // console.log(userProfile.userId, 'username');
+          //console.log(profilePic, 'profile pic');
+
+          console.log('ID', userProfile.userId);
           return (
             <div key={userProfile.id} className="col-sm-4">
               <div className="card profile-card">
@@ -137,7 +162,7 @@ const SearchResults = ({ auth }) => {
                     {getUsername(userProfile.userId)}
                   </h5>
                   <p className="card-text">
-                    Age {findAge(userProfile.birthdate)}{" "}
+                    Age {findAge(userProfile.birthdate)}{' '}
                   </p>
                   <button
                     type="button"
@@ -148,11 +173,11 @@ const SearchResults = ({ auth }) => {
                     data-target="#exampleModalCenter"
                     data-dismiss="modal"
                   >
-                    {" "}
+                    {' '}
                     Friend
                   </button>
                   <p className="card-text">
-                    Age {findAge(userProfile.birthdate)}{" "}
+                    Age {findAge(userProfile.birthdate)}{' '}
                   </p>
 
                   {/* <a href="#" className="btn btn-primary">
@@ -190,7 +215,7 @@ const SearchResults = ({ auth }) => {
                           </button>
                         </div>
                         <div className="modal-body">
-                          {getUsername(userProfile.userId)}
+                          {/* {getUsername(userProfile.userId)} */}
                         </div>
                         <div className="modal-footer">
                           <button
