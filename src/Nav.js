@@ -18,9 +18,9 @@ import Home from "./Home";
 
 const Nav = ({ params, logout, auth, login }) => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link className="navbar-brand" to="/#">
-        <h1>WannaHang</h1>
+    <nav className="navbar navbar-expand-lg bg-dark">
+      <Link className="navbar-brand nav-link" to="/home">
+        <h2 className="logo-word">WannaHang</h2>
       </Link>
       <button
         className="navbar-toggler"
@@ -38,7 +38,7 @@ const Nav = ({ params, logout, auth, login }) => {
           <li className="nav-item dropdown">
             <Link
               to="/userinfo"
-              className="nav-link dropdown-toggle"
+              className="nav-link dropdown-toggle links-nav"
               // href="#"
               id="navbarDropdown"
               role="button"
@@ -77,7 +77,7 @@ const Nav = ({ params, logout, auth, login }) => {
           <li className="nav-item dropdown">
             <Link
               to="/userinfo"
-              className="nav-link dropdown-toggle"
+              className="nav-link dropdown-toggle links-nav"
               // href="#"
               id="navbarDropdown"
               role="button"
@@ -88,11 +88,11 @@ const Nav = ({ params, logout, auth, login }) => {
               My User Settings
             </Link>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link className="nav-link" to="/useraccount">
                   Account Settings
                 </Link>
-              </div>
+              </div> */}
               <div className="nav-item">
                 <Link
                   className="nav-link"
@@ -188,11 +188,13 @@ const Nav = ({ params, logout, auth, login }) => {
         <form className="form-inline my-2 my-lg-0">
           <Link
             to="/login"
-            className="btn btn-outline-success my-2 my-sm-0"
+            className="btn btn-primary btn-sm"
             type="button"
             onClick={logout}
           >
-            Logout {auth.firstname} {auth.lastname}
+            <span className="btn-nav">
+              Logout {auth.firstname} {auth.lastname}
+            </span>
           </Link>
         </form>
       </div>
