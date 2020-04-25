@@ -36,8 +36,10 @@ const UserProfile = ({ logout, auth, params }) => {
   }
 
   console.log("photo", photo);
-  // console.log("profile", profile);
+  let birthday = moment(profile.birthdate).format("MMMM Do YYYY");
 
+  // let birth = profile.birthdate;
+  // let birthday = DATE_FORMAT(birthdate, "%M %e, %Y");
   return (
     <div className="container">
       <h3 className="userName">
@@ -108,7 +110,12 @@ const UserProfile = ({ logout, auth, params }) => {
             </li>
             <li className="list-group-item">Education: {profile.education}</li>
             <li className="list-group-item">Pets: {profile.pets}</li>
-            <li className="list-group-item">Birthdate: {profile.birthdate}</li>
+
+            {/* <li className="list-group-item">
+              Birthdate: {DATE_FORMAT(profile.birthdate, "%M %e, %Y")}
+            </li> */}
+
+            <li className="list-group-item">Birthdate: {birthday}</li>
             <li className="list-group-item">Zipcode: {profile.zipcode}</li>
             <li className="list-group-item">
               Employment Status: {profile.employmentstatus}

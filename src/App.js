@@ -7,7 +7,7 @@ import FileUpload from "./components/FileUpload";
 import Nav from "./Nav";
 import NavTop from "./NavTop";
 import CreateNewUser from "./components/User/CreateNewUser";
-import Header from "./components/header/Header";
+//import Header from "./components/header/Header";
 import UserInfo from "./UserInfo";
 import UserHobbies from "./UserHobbies";
 import UserAccount from "./components/User/UserAccount";
@@ -23,7 +23,7 @@ import UserProfile from "./UserProfile";
 import SearchResults from "./SearchResults";
 import EventDetail from "./components/Event/EventDetatil";
 import UserProfileEdit from "./UserProfileEdit";
-import SearchFilter from "./SearchFilter";
+import SearchFIlter from "./SearchFIlter";
 import Invitations from "./components/Invites/Invitations";
 import CreateEventWithInvite from "./components/Event/CreateEventWithInvite";
 import Home from "./Home";
@@ -129,7 +129,7 @@ const App = () => {
   if (!auth.id) {
     return (
       <Router>
-        <Header logout={logout} />
+        {/* <Header logout={logout} /> */}
         <Switch>
           <Route path="/register" exact>
             <CreateNewUser login={login} />
@@ -145,7 +145,6 @@ const App = () => {
     return (
       <Router>
         <NavTop logout={logout} auth={auth} />
-
         <Nav logout={logout} auth={auth} />
         <Switch>
           <Route path="/file/upload" exact>
@@ -175,7 +174,7 @@ const App = () => {
             <SearchResults auth={auth} users={users} />
           </Route>
           <Route path="/search/filter">
-            <SearchFilter auth={auth} />
+            <SearchFIlter auth={auth} />
           </Route>
           <Route path="/UserHobbies">
             <UserHobbies auth={auth} />

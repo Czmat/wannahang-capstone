@@ -97,7 +97,7 @@ const FileUpload = ({ auth, params }) => {
           </div>
           <div className="overlay"></div>
           <div className="header-content text-md-center">
-            <p>
+            <span>
               <div className="container">
                 <h4 className="display-4 text-center mb-4 welcome">
                   Welcome, {auth.firstname}!
@@ -146,7 +146,7 @@ const FileUpload = ({ auth, params }) => {
                   </Link>
                 </div>
               </div>
-            </p>
+            </span>
           </div>
         </header>
 

@@ -1,8 +1,22 @@
-const client = require('../client');
+const client = require("../client");
+
+// const readProfiles = async () => {
+//   return (await client.query("SELECT * from user_profiles")).rows;
+// };
 
 const readProfiles = async () => {
-  return (await client.query('SELECT * from user_profiles')).rows;
+  return (
+    await client.query(
+      "SELECT userId, gender, politicalAffiliation, religiousAffiliation, careerId, education, pets, DATE_FORMAT(birth_date, '%M %e, %Y'), zipCode, employmentStatus, about FROM user_profiles"
+    )
+  ).rows;
 };
+
+// const readProfiles = async () => {
+//     return (await client.query('SELECT
+//     "userId", gender, politicalAffiliation, religiousAffiliation, careerId, education, pets, (DATE_FORMAT(birthdate, '%M %e, %Y')), zipCode, employmentStatus, about from user_profiles')).rows;
+//   }
+
 const createProfile = async (user_profiles) => {
   const SQL = `INSERT INTO user_profiles("userId", gender, politicalAffiliation, religiousAffiliation, careerId, education, pets, birthdate, zipCode, employmentStatus, about)
         values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) returning *`;

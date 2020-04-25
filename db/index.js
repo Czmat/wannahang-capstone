@@ -154,9 +154,9 @@ const sync = async () => {
     education VARCHAR(100),
     pets VARCHAR(100),
     birthdate DATE,
-    zipCode VARCHAR(10),
+    zipCode VARCHAR(10) NOT NULL,
     employmentStatus VARCHAR(100),
-    about VARCHAR(250),
+    about VARCHAR(500),
     communicationPreference VARCHAR(5)
   );
 
