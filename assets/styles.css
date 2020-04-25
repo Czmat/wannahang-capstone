@@ -133,7 +133,7 @@ body {
   left: 0;
   width: 100vw;
   z-index: 1;
-  background: #225470;
+  background: #668699;
   opacity: 0.85;
 }
 
@@ -195,9 +195,12 @@ body {
 .navbar {
   padding-top: 3px;
   padding-bottom: 3px;
+  margin-top: 0;
 }
 
 .top-nav-bkgd {
+  margin-bottom: 0;
+
   background: rgb(34, 193, 195);
   background: linear-gradient(
     135deg,
@@ -231,4 +234,9 @@ a.links-nav:hover {
 }
 .welcome {
   font-size: 2rem;
+}
+.medium-type {
+  font-size: 0.6rem;
+  margin-top: 10px;
+  color: white;
 }

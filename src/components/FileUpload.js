@@ -11,7 +11,9 @@ const FileUpload = ({ auth, params }) => {
   const [uploadedFile, setUploadedFile] = useState({});
   const [message, setMessage] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
-  const [page, setPage] = useState("Skip This Step");
+  const [page, setPage] = useState(
+    <p className="medium-type">Skip This Step</p>
+  );
 
   // console.log("AUTH", auth.id);
   let userId = auth.id;
@@ -55,7 +57,7 @@ const FileUpload = ({ auth, params }) => {
       setUploadedFile({ fileName, filePath });
       // console.log("filePath", filePath);
       setMessage("File Uploaded");
-      setPage("Next Page");
+      setPage(<p className="medium-type">Next Page</p>);
       createUserPhoto({
         fileName,
         filePath,

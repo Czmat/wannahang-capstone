@@ -88,11 +88,11 @@ const Nav = ({ params, logout, auth, login }) => {
               My User Settings
             </Link>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link className="nav-link" to="/useraccount">
                   Account Settings
                 </Link>
-              </div>
+              </div> */}
               <div className="nav-item">
                 <Link
                   className="nav-link"
