@@ -170,7 +170,7 @@ const App = () => {
           {/* <Route path="/search/criteria">
             <SearchCriteria auth={auth} />
           </Route> */}
-          <Route path="/search/results">
+          <Route path="/peeps">
             <SearchResults auth={auth} users={users} />
           </Route>
           {/* <Route path="/search/filter">
