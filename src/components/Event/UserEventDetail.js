@@ -5,7 +5,7 @@ import moment from 'moment';
 import FavButton from './FavButton';
 import DeclineAcceptanceButton from './eventButtons/DeclineAcceptanceButton';
 import InviteButton from './InviteButton';
-import UnInviteButton from './eventButtons/UninviteButton';
+import UnInviteButton from './eventButtons/UnInviteButton';
 import EditEventButton from './eventButtons/EditEventButton';
 import EditEventDetail from './EditEventDetail';
 

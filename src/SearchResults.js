@@ -9,13 +9,18 @@ const SearchResults = ({ auth }) => {
   const [photos, setPhotos] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
+  const [userToBeInvited, setuserToBeInvited] = useState([]);
   //console.log(users, 'users', careers);
 
   //const usersId = auth.id;
 
-  console.log(favorite);
+  // console.log(favorite);
   // let fave = favorites.data.find(({ userId }) => userId === favoriteId);
   // console.log(fave);
+
+  const inviteUser = (userid) => {
+    setuserToBeInvited(...userToBeInvited, userid);
+  };
 
   const findFave = (friendId) => {
     console.log('FI', friendId);
@@ -85,6 +90,27 @@ const SearchResults = ({ auth }) => {
     if (career) {
       return career.career_name;
     }
+  };
+  useEffect(() => {
+    axios
+      .get('/api/user_hobbies')
+      .then((response) => setUsersHobbies(response.data));
+  }, []);
+
+  useEffect(() => {
+    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
+  }, []);
+
+  const getUserHobbies = (uid) => {
+    console.log('uh', usersHobbies);
+    const uHobs = usersHobbies.find((h) => h.user_id === uid);
+    return uHobs;
+  };
+
+  const getHobbyName = (hobbyId) => {
+    console.log('hobbyid', hobbyId);
+    const hobNm = hobbies.find((b) => b.id === hobbyId.hobby_id);
+    return hobNm.hobby_name;
   };
 
   const findAge = (birthday) => {
@@ -181,9 +207,9 @@ const SearchResults = ({ auth }) => {
                       {' '}
                       Friend
                     </button>
-                    <p className="card-text">
+                    {/* <p className="card-text">
                       Age {findAge(userProfile.birthdate)}{' '}
-                    </p>
+                    </p> */}
 
                     {/* <a href="#" className="btn btn-primary">
                     Go somewhere
@@ -250,7 +276,13 @@ const SearchResults = ({ auth }) => {
                     >
                       View details
                     </button>
-
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => inviteUser(userProfile.userId)}
+                    >
+                      Invite user
+                    </button>
                     <div
                       className="modal fade"
                       id="exampleModalCenter2"
@@ -310,6 +342,14 @@ const SearchResults = ({ auth }) => {
                               data-dismiss="modal"
                             >
                               Save as favorite?
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => inviteUser(userProfile.userId)}
+                              data-dismiss="modal"
+                            >
+                              Invite user
                             </button>
                           </div>
                         </div>
