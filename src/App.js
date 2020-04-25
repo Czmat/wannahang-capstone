@@ -46,6 +46,7 @@ const App = () => {
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
+  const [userProfiles, setUserProfiles] = useState([]);
   const [userEvents, setUserEvents] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState([]);
   const [userToBeInvited, setuserToBeInvited] = useState([]);
@@ -101,6 +102,12 @@ const App = () => {
   //     });
   //   }
   // }, [auth]);
+
+  useEffect(() => {
+    axios
+      .get('/api/profiles')
+      .then((response) => setUserProfiles(response.data));
+  }, []);
 
   useEffect(() => {
     if (auth.id) {
@@ -175,7 +182,7 @@ const App = () => {
             <SearchResults auth={auth} users={users} />
           </Route>
           <Route path="/search/filter">
-            <SearchFIlter auth={auth} />
+            <SearchFIlter auth={auth} userProfiles={userProfiles} />
           </Route>
           <Route path="/UserHobbies">
             <UserHobbies auth={auth} />

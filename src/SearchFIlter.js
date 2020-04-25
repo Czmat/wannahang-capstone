@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SearchFIlter = ({ auth }) => {
+const SearchFIlter = ({ auth, userProfiles }) => {
   const [filter, setFilter] = useState('');
   const [hobbyFilter, setHobbyFilter] = useState('');
   const [hobbies, setHobbies] = useState([]);
@@ -10,6 +10,7 @@ const SearchFIlter = ({ auth }) => {
   const [profile, setProfile] = useState([]);
   const [profiles, setProfiles] = useState([]);
   const [careers, setCareers] = useState([]);
+  const [allProfiles, setAllProfiles] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState([]);
 
   useEffect(() => {
@@ -44,6 +45,13 @@ const SearchFIlter = ({ auth }) => {
       age--;
     }
     return age;
+  };
+
+  const getUsername = (id) => {
+    const user = users.find((u) => u.id === id);
+    if (user) {
+      return user.username;
+    }
   };
 
   const userEmployment = profile.employmentstatus;
@@ -193,13 +201,14 @@ const SearchFIlter = ({ auth }) => {
         </form>
       </div>
       <div>
-        {/* <div>
+        <div>
+          <h4>All users</h4>
           <ul>
-            {filteredProfiles.map((filteredProfile) => {
-              return <li key={filteredProfile.length}>{filteredProfile}</li>;
+            {userProfiles.map((prof) => {
+              return <li key={prof.id}>{getUsername(prof.userId)}</li>;
             })}
           </ul>
-        </div> */}
+        </div>
       </div>
     </div>
   );
