@@ -10,6 +10,9 @@ const SearchFIlter = ({ auth }) => {
   const [profiles, setProfiles] = useState([]);
   const [careers, setCareers] = useState([]);
 
+  //console.log(profile);
+  //console.log(filter, 'filter');
+
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
@@ -27,6 +30,7 @@ const SearchFIlter = ({ auth }) => {
 
   const getCareerName = (cid) => {
     const career = careers.find((c) => c.id === cid);
+    // console.log(cid, 'cid', career);
     if (career) {
       return career.career_name;
     }
@@ -52,71 +56,65 @@ const SearchFIlter = ({ auth }) => {
   const userOccupation = getCareerName(profile.careerid);
 
   const searchCriteria = (input) => {
-    setFilter(...filter, input);
+    //setFilter(...filter, input);
     switch (filter) {
       case userOccupation:
+        console.log('input in occup', input);
         axios
           .post('/api/search/career', { careerid: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => {
+            console.log(response.data, 'occup data back');
+            setFilteredProfiles(response.data);
+          });
         break;
       case userGender:
         axios
           .post('/api/search/gender', { gender: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userAge:
         axios
           .post('/api/search/age', { birthdate: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userPets:
         axios
           .post('/api/search/pets', { pets: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userReligion:
         axios
           .post('/api/search/religion', { religiousaffiliation: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userPolitics:
         axios
           .post('/api/search/politics', { politicalaffiliation: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userEmployment:
-        console.log('input', input);
+        // console.log('input', input);
         axios
           .post('/api/search/employment_status', { employmentstatus: input })
           .then((response) => {
             // setFilteredProfiles([response.data, ...filteredProfiles]);
-            setFilteredProfiles([...filteredProfiles, response.data]);
-            setFilteredProfiles(...filteredProfiles, {
-              username: response.data.username,
-            });
+            setFilteredProfiles(response.data);
+            // setFilteredProfiles(...filteredProfiles, {
+            //   username: response.data.username,
+            // });
             // setFilteredProfiles(response.data);
             // setFilteredProfiles([response.data]);
-            console.log('resp', response.data);
+            //console.log('resp', response.data);
           });
-        console.log('filtered?', filteredProfiles);
+        //console.log('filtered?', filteredProfiles);
         break;
       default:
-        console.log('show all users w message');
+        //console.log('show all users w message');
         break;
     }
   };
+
+  console.log(filteredProfiles, 'filtered profiles');
 
   const onSubmit = (event) => {
     event.preventDefault();
