@@ -68,89 +68,112 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   const userBirthday = profile.birthdate;
 
   const searchCriteria = (input) => {
-    //setFilter(...filter, input);
-    switch (filter) {
-      case userOccupation:
-        console.log('input in occup', input);
-        axios
-          .post('/api/search/career', { careerid: input })
-          .then((response) => {
-            console.log(response.data, 'occup data back');
-            setFilteredProfiles(response.data);
-          });
-        break;
-      case userGender:
-        axios
-          .post('/api/search/gender', { gender: input })
-          .then((response) => setFilteredProfiles(response.data));
-        break;
-      case userBirthday:
-        axios
-          .post('/api/search/age', { birthdate: input })
-          .then((response) => setFilteredProfiles(response.data));
-        break;
-      case userPets:
-        axios
-          .post('/api/search/pets', { pets: input })
-          .then((response) => setFilteredProfiles(response.data));
-        break;
-      case userReligion:
-        axios
-          .post('/api/search/religion', { religiousaffiliation: input })
-          .then((response) => setFilteredProfiles(response.data));
-        break;
-      case userPolitics:
-        axios
-          .post('/api/search/politics', { politicalaffiliation: input })
-          .then((response) => setFilteredProfiles(response.data));
-        break;
-      case userEmployment:
-        // console.log('input', input);
-        axios
-          .post('/api/search/employment_status', { employmentstatus: input })
-          .then((response) => {
-<<<<<<< HEAD
-            setFilteredProfiles([...filteredProfiles, response.data]);
-            console.log('resp', response.data);
-=======
-            // setFilteredProfiles([response.data, ...filteredProfiles]);
-            setFilteredProfiles(response.data);
-            // setFilteredProfiles(...filteredProfiles, {
-            //   username: response.data.username,
-            // });
-            // setFilteredProfiles(response.data);
-            // setFilteredProfiles([response.data]);
-            //console.log('resp', response.data);
->>>>>>> master
-          });
-        //console.log('filtered?', filteredProfiles);
-        break;
-      default:
-        //console.log('show all users w message');
-        break;
+    setFilter(...filter, input);
+    // switch (filter) {
+    //   case userOccupation:
+    //     console.log('input in occup', input);
+    //     axios
+    //       .post('/api/search/career', { careerid: input })
+    //       .then((response) => {
+    //         console.log(response.data, 'occup data back');
+    //         setFilteredProfiles(response.data);
+    //       });
+    //     break;
+    //   case userGender:
+    //     axios
+    //       .post('/api/search/gender', { gender: input })
+    //       .then((response) => setFilteredProfiles(response.data));
+    //     break;
+    //   case userBirthday:
+    //     axios
+    //       .post('/api/search/age', { birthdate: input })
+    //       .then((response) => setFilteredProfiles(response.data));
+    //     break;
+    //   case userPets:
+    //     axios
+    //       .post('/api/search/pets', { pets: input })
+    //       .then((response) => setFilteredProfiles(response.data));
+    //     break;
+    //   case userReligion:
+    //     axios
+    //       .post('/api/search/religion', { religiousaffiliation: input })
+    //       .then((response) => setFilteredProfiles(response.data));
+    //     break;
+    //   case userPolitics:
+    //     axios
+    //       .post('/api/search/politics', { politicalaffiliation: input })
+    //       .then((response) => setFilteredProfiles(response.data));
+    //     break;
+    //   case userEmployment:
+    //     axios
+    //       .post('/api/search/employment_status', { employmentstatus: input })
+    //       .then((response) => setFilteredProfiles(response.data));
+    //     console.log('empprof', filteredProfiles);
+    //     break;
+    //   default:
+    //     console.log('show all users w message');
+    //     break;
+    // }
+    console.log('input', filter);
+    if (filter === userOccupation) {
+      axios.post('/api/search/career', { careerid: input }).then((response) => {
+        console.log(response.data, 'occup data back');
+        setFilteredProfiles(response.data);
+        console.log('FP', filteredProfiles);
+      });
+    } else if (filter === userGender) {
+      axios
+        .post('/api/search/gender', { gender: input })
+        .then((response) => setFilteredProfiles(response.data));
+      console.log('FP', filteredProfiles);
+    } else if (filter === userBirthday) {
+      axios
+        .post('/api/search/age', { birthdate: input })
+        .then((response) => setFilteredProfiles(response.data));
+      console.log('FP', filteredProfiles);
+    } else if (filter === userPets) {
+      axios
+        .post('/api/search/pets', { pets: input })
+        .then((response) => setFilteredProfiles(response.data));
+      console.log('FP', filteredProfiles);
+    } else if (filter === userReligion) {
+      axios
+        .post('/api/search/religion', { religiousaffiliation: input })
+        .then((response) => setFilteredProfiles(response.data));
+      console.log('FP', filteredProfiles);
+    } else if (filter === userPolitics) {
+      axios
+        .post('/api/search/politics', { politicalaffiliation: input })
+        .then((response) => setFilteredProfiles(response.data));
+      console.log('FP', filteredProfiles);
+    } else if (filter === userEmployment) {
+      axios
+        .post('/api/search/employment_status', { employmentstatus: input })
+        .then((response) => setFilteredProfiles(response.data));
+      console.log('FP', filteredProfiles);
+    } else {
+      console.log('no results');
     }
   };
 
-<<<<<<< HEAD
   const searchHobby = (inp) => {
     axios.post('/api/search/hobbies', { hobby_name: inp }).then((response) => {
       const usernamesWithHobby = response.data;
       setFilteredProfiles([...filteredProfiles, usernamesWithHobby]);
     });
-    // const newUserEvent = response.data;
-    // setUserEvents([...userEvents, newUserEvent]);
     console.log('frprof', filteredProfiles);
   };
 
   const submitCriteria = (event) => {
-=======
-  console.log(filteredProfiles, 'filtered profiles');
-
-  const onSubmit = (event) => {
->>>>>>> master
     event.preventDefault();
+    // console.log(filteredProfiles, 'filtered profiles');
     searchCriteria(filter);
   };
+
+  // const onSubmit = (event) => {
+  //   event.preventDefault();
+  //   searchCriteria(filter);
+  // };
 
   const submitHobby = (event) => {
     event.preventDefault();
@@ -212,6 +235,14 @@ const SearchFIlter = ({ auth, userProfiles }) => {
           </div>
           <button type="submit">Submit</button>
         </form>
+      </div>
+      <div>
+        <h4>Search Results</h4>
+        <ul>
+          {filteredProfiles.map((profl) => {
+            return <li key={profl.id}>{getUsername(profl.userId)}</li>;
+          })}
+        </ul>
       </div>
       <div>
         <div>
