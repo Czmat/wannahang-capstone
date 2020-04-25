@@ -9,8 +9,8 @@ app.use("/dist", express.static(path.join(__dirname, "dist")));
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 //app.use("/public/uploads", express.static(path.join(__dirname, "uploads")));
 
-
 app.use(express.static("public"));
+
 app.use(express.json());
 
 app.use((req, res, next) => {
