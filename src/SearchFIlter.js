@@ -13,6 +13,9 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   const [allProfiles, setAllProfiles] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState([]);
 
+  //console.log(profile);
+  //console.log(filter, 'filter');
+
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
@@ -31,6 +34,7 @@ const SearchFIlter = ({ auth, userProfiles }) => {
 
   const getCareerName = (cid) => {
     const career = careers.find((c) => c.id === cid);
+    // console.log(cid, 'cid', career);
     if (career) {
       return career.career_name;
     }
@@ -64,66 +68,70 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   const userBirthday = profile.birthdate;
 
   const searchCriteria = (input) => {
-    setFilter(...filter, input);
+    //setFilter(...filter, input);
     switch (filter) {
       case userOccupation:
+        console.log('input in occup', input);
         axios
           .post('/api/search/career', { careerid: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => {
+            console.log(response.data, 'occup data back');
+            setFilteredProfiles(response.data);
+          });
         break;
       case userGender:
         axios
           .post('/api/search/gender', { gender: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userBirthday:
         axios
           .post('/api/search/age', { birthdate: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userPets:
         axios
           .post('/api/search/pets', { pets: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userReligion:
         axios
           .post('/api/search/religion', { religiousaffiliation: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userPolitics:
         axios
           .post('/api/search/politics', { politicalaffiliation: input })
-          .then((response) =>
-            setFilteredProfiles([response.data, ...filteredProfiles])
-          );
+          .then((response) => setFilteredProfiles(response.data));
         break;
       case userEmployment:
-        console.log('input', input);
+        // console.log('input', input);
         axios
           .post('/api/search/employment_status', { employmentstatus: input })
           .then((response) => {
+<<<<<<< HEAD
             setFilteredProfiles([...filteredProfiles, response.data]);
             console.log('resp', response.data);
+=======
+            // setFilteredProfiles([response.data, ...filteredProfiles]);
+            setFilteredProfiles(response.data);
+            // setFilteredProfiles(...filteredProfiles, {
+            //   username: response.data.username,
+            // });
+            // setFilteredProfiles(response.data);
+            // setFilteredProfiles([response.data]);
+            //console.log('resp', response.data);
+>>>>>>> master
           });
-        console.log('filtered?', filteredProfiles);
+        //console.log('filtered?', filteredProfiles);
         break;
       default:
-        console.log('show all users w message');
+        //console.log('show all users w message');
         break;
     }
   };
 
+<<<<<<< HEAD
   const searchHobby = (inp) => {
     axios.post('/api/search/hobbies', { hobby_name: inp }).then((response) => {
       const usernamesWithHobby = response.data;
@@ -135,6 +143,11 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   };
 
   const submitCriteria = (event) => {
+=======
+  console.log(filteredProfiles, 'filtered profiles');
+
+  const onSubmit = (event) => {
+>>>>>>> master
     event.preventDefault();
     searchCriteria(filter);
   };
