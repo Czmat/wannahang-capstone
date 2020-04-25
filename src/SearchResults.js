@@ -9,18 +9,18 @@ const SearchResults = ({ auth }) => {
   const [photos, setPhotos] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
-<<<<<<< HEAD
-  const [usersHobbies, setUsersHobbies] = useState([]);
-  const [hobbies, setHobbies] = useState([]);
-=======
+  const [userToBeInvited, setuserToBeInvited] = useState([]);
   //console.log(users, 'users', careers);
->>>>>>> master
 
   //const usersId = auth.id;
 
   // console.log(favorite);
   // let fave = favorites.data.find(({ userId }) => userId === favoriteId);
   // console.log(fave);
+
+  const inviteUser = (userid) => {
+    setuserToBeInvited(...userToBeInvited, userid);
+  };
 
   const findFave = (friendId) => {
     console.log('FI', friendId);
@@ -43,16 +43,9 @@ const SearchResults = ({ auth }) => {
 
     axios.get('/api/photos').then((response) => setPhotos(response.data));
     // gets zip code of current user
-<<<<<<< HEAD
-    axios
-      .get('/api/profiles')
-      .then((response) =>
-        setProfile(response.data.find(({ userId }) => userId === auth.id))
-=======
     axios.get('/api/profiles').then((response) => {
       const findProfile = response.data.find(
         ({ userId }) => userId === auth.id
->>>>>>> master
       );
       setProfile(findProfile);
       setProfiles(response.data);
@@ -61,13 +54,6 @@ const SearchResults = ({ auth }) => {
   }, []);
 
   const userZip = profile.zipcode;
-<<<<<<< HEAD
-  useEffect(() => {
-    // find userids of profiles with same zip code
-    axios.get('/api/profiles').then((response) => setProfiles(response.data));
-  }, []);
-=======
->>>>>>> master
 
   // useEffect(() => {
   //   axios.get('/api/careers').then((response) => setCareers(response.data));
@@ -83,11 +69,6 @@ const SearchResults = ({ auth }) => {
     (p) => p.zipcode === userZip && p.userId !== auth.id
   );
 
-<<<<<<< HEAD
-  useEffect(() => {
-    axios.get('/api/users').then((response) => setUsers(response.data));
-  }, []);
-=======
   // console.log(
   //   profile,
   //   'profile',
@@ -96,7 +77,6 @@ const SearchResults = ({ auth }) => {
   //   userProfiles,
   //   'user profiles'
   // );
->>>>>>> master
 
   const getUsername = (id) => {
     const user = users.find((u) => u.id === id);
@@ -104,15 +84,7 @@ const SearchResults = ({ auth }) => {
       return user.username;
     }
   };
-<<<<<<< HEAD
-
-  useEffect(() => {
-    axios.get('/api/careers').then((response) => setCareers(response.data));
-  }, []);
-
-=======
   //console.log(getUsername())
->>>>>>> master
   const getCareerName = (cid) => {
     const career = careers.find((c) => c.id === cid);
     if (career) {
@@ -152,35 +124,15 @@ const SearchResults = ({ auth }) => {
     return age;
   };
 
-<<<<<<< HEAD
-  useEffect(() => {
-    axios.get('/api/photos').then((response) => setPhotos(response.data));
-  }, []);
-
-  // useEffect(() => {
-  //   axios
-  //     .get('/api/user_hobbies')
-  //     .then((response) => setUserHobbies(response.data));
-  // }, []);
-
-=======
->>>>>>> master
   const getProfilePic = (friendId) => {
     // if (photos) {
     const profilePic = photos.find((photo) => photo.userId === friendId);
-<<<<<<< HEAD
-    const filename = profilePic.filename;
-    const filepath = profilePic.filepath;
-    const src = filepath + '/' + filename;
-    return src;
-=======
     if (profilePic) {
       const filename = profilePic.filename;
       const filepath = profilePic.filepath;
       const src = filepath + '/' + filename;
       return src;
     }
->>>>>>> master
   };
 
   const saveAsFavorite = async (fave) => {
@@ -188,20 +140,6 @@ const SearchResults = ({ auth }) => {
       .post('/api/createFavorite', fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
-<<<<<<< HEAD
-  useEffect(() => {
-    axios.get('/api/favorites').then((response) => setFavorite(response.data));
-  }, []);
-  const onSubmit = (fav) => {
-    const user1 = usersId;
-    const user2 = fav;
-    const faveUser = {
-      userId: user1,
-      favoriteId: user2,
-    };
-    saveAsFavorite(faveUser);
-  };
-=======
   // useEffect(() => {
   //   axios.get('/api/favorites').then((response) => setFavorite(response.data));
   // }, []);
@@ -214,55 +152,10 @@ const SearchResults = ({ auth }) => {
   //   };
   //   saveAsFavorite(faveUser);
   // };
->>>>>>> master
   // function myFunction(x) {
   //   x.classList.toggle("fa fa-heart");
   // }
 
-<<<<<<< HEAD
-  return (
-    <div className="container">
-      {/* <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i> */}
-      <h3>
-        Future Friends Nearby (There are {userProfiles.length} in your zip:{' '}
-        {userZip} )
-      </h3>
-      <div className="row">
-        {userProfiles.map((userProfile) => {
-          console.log('ID', userProfile.userId);
-          return (
-            <div key={userProfile.id} className="col-sm-4">
-              <div className="card profile-card">
-                <div className="card-body">
-                  <div>
-                    <img
-                      className="profile-photo"
-                      src={getProfilePic(userProfile.userId)}
-                      alt={getUsername(userProfile.userId)}
-                    />
-                  </div>
-                  <h5 className="card-title">
-                    {getUsername(userProfile.userId)}
-                  </h5>
-                  <p className="card-text">
-                    Age {findAge(userProfile.birthdate)}{' '}
-                  </p>
-                  <button
-                    type="button"
-                    id="heart"
-                    className="fas fa-heart gray"
-                    onClick={(e) => findFave(userProfile.userId)}
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                    data-dismiss="modal"
-                  >
-                    {' '}
-                    Friend
-                  </button>
-                  <p className="card-text">
-                    Age {findAge(userProfile.birthdate)}{' '}
-                  </p>
-=======
   if (!users) {
     Loading;
   } else {
@@ -314,10 +207,9 @@ const SearchResults = ({ auth }) => {
                       {' '}
                       Friend
                     </button>
-                    <p className="card-text">
+                    {/* <p className="card-text">
                       Age {findAge(userProfile.birthdate)}{' '}
-                    </p>
->>>>>>> master
+                    </p> */}
 
                     {/* <a href="#" className="btn btn-primary">
                     Go somewhere
@@ -384,7 +276,13 @@ const SearchResults = ({ auth }) => {
                     >
                       View details
                     </button>
-
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => inviteUser(userProfile.userId)}
+                    >
+                      Invite user
+                    </button>
                     <div
                       className="modal fade"
                       id="exampleModalCenter2"
@@ -393,51 +291,6 @@ const SearchResults = ({ auth }) => {
                       aria-labelledby="exampleModalCenterTitle"
                       aria-hidden="true"
                     >
-<<<<<<< HEAD
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h5
-                            className="modal-title"
-                            id="exampleModalCenterTitle"
-                          >
-                            Details of user {getUsername(userProfile.userId)}
-                          </h5>
-                          <button
-                            type="button"
-                            className="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div className="modal-body">
-                          <li>Politics: {userProfile.politicalaffiliation}</li>
-                          <li>Religion: {userProfile.religiousaffiliation}</li>
-                          <li>Education: {userProfile.education}</li>
-                          <li>Career: {getCareerName(userProfile.careerid)}</li>
-                          <li>Pets: {userProfile.pets}</li>
-                          <li>Employment: {userProfile.employmentstatus}</li>
-                          {/* <li>Hobbies: {getUserHobbies(userProfile.userId)}</li> */}
-                          <li>About: {userProfile.about}</li>
-                        </div>
-                        <div className="modal-footer">
-                          <button
-                            type="button"
-                            className="btn btn-secondary"
-                            data-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                          <button
-                            type="submit"
-                            className="btn btn-primary"
-                            onClick={() => onSubmit(userProfile.userId)}
-                            data-dismiss="modal"
-                          >
-                            Save as favorite?
-                          </button>
-=======
                       <div
                         className="modal-dialog modal-dialog-centered"
                         role="document"
@@ -490,8 +343,15 @@ const SearchResults = ({ auth }) => {
                             >
                               Save as favorite?
                             </button>
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={() => inviteUser(userProfile.userId)}
+                              data-dismiss="modal"
+                            >
+                              Invite user
+                            </button>
                           </div>
->>>>>>> master
                         </div>
                       </div>
                     </div>

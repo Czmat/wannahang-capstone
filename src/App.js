@@ -44,6 +44,7 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
   const [userEvents, setUserEvents] = useState([]);
+  const [userToBeInvited, setuserToBeInvited] = useState([]);
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
