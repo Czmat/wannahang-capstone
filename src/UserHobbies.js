@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 let clicks = 0;
 const UserHobbies = (auth) => {
   const [hobbies, setHobbies] = useState([]);
@@ -33,7 +33,7 @@ const UserHobbies = (auth) => {
       ...selected,
       [hobby.id]: clicks,
     });
-    console.log('DD', Object.values(selected));
+    console.log("DD", Object.values(selected));
     let nums = Object.values(selected);
 
     let selectedGroup = [];
@@ -42,7 +42,7 @@ const UserHobbies = (auth) => {
         selectedGroup.push(selected[i]);
       }
     }
-    console.log('SG', selectedGroup);
+    console.log("SG", selectedGroup);
 
     // if (Object.values(selected) % 2) {
     //   console.log(Object.keys(selected));
@@ -63,7 +63,7 @@ const UserHobbies = (auth) => {
   };
   const numClicks = Object.values(selected);
   const eachHobbyid = Object.keys(selected);
-  console.log('Selected', selected);
+  console.log("Selected", selected);
   // console.log("numClicks", numClicks);
   // console.log("eachHobbyid", eachHobbyid);
 
@@ -73,21 +73,21 @@ const UserHobbies = (auth) => {
   const userId = auth.auth.id;
 
   useEffect(() => {
-    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
+    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
   }, []);
 
   const createUserHobbies = (user) => {
-    axios.post('/api/createUserHobbies', user).then((response) => {
-      console.log('USERHobby', response);
+    axios.post("/api/createUserHobbies", user).then((response) => {
+      console.log("USERHobby", response);
     });
   };
 
   const onSubmit = (ev) => {
     ev.preventDefault();
     const eachHobby = Object.keys(userHobbies);
-    console.log('ARR', eachHobby);
+    console.log("ARR", eachHobby);
     eachHobby.forEach((hobbyId) => {
-      console.log('EACH ID', hobbyId);
+      console.log("EACH ID", hobbyId);
 
       createUserHobbies({
         userId,
