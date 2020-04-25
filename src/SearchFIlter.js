@@ -3,12 +3,14 @@ import axios from 'axios';
 
 const SearchFIlter = ({ auth }) => {
   const [filter, setFilter] = useState('');
-  const [filteredProfiles, setFilteredProfiles] = useState([]);
+  const [hobbyFilter, setHobbyFilter] = useState('');
+  const [hobbies, setHobbies] = useState([]);
   const [users, setUsers] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [profile, setProfile] = useState([]);
   const [profiles, setProfiles] = useState([]);
   const [careers, setCareers] = useState([]);
+  const [filteredProfiles, setFilteredProfiles] = useState([]);
 
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
@@ -22,6 +24,7 @@ const SearchFIlter = ({ auth }) => {
       setProfile(findProfile);
       setProfiles(response.data);
     });
+    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
     axios.get('/api/careers').then((response) => setCareers(response.data));
   }, []);
 
@@ -101,11 +104,11 @@ const SearchFIlter = ({ auth }) => {
         axios
           .post('/api/search/employment_status', { employmentstatus: input })
           .then((response) => {
-            // setFilteredProfiles([response.data, ...filteredProfiles]);
-            setFilteredProfiles([...filteredProfiles, response.data]);
-            setFilteredProfiles(...filteredProfiles, {
-              username: response.data.username,
-            });
+            setFilteredProfiles([response.data, ...filteredProfiles]);
+            // setFilteredProfiles([...filteredProfiles, response.data]);
+            // setFilteredProfiles(...filteredProfiles, {
+            //   username: response.data.username,
+            // });
             // setFilteredProfiles(response.data);
             // setFilteredProfiles([response.data]);
             console.log('resp', response.data);
@@ -118,16 +121,31 @@ const SearchFIlter = ({ auth }) => {
     }
   };
 
-  const onSubmit = (event) => {
+  const searchHobby = (inp) => {
+    axios.post('/api/search/hobbies', { hobby_name: inp }).then((response) => {
+      const usernamesWithHobby = response.data;
+      setFilteredProfiles([...filteredProfiles, usernamesWithHobby]);
+    });
+    // const newUserEvent = response.data;
+    // setUserEvents([...userEvents, newUserEvent]);
+    console.log('frprof', filteredProfiles);
+  };
+
+  const submitCriteria = (event) => {
     event.preventDefault();
     searchCriteria(filter);
+  };
+
+  const submitHobby = (event) => {
+    event.preventDefault();
+    searchHobby(hobbyFilter);
   };
 
   return (
     <div>
       <h2>Test</h2>
       <div>
-        <form onSubmit={(e) => onSubmit(e)}>
+        <form onSubmit={(e) => submitCriteria(e)}>
           <div className="form-group mt-3">
             <label htmlFor="about">Search for someone that matches my:</label>
             <select
@@ -154,7 +172,30 @@ const SearchFIlter = ({ auth }) => {
               {/* <option value="hobbies">Hobbies(DNU)</option> */}
             </select>
           </div>
-          <button type="submit">Submit </button>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <div>
+        <form onSubmit={(e) => submitHobby(e)}>
+          <div>
+            <label htmlFor="about">Search for someone whose hobby is:</label>
+            <select
+              className="form-control"
+              id="hobbies"
+              defaultValue
+              onChange={(ev) => setHobbyFilter(ev.target.value)}
+            >
+              <option value={hobbyFilter}> --select your option-- </option>
+              {hobbies.map((hobby) => {
+                return (
+                  <option key={hobby.id} value={hobby.hobby_name}>
+                    {hobby.hobby_name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <button type="submit">Submit</button>
         </form>
       </div>
       <div>
