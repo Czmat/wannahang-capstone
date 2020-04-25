@@ -7,7 +7,7 @@ const Login = ({ login }) => {
   const [error, setError] = useState('');
 
   const history = useHistory();
-  const goToUpload = () => history.push('/file/upload');
+  const goToUpload = () => history.push('/peeps');
 
   const onSubmit = (ev) => {
     ev.preventDefault();
