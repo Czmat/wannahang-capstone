@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SearchFilter = ({ auth }) => {
+const SearchFIlter = ({ auth }) => {
   const [filter, setFilter] = useState('');
   const [filteredProfiles, setFilteredProfiles] = useState([]);
   const [users, setUsers] = useState([]);
@@ -154,7 +154,7 @@ const SearchFilter = ({ auth }) => {
               {/* <option value="hobbies">Hobbies(DNU)</option> */}
             </select>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Submit </button>
         </form>
       </div>
       <div>
@@ -170,4 +170,4 @@ const SearchFilter = ({ auth }) => {
   );
 };
 
-export default SearchFilter;
+export default SearchFIlter;
