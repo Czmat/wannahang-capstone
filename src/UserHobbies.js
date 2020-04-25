@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 let clicks = 0;
 const UserHobbies = (auth) => {
   const [hobbies, setHobbies] = useState([]);
-  const [userHobbies, setUserHobbies] = useState({});
+  const [userHobbies, setUserHobbies] = useState([]);
   const [selected, setSelected] = useState([]);
 
   // const selectMe = (ev) => {
@@ -21,19 +21,20 @@ const UserHobbies = (auth) => {
   //     }
   //   }
   // });
+  //console.log(imgSelected);
 
   const toggleImage = (hobby) => {
     let img1 = `http://www.terribailey.com/images/${hobby.hobby_image}`;
     let img2 = `http://www.terribailey.com/images/imagesShadow/${hobby.hobby_image}`;
     let imgElement = document.getElementById(hobby.id);
-    //console.log("WHAT", imgElement);
+    //console.log('WHAT', imgElement);
     imgElement.src = imgElement.src === img1 ? img2 : img1;
     clicks = clicks + 1;
     setSelected({
       ...selected,
       [hobby.id]: clicks,
     });
-    console.log("DD", Object.values(selected));
+    // console.log('DD', Object.values(selected));
     let nums = Object.values(selected);
 
     let selectedGroup = [];
@@ -42,7 +43,7 @@ const UserHobbies = (auth) => {
         selectedGroup.push(selected[i]);
       }
     }
-    console.log("SG", selectedGroup);
+    //console.log('SG', selectedGroup);
 
     // if (Object.values(selected) % 2) {
     //   console.log(Object.keys(selected));
@@ -63,32 +64,43 @@ const UserHobbies = (auth) => {
   };
   const numClicks = Object.values(selected);
   const eachHobbyid = Object.keys(selected);
-  console.log("Selected", selected);
+  //console.log('Selected', selected);
   // console.log("numClicks", numClicks);
   // console.log("eachHobbyid", eachHobbyid);
 
   selected.filter;
-  // console.log("USER", auth.auth.id);
-  // console.log("F", auth);
+
   const userId = auth.auth.id;
 
   useEffect(() => {
-    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
+    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
   }, []);
 
+  const selectHobbies = (selectedHobby) => {
+    const found = userHobbies.find(
+      (hobby) => hobby.name === selectedHobby.name
+    );
+    if (!found) {
+      setUserHobbies([...userHobbies, selectedHobby]);
+    } else {
+      const filteredHobbies = userHobbies.filter(
+        (h) => h.name !== selectedHobby.name
+      );
+
+      setUserHobbies(filteredHobbies);
+    }
+  };
+
   const createUserHobbies = (user) => {
-    axios.post("/api/createUserHobbies", user).then((response) => {
-      console.log("USERHobby", response);
+    axios.post('/api/createUserHobbies', user).then((response) => {
+      //console.log('USERHobby', response.data);
     });
   };
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    const eachHobby = Object.keys(userHobbies);
-    console.log("ARR", eachHobby);
-    eachHobby.forEach((hobbyId) => {
-      console.log("EACH ID", hobbyId);
-
+    userHobbies.forEach((hobby) => {
+      const hobbyId = hobby.id;
       createUserHobbies({
         userId,
         hobbyId,
@@ -103,6 +115,9 @@ const UserHobbies = (auth) => {
         <button>Submit</button>
         <div className="form-group d-flex flex-wrap align-content-around">
           {hobbies.map((hobby) => {
+            // let img1 = `http://www.terribailey.com/images/${hobby.hobby_image}`;
+            // let img2 = `http://www.terribailey.com/images/imagesShadow/${hobby.hobby_image}`;
+
             return (
               <div
                 key={hobby.id}
@@ -116,10 +131,13 @@ const UserHobbies = (auth) => {
                     id={hobby.id}
                     alt={hobby.hobby_name}
                     onClick={(ev) => {
-                      setUserHobbies({
-                        ...userHobbies,
-                        [hobby.id]: hobby.hobby_name,
-                      });
+                      //selectUnselectImg(hobby.hobby_name);
+                      //setImgSelected(imgSelected ? false : true);
+                      selectHobbies({ name: hobby.hobby_name, id: hobby.id });
+                      // setUserHobbies({
+                      //   ...userHobbies,
+                      //   [hobby.id]: hobby.hobby_name,
+                      // });
                       toggleImage(hobby);
                     }}
                   />

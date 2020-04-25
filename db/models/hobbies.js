@@ -7,9 +7,8 @@ const readUserHobbies = async () => {
 const createUserHobbies = async (user_hobbies) => {
   const SQL = `INSERT INTO user_hobbies(user_id, hobby_id)
         values($1, $2) returning *`;
-  return (
-    await client.query(SQL, [user_hobbies.user_id, user_hobbies.hobby_id])
-  ).rows[0];
+  return (await client.query(SQL, [user_hobbies.userId, user_hobbies.hobbyId]))
+    .rows[0];
 };
 
 const findHobbyId = async (hobbyName) => {
