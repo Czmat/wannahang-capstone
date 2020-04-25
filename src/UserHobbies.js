@@ -21,10 +21,6 @@ const UserHobbies = (auth) => {
   //     }
   //   }
   // });
-  const checkArray = (array) => {
-    array.filter((element) => element % 2 !== 0);
-    return array;
-  };
 
   const toggleImage = (hobby) => {
     let img1 = `http://www.terribailey.com/images/${hobby.hobby_image}`;
@@ -33,18 +29,20 @@ const UserHobbies = (auth) => {
     //console.log("WHAT", imgElement);
     imgElement.src = imgElement.src === img1 ? img2 : img1;
     clicks = clicks + 1;
-    setSelected(...selected, { [hobby.id]: clicks });
+    setSelected({
+      ...selected,
+      [hobby.id]: clicks,
+    });
     console.log('DD', Object.values(selected));
     let nums = Object.values(selected);
 
-    // let selectedGroup = [];
-    // for (let i = 0; i < selected.length; i++) {
-    //   console.log('hobbie', selected[i]);
-    //   if (selected[i].clicks % 2) {
-    //     selectedGroup.push(selected[i]);
-    //   }
-    // }
-    // console.log('SG', selectedGroup);
+    let selectedGroup = [];
+    for (let i = 0; i < selected.length; i++) {
+      if (selected[i].clicks % 2) {
+        selectedGroup.push(selected[i]);
+      }
+    }
+    console.log('SG', selectedGroup);
 
     // if (Object.values(selected) % 2) {
     //   console.log(Object.keys(selected));
@@ -53,21 +51,19 @@ const UserHobbies = (auth) => {
 
     // let x = selected.filter((numClicks) => numClicks % 2);
     // console.log("x", x);
-    // };
-    // console.log(checkArray(selected));
+    // }
+
+    // on click check array for id
+    // if id exists remove it
+    // if id is new, continue
+    // var elemInArray = array.find(element => element === id)
+    // if (elemInArray) {
+    //    array.filter(element => element !== id)
+    //}
   };
   const numClicks = Object.values(selected);
-  console.log('nc', numClicks);
   const eachHobbyid = Object.keys(selected);
-  console.log('eH', eachHobbyid);
   console.log('Selected', selected);
-  console.log(typeof selected);
-  let selectedGroup = [];
-  for (let i = 0; i < selected.length; i++) {
-    if (selected[i].clicks % 2) {
-      selectedGroup.push(selected[i]);
-    }
-  }
   // console.log("numClicks", numClicks);
   // console.log("eachHobbyid", eachHobbyid);
 

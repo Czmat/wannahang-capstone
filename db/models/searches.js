@@ -1,13 +1,5 @@
 const client = require('../client');
 
-const searchZipCode = async ({ criteria }) => {
-  const SQL = `SELECT users.username FROM user_profiles
-  JOIN users ON user_profiles."userId" = users.id
-  WHERE zipCode = ($1)`;
-  const response = await client.query(SQL, [criteria.zipCode]);
-  return response.rows;
-};
-
 const searchPerfectMatch = async (criteria) => {
   const SQL = `SELECT users.username FROM user_profiles 
   JOIN users ON user_profiles."userId" = users.id
@@ -32,11 +24,24 @@ const searchCareer = async (careerId) => {
   WHERE careerId = $1 returning *`;
   return (await client.query(SQL, [careerId])).rows[0];
 };
+const searchUsersByCareer = async (careerId) => {
+  const SQL = `SELECT users.username FROM user_profiles 
+  JOIN users ON user_profiles."userId" = users.id
+  JOIN careers ON careers.id = user_profiles.careerid
+  WHERE career_name = $1 `;
+  return (await client.query(SQL, [careerId])).rows;
+};
 const searchGender = async (gender) => {
   const SQL = `SELECT users.username FROM user_profiles 
   JOIN users ON user_profiles."userId" = users.id
   WHERE gender = $1 returning *`;
   return (await client.query(SQL, [gender])).rows[0];
+};
+const searchUsersByGender = async (gender) => {
+  const SQL = `SELECT users.username FROM user_profiles 
+  JOIN users ON user_profiles."userId" = users.id
+  WHERE gender = $1 `;
+  return (await client.query(SQL, [gender])).rows;
 };
 const searchHobbies = async (hobbies) => {
   const SQL = `SELECT users.username FROM user_profiles 
@@ -45,11 +50,24 @@ const searchHobbies = async (hobbies) => {
   return (await client.query(SQL, [hobbies])).rows[0];
 };
 
+const searchUsersByHobbies = async (hobbies) => {
+  const SQL = `SELECT users.username FROM user_profiles 
+  JOIN users ON user_hobbies."userId" = users.id
+  WHERE hobbies = $1 `;
+  return (await client.query(SQL, [hobbies])).rows;
+};
+
 const searchPets = async (pets) => {
   const SQL = `SELECT users.username FROM user_profiles 
   JOIN users ON user_profiles."userId" = users.id
   WHERE pets = $1 returning *`;
   return (await client.query(SQL, [pets])).rows[0];
+};
+const searchUsersByPets = async (pets) => {
+  const SQL = `SELECT users.username FROM user_profiles 
+  JOIN users ON user_profiles."userId" = users.id
+  WHERE pets = $1 `;
+  return (await client.query(SQL, [pets])).rows;
 };
 const searchPoliticalAffiliation = async (politicalAffiliation) => {
   const SQL = `SELECT users.username FROM user_profiles 
@@ -57,17 +75,36 @@ const searchPoliticalAffiliation = async (politicalAffiliation) => {
   WHERE politicalAffiliation = $1 returning *`;
   return (await client.query(SQL, [politicalAffiliation])).rows[0];
 };
+const searchUsersByPoliticalAffiliation = async (politicalAffiliation) => {
+  const SQL = `SELECT users.username FROM user_profiles 
+  JOIN users ON user_profiles."userId" = users.id
+  WHERE politicalAffiliation = $1 `;
+  return (await client.query(SQL, [politicalAffiliation])).rows;
+};
 const searchReligiousAffiliation = async (religiousAffiliation) => {
   const SQL = `SELECT users.username FROM user_profiles 
   JOIN users ON user_profiles."userId" = users.id
   WHERE religiousAffiliation = $1 returning *`;
   return (await client.query(SQL, [religiousAffiliation])).rows[0];
 };
+const searchUsersByReligiousAffiliation = async (religiousAffiliation) => {
+  const SQL = `SELECT users.username FROM user_profiles 
+  JOIN users ON user_profiles."userId" = users.id
+  WHERE religiousAffiliation = $1 `;
+  return (await client.query(SQL, [religiousAffiliation])).rows;
+};
 const searchEmploymentStatus = async (employmentStatus) => {
   const SQL = `SELECT users.username FROM user_profiles 
   JOIN users ON user_profiles."userId" = users.id
   WHERE status_name = $1 returning *`;
   return (await client.query(SQL, [employmentStatus])).rows[0];
+};
+
+const searchUsersByEmploymentStatus = async (employmentStatus) => {
+  const SQL = `SELECT users.username FROM user_profiles 
+  JOIN users ON user_profiles."userId" = users.id
+  WHERE employmentstatus = $1`;
+  return (await client.query(SQL, [employmentStatus])).rows;
 };
 
 const searchAgeRange = async (birthdate, ageMin, ageMax) => {
@@ -77,7 +114,12 @@ const searchAgeRange = async (birthdate, ageMin, ageMax) => {
   WHERE date_part('year',age(user_profiles.birthdate)) BETWEEN ($1) AND ($2) returning *`;
   return (await client.query(SQL, [ageMin, ageMax])).rows[0];
 };
-
+const searchUsersByAge = async (age) => {
+  const SQL = `SELECT users.username FROM user_profiles 
+  JOIN users ON user_profiles."userId" = users.id
+  WHERE birthdate = $1`;
+  return (await client.query(SQL, [age])).rows;
+};
 const createUserSearchCriteria = async (searchCriteria) => {
   const SQL = `
     INSERT INTO user_search_criteria 
@@ -105,7 +147,6 @@ const createUserSearchCriteria = async (searchCriteria) => {
   ).rows[0];
 };
 module.exports = {
-  searchZipCode,
   searchPerfectMatch,
   searchCareer,
   searchPets,
@@ -116,4 +157,12 @@ module.exports = {
   searchReligiousAffiliation,
   searchAgeRange,
   createUserSearchCriteria,
+  searchUsersByEmploymentStatus,
+  searchUsersByAge,
+  searchUsersByCareer,
+  searchUsersByPets,
+  searchUsersByGender,
+  searchUsersByHobbies,
+  searchUsersByPoliticalAffiliation,
+  searchUsersByReligiousAffiliation,
 };

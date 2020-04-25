@@ -47,6 +47,7 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
   const [userEvents, setUserEvents] = useState([]);
+  const [userToBeInvited, setuserToBeInvited] = useState([]);
 
   const login = async (credentials) => {
     const token = (await axios.post("/api/auth", credentials)).data.token;
@@ -173,9 +174,9 @@ const App = () => {
           <Route path="/peeps">
             <SearchResults auth={auth} users={users} />
           </Route>
-          {/* <Route path="/search/filter">
+          <Route path="/search/filter">
             <SearchFilter auth={auth} />
-          </Route> */}
+          </Route>
           <Route path="/UserHobbies">
             <UserHobbies auth={auth} />
           </Route>
