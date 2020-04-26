@@ -114,7 +114,6 @@ const SearchFIlter = ({ auth, userProfiles }) => {
     //     console.log('show all users w message');
     //     break;
     // }
-    console.log('input', filter);
     if (filter === userOccupation) {
       axios.post('/api/search/career', { careerid: input }).then((response) => {
         console.log(response.data, 'occup data back');
@@ -127,8 +126,9 @@ const SearchFIlter = ({ auth, userProfiles }) => {
         .then((response) => setFilteredProfiles(response.data));
       console.log('FP', filteredProfiles);
     } else if (filter === userBirthday) {
+      const bDay = input.substring(0, 4);
       axios
-        .post('/api/search/age', { birthdate: input })
+        .post('/api/search/age', { birthdate: bDay })
         .then((response) => setFilteredProfiles(response.data));
       console.log('FP', filteredProfiles);
     } else if (filter === userPets) {
