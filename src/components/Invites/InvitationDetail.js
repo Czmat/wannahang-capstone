@@ -4,7 +4,81 @@ import axios from 'axios';
 import moment from 'moment';
 import UserDetailPopUp from '../User/UserDetailPopUp';
 
-export default function InvitationDetail({ inviteDetail, setInviteDetail }) {
+export default function InvitationDetail({
+  inviteDetail,
+  setInviteDetail,
+  events,
+  setEvents,
+}) {
+  const [isGoing, setIsGoing] = useState('');
+  //console.log(isGoing, 'isGoing', inviteDetail);
+
+  const acceptInvite = (acceptEvent) => {
+    axios
+      .put(`/api/user_events/${acceptEvent.id}`, acceptEvent)
+      .then((response) => {
+        const userEvent = response.data;
+        // const updated = myUserEvents.map((_userEvent) =>
+        //   _userEvent.id === userEvent.id ? userEvent : _userEvent
+        // );
+        // setUserEvents(updated);
+        setIsGoing(userEvent);
+        setInviteDetail({ ...inviteDetail, status: 'accepted' });
+      });
+    axios
+      .put(`/api/events/${inviteDetail.eventId}`, {
+        name: inviteDetail.name,
+        date: inviteDetail.date,
+        location: inviteDetail.location,
+        description: inviteDetail.description,
+        isPublic: false,
+        isAccepted: true,
+        userId: inviteDetail.userId,
+      })
+      .then((response) => {
+        const returnedE = response.data;
+        console.log(returnedE, 'new ');
+        const updated = events.map((_event) =>
+          _event.id === returnedE.id ? returnedE : _event
+        );
+        setEvents(updated);
+      });
+  };
+
+  const declineInvite = (declineEvent) => {
+    //console.log(declineEvent, 'declineInvite');
+
+    axios
+      .put(`/api/user_events/${declineEvent.id}`, declineEvent)
+      .then((response) => {
+        const userEvent = response.data;
+        // const updated = myUserEvents.map((_userEvent) =>
+        //   _userEvent.id === userEvent.id ? userEvent : _userEvent
+        // );
+        // setUserEvents(updated);
+        setIsGoing(userEvent);
+        setInviteDetail({ ...inviteDetail, status: 'declined' });
+      });
+    axios
+      .put(`/api/events/${inviteDetail.eventId}`, {
+        name: inviteDetail.name,
+        date: inviteDetail.date,
+        location: inviteDetail.location,
+        description: inviteDetail.description,
+        isPublic: false,
+        isAccepted: false,
+        userId: inviteDetail.userId,
+      })
+      .then((response) => {
+        const returnedE = response.data;
+        console.log(returnedE, 'new ');
+        const updated = events.map((_event) =>
+          _event.id === returnedE.id ? returnedE : _event
+        );
+        setEvents(updated);
+      });
+  };
+
   return (
     <div>
       <h5>Invite Detail</h5>
@@ -40,15 +114,37 @@ export default function InvitationDetail({ inviteDetail, setInviteDetail }) {
             </Link>{' '}
           </p>
 
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              //acceptInvite({})
-              console.log(inviteDetail.id, 'accept invite');
-            }}
-          >
-            accept invite
-          </button>
+          {inviteDetail.status === 'accepted' ? (
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                declineInvite({
+                  id: inviteDetail.id,
+                  joinedUserId: inviteDetail.joinedUserId,
+                  eventId: inviteDetail.eventId,
+                  status: 'declined',
+                });
+                //console.log(inviteDetail.id, 'accept invite');
+              }}
+            >
+              decline invite
+            </button>
+          ) : (
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                acceptInvite({
+                  id: inviteDetail.id,
+                  joinedUserId: inviteDetail.joinedUserId,
+                  eventId: inviteDetail.eventId,
+                  status: 'accepted',
+                });
+                //console.log(inviteDetail.id, 'accept invite');
+              }}
+            >
+              accept invite
+            </button>
+          )}
         </div>
       </div>
       <UserDetailPopUp inviteDetail={inviteDetail} />
