@@ -50,11 +50,12 @@ const searchHobbies = async (hobbies) => {
   return (await client.query(SQL, [hobbies])).rows[0];
 };
 
-const searchUsersByHobbies = async (hobbies) => {
-  const SQL = `SELECT users.username FROM user_profiles 
-  JOIN users ON user_hobbies."userId" = users.id
-  WHERE hobbies = $1 `;
-  return (await client.query(SQL, [hobbies])).rows;
+const searchUsersByHobbies = async (hobby) => {
+  const SQL = `SELECT users.username FROM user_hobbies
+  JOIN users ON user_hobbies.user_id = users.id
+  JOIN hobbies ON user_hobbies.hobby_id = hobbies.id
+  WHERE hobby_name = $1 `;
+  return (await client.query(SQL, [hobby])).rows;
 };
 
 const searchPets = async (pets) => {
@@ -114,11 +115,10 @@ const searchAgeRange = async (birthdate, ageMin, ageMax) => {
   WHERE date_part('year',age(user_profiles.birthdate)) BETWEEN ($1) AND ($2) returning *`;
   return (await client.query(SQL, [ageMin, ageMax])).rows[0];
 };
-const searchUsersByAge = async (age) => {
+const searchUsersByAge = async (birthdate) => {
   const SQL = `SELECT users.username FROM user_profiles 
-  JOIN users ON user_profiles."userId" = users.id
-  WHERE birthdate = $1`;
-  return (await client.query(SQL, [age])).rows;
+  JOIN users ON user_profiles."userId" = users.id where date_part('year', birthdate) =  $1`;
+  return (await client.query(SQL, [birthdate])).rows;
 };
 const createUserSearchCriteria = async (searchCriteria) => {
   const SQL = `
