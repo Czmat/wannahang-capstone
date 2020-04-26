@@ -1,31 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
-import { Player } from "video-react";
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { Player } from 'video-react';
 
 const CreateNewUser = ({ login }) => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [gender, setGender] = useState("");
-  const [error, setError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [zipcode, setZipcode] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [gender, setGender] = useState('');
+  const [error, setError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const history = useHistory();
-  const goToUploadPhoto = () => history.push("/file/upload");
+  const goToUploadPhoto = () => history.push('/file/upload');
+  const goToLogIn = () => history.push('/login');
 
   const createUser = (user) => {
-    axios.post("/api/users", user).then((response) => {
+    axios.post('/api/users', user).then((response) => {
       login({ email, password }).catch((ex) =>
         setError(ex.response.data.message)
       );
     });
+  };
+
+  const redirect = (event) => {
+    event.preventDefault();
+    goToLogIn();
   };
 
   const onSubmit = (ev) => {
@@ -148,6 +154,15 @@ const CreateNewUser = ({ login }) => {
               }
             >
               Create Account
+            </button>
+            <button
+              className="btn btn-success my-2 my-sm-0"
+              type="button"
+              onClick={(event) => {
+                redirect(event);
+              }}
+            >
+              Log In
             </button>
           </form>
         </div>
