@@ -116,41 +116,41 @@ const SearchFIlter = ({ auth, userProfiles }) => {
     // }
     if (filter === userOccupation) {
       axios.post('/api/search/career', { careerid: input }).then((response) => {
-        console.log(response.data, 'occup data back');
+        // console.log(response.data, 'occup data back');
         setFilteredProfiles(response.data);
-        console.log('FP', filteredProfiles);
+        // console.log('FP', filteredProfiles);
       });
     } else if (filter === userGender) {
       axios
         .post('/api/search/gender', { gender: input })
         .then((response) => setFilteredProfiles(response.data));
-      console.log('FP', filteredProfiles);
+      // console.log('FP', filteredProfiles);
     } else if (filter === userBirthday) {
       const bDay = input.substring(0, 4);
       axios
         .post('/api/search/age', { birthdate: bDay })
         .then((response) => setFilteredProfiles(response.data));
-      console.log('FP', filteredProfiles);
+      // console.log('FP', filteredProfiles);
     } else if (filter === userPets) {
       axios
         .post('/api/search/pets', { pets: input })
         .then((response) => setFilteredProfiles(response.data));
-      console.log('FP', filteredProfiles);
+      // console.log('FP', filteredProfiles);
     } else if (filter === userReligion) {
       axios
         .post('/api/search/religion', { religiousaffiliation: input })
         .then((response) => setFilteredProfiles(response.data));
-      console.log('FP', filteredProfiles);
+      // console.log('FP', filteredProfiles);
     } else if (filter === userPolitics) {
       axios
         .post('/api/search/politics', { politicalaffiliation: input })
         .then((response) => setFilteredProfiles(response.data));
-      console.log('FP', filteredProfiles);
+      // console.log('FP', filteredProfiles);
     } else if (filter === userEmployment) {
       axios
         .post('/api/search/employment_status', { employmentstatus: input })
         .then((response) => setFilteredProfiles(response.data));
-      console.log('FP', filteredProfiles);
+      // console.log('FP', filteredProfiles);
     } else {
       console.log('no results');
     }
@@ -161,7 +161,7 @@ const SearchFIlter = ({ auth, userProfiles }) => {
       const usernamesWithHobby = response.data;
       setFilteredProfiles([...filteredProfiles, usernamesWithHobby]);
     });
-    console.log('frprof', filteredProfiles);
+    // console.log('frprof', filteredProfiles);
   };
 
   const submitCriteria = (event) => {
