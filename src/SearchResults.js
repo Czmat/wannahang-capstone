@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const SearchResults = ({ auth }) => {
+const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [users, setUsers] = useState([]);
   const [profile, setProfile] = useState([]);
   const [profiles, setProfiles] = useState([]);
@@ -9,8 +10,8 @@ const SearchResults = ({ auth }) => {
   const [photos, setPhotos] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
-  const [userToBeInvited, setuserToBeInvited] = useState([]);
-  //console.log(users, 'users', careers);
+  //const [userToBeInvited, setUserToBeInvited] = useState([]);
+  //console.log(profiles, 'profiles');
 
   //const usersId = auth.id;
 
@@ -18,19 +19,21 @@ const SearchResults = ({ auth }) => {
   // let fave = favorites.data.find(({ userId }) => userId === favoriteId);
   // console.log(fave);
 
-  const inviteUser = (userid) => {
-    setuserToBeInvited(...userToBeInvited, userid);
+  //for createUserWithInvite
+  const inviteUser = (userToInvite) => {
+    console.log(userToInvite, 'invite button');
+    setUserToBeInvited(userToInvite);
   };
 
   const findFave = (friendId) => {
-    console.log('FI', friendId);
+    //console.log('FI', friendId);
     // for (let i = 0; i <= favorite.length; i++) {
     //   if (favorite[i].userId === friendId) {
     //     console.log("UF", favorites[i]);
     //   }
     // }
     const userFave = favorite.find((fave) => fave.userId === friendId);
-    console.log('UF', userFave);
+    //console.log('UF', userFave);
   };
 
   // const redHeart = () => {
@@ -102,13 +105,13 @@ const SearchResults = ({ auth }) => {
   }, []);
 
   const getUserHobbies = (uid) => {
-    console.log('uh', usersHobbies);
+    // console.log('uh', usersHobbies);
     const uHobs = usersHobbies.find((h) => h.user_id === uid);
     return uHobs;
   };
 
   const getHobbyName = (hobbyId) => {
-    console.log('hobbyid', hobbyId);
+    // console.log('hobbyid', hobbyId);
     const hobNm = hobbies.find((b) => b.id === hobbyId.hobby_id);
     return hobNm.hobby_name;
   };
@@ -177,7 +180,7 @@ const SearchResults = ({ auth }) => {
             // console.log(userProfile.userId, 'username');
             //console.log(profilePic, 'profile pic');
 
-            console.log('ID', userProfile.userId);
+            // console.log('ID', userProfile.userId);
             return (
               <div key={userProfile.id} className="col-sm-4">
                 <div className="card profile-card">
@@ -276,13 +279,19 @@ const SearchResults = ({ auth }) => {
                     >
                       View details
                     </button>
-                    <button
+                    <Link
+                      to="/create/invite/event"
                       type="button"
                       className="btn btn-primary"
-                      onClick={() => inviteUser(userProfile.userId)}
+                      onClick={() =>
+                        inviteUser({
+                          id: userProfile.userId,
+                          name: getUsername(userProfile.userId),
+                        })
+                      }
                     >
                       Invite user
-                    </button>
+                    </Link>
                     <div
                       className="modal fade"
                       id="exampleModalCenter2"
@@ -344,10 +353,16 @@ const SearchResults = ({ auth }) => {
                               Save as favorite?
                             </button>
                             <button
+                              //to="/create/invite/event"
                               type="button"
-                              className="btn btn-primary"
-                              onClick={() => inviteUser(userProfile.userId)}
                               data-dismiss="modal"
+                              className="btn btn-primary"
+                              onClick={() =>
+                                inviteUser({
+                                  id: userProfile.userId,
+                                  name: getUsername(userProfile.userId),
+                                })
+                              }
                             >
                               Invite user
                             </button>

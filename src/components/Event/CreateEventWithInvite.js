@@ -10,8 +10,8 @@ const CreateEventWithInvite = ({
   setEvents,
   events,
   headers,
+  userToBeInvited,
 }) => {
-  // const [seen, setSeen] = useState(false);
   const [cancelMessage, setCancelMessage] = useState('');
   const [error, setError] = useState('');
   const [isInvited, setIsInvited] = useState(false);
@@ -24,11 +24,20 @@ const CreateEventWithInvite = ({
     userId: auth.id,
   });
 
-  const userToInvite = users.find((user) => user.username === 'moe');
-  console.log(userToInvite);
+  // const userToInvite = users.find((user) => user.username === 'moe');
+
   //once event is created go to a specific page
   const history = useHistory();
-  const goToFreinds = () => history.push('/search/results');
+  const goToPeeps = () => history.push('/peeps');
+
+  useEffect(() => {
+    if (!userToBeInvited) {
+      goToPeeps();
+      console.log('here');
+    }
+  }, []);
+
+  //console.log(userToBeInvited, 'user to be invited');
 
   const onChange = (ev) => {
     const change = {};
@@ -43,7 +52,7 @@ const CreateEventWithInvite = ({
       const newEvent = response.data;
       setEvent(response.data);
       const createUserEvent = {
-        joinedUserId: userToInvite.id, //this needs to be changed to the user that erica gives me
+        joinedUserId: userToBeInvited.id, //this needs to be changed to the user that erica gives me
         eventId: newEvent.id,
         status: 'invited',
       };
@@ -64,7 +73,7 @@ const CreateEventWithInvite = ({
     //console.log(event, 'event');
     createEvent(event);
     //need to have page working
-    //goToFreinds();
+    goToPeeps();
   };
   //console.log(isInvited, 'isInvited');
   return (
@@ -139,7 +148,7 @@ const CreateEventWithInvite = ({
             onChange={(ev) => setIsInvited(ev.target.checked)}
           />
           <label className="custom-control-label" htmlFor="invite">
-            Invite User
+            Invite {userToBeInvited.name}
           </label>
         </div>
         <button
@@ -149,7 +158,7 @@ const CreateEventWithInvite = ({
           Create Event
         </button>
         {/* Change link once you know where it will go */}
-        <Link to="/meetups" className="btn">
+        <Link to="/peeps" className="btn">
           Cancel
         </Link>
       </form>
