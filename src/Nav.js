@@ -16,7 +16,7 @@ import FileUpload from './components/FileUpload';
 import Login from './Login';
 import Home from './Home';
 
-const Nav = ({ params, logout, auth, login }) => {
+const Nav = ({ params, logout, auth, login, invitesCount }) => {
   return (
     <nav className="navbar navbar-expand-lg bg-dark">
       <Link className="navbar-brand nav-link" to="/home">
@@ -183,8 +183,9 @@ const Nav = ({ params, logout, auth, login }) => {
             </div>
           </li>
         </ul>
-        <i className="fas fa-envelope-open-text fa-lg"></i>
-
+        <Link to="/invites">
+          <i className="fas fa-envelope-open-text fa-lg">{invitesCount}</i>
+        </Link>
         <form className="form-inline my-2 my-lg-0">
           <Link
             to="/login"
