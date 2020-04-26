@@ -40,6 +40,29 @@ h3 {
 .profile-photo {
   width: 100%;
 }
+.side-by-side {
+  display: inline-block;
+  width: 100%;
+}
+.sbs {
+  width: 48%;
+}
+.round-photo-inset {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  top: 0;
+  z-index: 5;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+.about-user {
+  font-size: 0.8rem;
+  color: #333;
+  list-style: none;
+  margin: 0 10px;
+}
 .fa {
   font-size: 50px;
   cursor: pointer;
@@ -48,14 +71,46 @@ h3 {
 .fa:visited {
   color: green;
 }
-.fa:hover {
-  color: darkblue;
+.fas:hover {
+  color: red;
 }
 .fa-envelope-open-text {
   margin-right: 15px;
 }
 .gray {
   color: gray;
+  border: none;
+  z-index: 5;
+  position: absolute;
+  top: 40px;
+  left: 30px;
+  background: 0%;
+}
+.gray-modal {
+  color: gray;
+  border: none;
+  z-index: 5;
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  background: 0%;
+  font-size: 48px;
+}
+.smaller-headline {
+  font-size: 1rem;
+}
+.card {
+  box-shadow: 5px 5px 5px gray;
+}
+.card-info {
+  margin: 10px 10px 20px;
+  text-align: center;
+}
+.card-name {
+  text-align: center;
+}
+.card-age {
+  text-align: right;
 }
 .red {
   color: red;
@@ -155,8 +210,8 @@ body {
 .btn {
   background: #34b3a0;
   color: #fff;
-  font-size: 1.2rem;
-  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  padding: 0.2rem 1rem;
   text-decoration: none;
 }
 .btn-nav {
