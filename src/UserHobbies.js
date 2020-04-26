@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useHistory, Link } from 'react-router-dom';
+
 let clicks = 0;
 const UserHobbies = (auth) => {
   const [hobbies, setHobbies] = useState([]);
   const [userHobbies, setUserHobbies] = useState([]);
   const [selected, setSelected] = useState([]);
+
+  const history = useHistory();
+  const goToPeeps = () => history.push('/peeps');
 
   // const selectMe = (ev) => {
   const eachHobby = Object.keys(userHobbies);
@@ -106,6 +111,7 @@ const UserHobbies = (auth) => {
         hobbyId,
       });
     });
+    goToPeeps();
   };
 
   return (

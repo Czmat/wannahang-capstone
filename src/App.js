@@ -48,8 +48,8 @@ const App = () => {
   const [userProfile, setUserProfile] = useState([]);
   const [userProfiles, setUserProfiles] = useState([]);
   const [userEvents, setUserEvents] = useState([]);
+  const [userToBeInvited, setUserToBeInvited] = useState('');
   const [filteredProfiles, setFilteredProfiles] = useState([]);
-  const [userToBeInvited, setuserToBeInvited] = useState([]);
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
@@ -179,7 +179,11 @@ const App = () => {
             <SearchCriteria auth={auth} />
           </Route> */}
           <Route path="/peeps">
-            <SearchResults auth={auth} users={users} />
+            <SearchResults
+              auth={auth}
+              users={users}
+              setUserToBeInvited={setUserToBeInvited}
+            />
           </Route>
           <Route path="/search/filter">
             <SearchFIlter auth={auth} userProfiles={userProfiles} />
@@ -248,6 +252,7 @@ const App = () => {
               setEvents={setEvents}
               events={events}
               headers={headers}
+              userToBeInvited={userToBeInvited}
             />
           </Route>
           <Route path="/friends">
