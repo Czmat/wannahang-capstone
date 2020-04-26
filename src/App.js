@@ -50,6 +50,7 @@ const App = () => {
   const [userEvents, setUserEvents] = useState([]);
   const [userToBeInvited, setUserToBeInvited] = useState('');
   const [filteredProfiles, setFilteredProfiles] = useState([]);
+  const [invitesCount, setInvitesCount] = useState(0);
 
   const login = async (credentials) => {
     const token = (await axios.post('/api/auth', credentials)).data.token;
@@ -92,6 +93,19 @@ const App = () => {
       axios
         .get('/api/users', headers())
         .then((response) => setUsers(response.data));
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    //console.log(inviteDetail, 'inviteDetail');
+    if (auth.id) {
+      axios.get(`/api/invites/${auth.id}`).then((response) => {
+        const invites = response.data;
+        const invitations = invites.filter(
+          (invite) => invite.status === 'invited'
+        );
+        setInvitesCount(invitations.length);
+      });
     }
   }, [auth]);
 
@@ -153,7 +167,7 @@ const App = () => {
     return (
       <Router>
         <NavTop logout={logout} auth={auth} />
-        <Nav logout={logout} auth={auth} />
+        <Nav logout={logout} auth={auth} invitesCount={invitesCount} />
         <Switch>
           <Route path="/file/upload" exact>
             <FileUpload auth={auth} logout={logout} />
@@ -233,6 +247,7 @@ const App = () => {
               userEvents={userEvents}
               setUserEvents={setUserEvents}
               headers={headers}
+              setInvitesCount={setInvitesCount}
             />
           </Route>
           <Route path="/create/event">
