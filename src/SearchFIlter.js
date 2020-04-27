@@ -118,6 +118,16 @@ const SearchFIlter = ({ usersid }) => {
     console.log('FP', filteredProfiles);
   };
 
+  const showAllUsers = () => {
+    const all = document.querySelector('#allUsers');
+    all.className = ' ';
+  };
+
+  const submitAll = (event) => {
+    event.preventDefault();
+    showAllUsers();
+  };
+
   return (
     <div>
       <div>
@@ -147,7 +157,7 @@ const SearchFIlter = ({ usersid }) => {
               </option>
             </select>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Show</button>
         </form>
       </div>
       <div>
@@ -170,7 +180,7 @@ const SearchFIlter = ({ usersid }) => {
               })}
             </select>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Show</button>
         </form>
       </div>
       <div>
@@ -183,12 +193,18 @@ const SearchFIlter = ({ usersid }) => {
       </div>
       <div>
         <div>
-          {/* <h4>All users</h4> */}
-          {/* <ul>
-            {userProfiles.map((prof) => {
-              return <li key={prof.id}>{getUsername(prof.userId)}</li>;
-            })}
-          </ul> */}
+          <h4>I just want to see all users with no filters</h4>
+          <button type="button" onClick={(e) => submitAll(e)}>
+            Show
+          </button>
+          <div id="allUsers" className="hide">
+            <h4>All users</h4>
+            <ul>
+              {users.map((user) => {
+                return <li key={user.id}>{user.username}</li>;
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
