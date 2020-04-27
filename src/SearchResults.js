@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 const SearchResults = ({ auth, setUserToBeInvited }) => {
@@ -10,6 +10,9 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [photos, setPhotos] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
+
+  const history = useHistory();
+  const goToCreateEvent = () => history.push("/create/invite/event");
   //const [userToBeInvited, setUserToBeInvited] = useState([]);
   //console.log(profiles, 'profiles');
 
@@ -167,7 +170,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   //   x.classList.toggle("fa fa-heart");
   // }
 
-  if (!users) {
+  if (!users || !photos) {
     Loading;
   } else {
     return (
@@ -305,9 +308,15 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                       <button
                         type="button"
                         className="btn-outline-success btn-rounded btn-sm p-2 d-inline sbs"
-                        onClick={() => inviteUser(userProfile.userId)}
+                        onClick={() => {
+                          inviteUser({
+                            id: userProfile.userId,
+                            name: getUsername(userProfile.userId),
+                          });
+                          goToCreateEvent();
+                        }}
                       >
-                        Invite Me
+                        Invite user
                       </button>
                     </div>
                     {/* ==================SECOND MODAL================== */}
@@ -397,7 +406,13 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                               <button
                                 type="button"
                                 className="btn-outline-success btn-rounded btn-sm mr-1"
-                                onClick={() => inviteUser(userProfile.userId)}
+                                onClick={() => {
+                                  inviteUser({
+                                    id: userProfile.userId,
+                                    name: getUsername(userProfile.userId),
+                                  });
+                                  goToCreateEvent();
+                                }}
                                 data-dismiss="modal"
                               >
                                 Invite?

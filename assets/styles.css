@@ -45,7 +45,7 @@ h3 {
   width: 100%;
 }
 .sbs {
-  width: 48%;
+  width: 45%;
 }
 .round-photo-inset {
   border-radius: 50%;
@@ -298,4 +298,18 @@ a.links-nav:hover {
 .smallType {
   font-size: 0.6rem;
   font-style: italic;
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .side-by-side {
+    width: 100%;
+  }
+  .sbs {
+    width: 100%;
+  }
+  .profile-card {
+    margin: 2px;
+  }
+  .card {
+    margin: 2px;
+  }
 }

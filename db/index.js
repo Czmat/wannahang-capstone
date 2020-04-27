@@ -635,33 +635,33 @@ const sync = async () => {
 
   Promise.all([
     photos.createPhoto({
-      filePath: "/uploads",
-      fileName: "chick.JPG",
+      filePath: "/uploads/",
+      fileName: "lucy.jpg",
       userId: lucyid,
     }),
     photos.createPhoto({
       filePath: "/uploads/",
-      fileName: "dude.PNG",
+      fileName: "moe.jpg",
       userId: moeid,
     }),
     photos.createPhoto({
       filePath: "/uploads/",
-      fileName: "fakeuser.JPG",
+      fileName: "curly.jpg",
       userId: curlyid,
     }),
     photos.createPhoto({
       filePath: "/uploads/",
-      fileName: "",
+      fileName: "larry.jpg",
       userId: larryid,
     }),
     photos.createPhoto({
       filePath: "/uploads/",
-      fileName: "mr.JPG",
+      fileName: "shemp.jpg",
       userId: shempid,
     }),
     photos.createPhoto({
       filePath: "/uploads/",
-      fileName: "flat.PNG",
+      fileName: "",
       userId: joeid,
     }),
     photos.createPhoto({
@@ -671,7 +671,7 @@ const sync = async () => {
     }),
     photos.createPhoto({
       filePath: "/uploads/",
-      fileName: "pat.JPG",
+      fileName: "Sally.jpg",
       userId: sallyid,
     }),
     photos.createPhoto({
@@ -819,7 +819,7 @@ const sync = async () => {
       careerId: othid,
       education: "Trade school",
       pets: "Reptiles",
-      birthdate: "5/5/1969",
+      birthdate: "5/5/1979",
       zipCode: "32073",
       employmentStatus: "Retired",
       about: "Football",
