@@ -1,4 +1,4 @@
-const client = require("../client");
+const client = require('../client');
 
 // const readProfiles = async () => {
 //   return (await client.query("SELECT * from user_profiles")).rows;
@@ -97,14 +97,14 @@ const updateProfile = async (user_profiles) => {
   const updatedProfile = (
     await client.query(SQL, [
       user_profiles.gender,
-      user_profiles.politicalAffiliation,
-      user_profiles.religiousAffiliation,
-      user_profiles.careerId,
+      user_profiles.politicalaffiliation,
+      user_profiles.religiousaffiliation,
+      user_profiles.careerid,
       user_profiles.education,
       user_profiles.pets,
       user_profiles.birthdate,
-      user_profiles.zipCode,
-      user_profiles.employmentStatus,
+      user_profiles.zipcode,
+      user_profiles.employmentstatus,
       user_profiles.about,
       user_profiles.id,
     ])
