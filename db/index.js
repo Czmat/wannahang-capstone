@@ -18,6 +18,7 @@ const models = ({
   events,
   searches,
   photos,
+  photosBkgd,
   favorites,
 } = require("./models"));
 
@@ -33,7 +34,6 @@ const sync = async () => {
   DROP TABLE IF EXISTS events;
   DROP TABLE IF EXISTS user_photos;
   DROP TABLE IF EXISTS user_photos_bkgd;
-
   DROP TABLE IF EXISTS user_groups CASCADE;
   DROP TABLE IF EXISTS user_profiles CASCADE;
   DROP TABLE IF EXISTS user_hobbies CASCADE;
@@ -652,27 +652,27 @@ const sync = async () => {
 
   Promise.all([
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/lucy.jpg",
       fileName: "lucy.jpg",
       userId: lucyid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/moe.jpg",
       fileName: "moe.jpg",
       userId: moeid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/curly.jpg",
       fileName: "curly.jpg",
       userId: curlyid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/larry.jpg",
       fileName: "larry.jpg",
       userId: larryid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/shemp.jpg",
       fileName: "shemp.jpg",
       userId: shempid,
     }),
@@ -682,99 +682,98 @@ const sync = async () => {
       userId: joeid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/patty.jpg",
       fileName: "patty.jpg",
       userId: pattiid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/Sally.jpg",
       fileName: "Sally.jpg",
       userId: sallyid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/Marcie.jpg",
       fileName: "Marcie.jpg",
       userId: marcieid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/Will.jpg",
       fileName: "Will.jpg",
       userId: willid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/Daniel.jpg",
       fileName: "Daniel.jpg",
       userId: danielid,
     }),
     photos.createPhoto({
-      filePath: "/uploads/",
+      filePath: "/uploads/Georgia.jpg",
       fileName: "Georgia.jpg",
       userId: georgiaid,
     }),
   ]);
-  // Promise.all([
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "",
-  //     userId: lucyid,
-  //   }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "three-stooges.jpg",
-  //     userId: moeid,
-  //   }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "three-stooges.jpg",
-  //     userId: curlyid,
-  //   }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "three-stooges.jpg",
-  //     userId: larryid,
-  //   }),
-  //   photos -
-  //     bkgd.createPhotoBkgd({
-  //       filePath: "/uploads/",
-  //       fileName: "",
-  //       userId: shempid,
-  //     }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "dock.jpg",
-  //     userId: joeid,
-  //   }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "bike.jpg",
-  //     userId: pattiid,
-  //   }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "red-jeep.jpg",
-  //     userId: sallyid,
-  //   }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "girls-party.jpg",
-  //     userId: marcieid,
-  //   }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "will-scene.jpg",
-  //     userId: willid,
-  //   }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "basketball.jpg",
-  //     userId: danielid,
-  //   }),
-  //   photosBkgd.createPhotoBkgd({
-  //     filePath: "/uploads/",
-  //     fileName: "highway.jpg",
-  //     userId: georgiaid,
-  //   }),
-  // ]);
+  Promise.all([
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/",
+      fileName: "",
+      userId: lucyid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/",
+      fileName: "three-stooges.jpg",
+      userId: moeid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/",
+      fileName: "three-stooges.jpg",
+      userId: curlyid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/three-stooges.jpg",
+      fileName: "three-stooges.jpg",
+      userId: larryid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/",
+      fileName: "",
+      userId: shempid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/dock.jpg",
+      fileName: "dock.jpg",
+      userId: joeid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/bike.jpg",
+      fileName: "bike.jpg",
+      userId: pattiid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/red-jeep.jpg",
+      fileName: "red-jeep.jpg",
+      userId: sallyid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/girls-party.jpg",
+      fileName: "girls-party.jpg",
+      userId: marcieid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/will-scene.jpg",
+      fileName: "will-scene.jpg",
+      userId: willid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/basketball.jpg",
+      fileName: "basketball.jpg",
+      userId: danielid,
+    }),
+    photosBkgd.createPhotoBkgd({
+      filePath: "/uploads/highway.jpg",
+      fileName: "highway.jpg",
+      userId: georgiaid,
+    }),
+  ]);
 
   Promise.all([
     profiles.createProfile({
@@ -1003,6 +1002,9 @@ const readUsernameProfiles = async () => {
 const readPhotos = async () => {
   return (await client.query("SELECT * from user_photos")).rows;
 };
+const readPhotosBkgd = async () => {
+  return (await client.query("SELECT * from user_photos_bkgd")).rows;
+};
 
 // const createUserInfo = async ([
 //   user,
@@ -1050,5 +1052,6 @@ module.exports = {
   readProfiles,
   readUsernameProfiles,
   readPhotos,
+  readPhotosBkgd,
   // createUserInfo,
 };

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
-import SearchResultAboutModal from './components/SearchResultAboutModal';
-import FavModal from './components/FavModal';
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
+import SearchResultAboutModal from "./components/SearchResultAboutModal";
+import FavModal from "./components/FavModal";
 
 const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [users, setUsers] = useState([]);
@@ -10,15 +10,16 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [profiles, setProfiles] = useState([]);
   const [careers, setCareers] = useState([]);
   const [photos, setPhotos] = useState([]);
+  const [photosBkgd, setPhotosBkgd] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
   const [hobbies, setHobbies] = useState([]);
   const [userHobbies, setUserHobbies] = useState([]);
   const [usersHobbies, setUsersHobbies] = useState([]);
-  const [aboutMe, setAboutMe] = useState('');
+  const [aboutMe, setAboutMe] = useState("");
 
   const history = useHistory();
-  const goToCreateEvent = () => history.push('/create/invite/event');
+  const goToCreateEvent = () => history.push("/create/invite/event");
 
   const inviteUser = (userToInvite) => {
     setUserToBeInvited(userToInvite);
@@ -30,23 +31,27 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   };
 
   useEffect(() => {
-    axios.get('/api/users').then((response) => setUsers(response.data));
+    axios.get("/api/users").then((response) => setUsers(response.data));
 
-    axios.get('/api/photos').then((response) => setPhotos(response.data));
+    axios.get("/api/photos").then((response) => setPhotos(response.data));
+    axios
+      .get("/api/photosBkgd")
+      .then((response) => setPhotosBkgd(response.data));
+
     // gets zip code of current user
-    axios.get('/api/profiles').then((response) => {
+    axios.get("/api/profiles").then((response) => {
       const findProfile = response.data.find(
         ({ userId }) => userId === auth.id
       );
       setProfile(findProfile);
       setProfiles(response.data);
     });
-    axios.get('/api/careers').then((response) => setCareers(response.data));
+    axios.get("/api/careers").then((response) => setCareers(response.data));
 
-    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
+    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
 
     axios
-      .get('/api/user_hobbies')
+      .get("/api/user_hobbies")
       .then((response) => setUserHobbies(response.data));
   }, []);
 
@@ -110,7 +115,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
 
   const saveAsFavorite = async (fave) => {
     await axios
-      .post('/api/createFavorite', fave)
+      .post("/api/createFavorite", fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
 
@@ -131,7 +136,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       <div className="container">
         {/* <i onclick="myFunction(this)" className="fa fa-thumbs-up"></i> */}
         <h3>
-          Future Friends Nearby{' '}
+          Future Friends Nearby{" "}
           <span className="smaller-headline">
             (There are {userProfiles.length} in your zip: {userZip} )
           </span>
@@ -152,8 +157,21 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (profilePic) {
               {
                 !profilePic.filename
-                  ? (src = '/images/avatar.jpg')
-                  : (src = profilePic.filepath + profilePic.filename);
+                  ? (src = "/images/avatar.jpg")
+                  : (src = profilePic.filepath);
+              }
+            }
+            console.log("SRC", src);
+            //photosbkgd
+            const profilePicBkgd = photosBkgd.find(
+              (photoBkgd) => photoBkgd.userId === userProfile.userId
+            );
+            let srcBkgd;
+            if (profilePicBkgd) {
+              {
+                !profilePicBkgd.filename
+                  ? (srcBkgd = "/images/no-bkgd.jpg")
+                  : (srcBkgd = profilePicBkgd.filepath);
               }
             }
             //career
@@ -174,10 +192,10 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                       <h5 className="card-title d-inline p-2 card-name">
                         {username
                           ? username.charAt(0).toUpperCase() + username.slice(1)
-                          : ''}
+                          : ""}
                       </h5>
                       <p className="card-text d-inline p-2 card-age">
-                        {findAge(userProfile.birthdate)}{' '}
+                        {findAge(userProfile.birthdate)}{" "}
                       </p>
                     </div>
                     <button
@@ -193,6 +211,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                           userId: userProfile.userId,
                           username,
                           src,
+                          srcBkgd,
                           careerName,
                           about: userProfile.about,
                           pets: userProfile.pets,
@@ -203,7 +222,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                         });
                       }}
                     >
-                      {' '}
+                      {" "}
                     </button>
                     <div className="side-by-side">
                       <button
@@ -216,6 +235,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                             userId: userProfile.userId,
                             username,
                             src,
+                            srcBkgd,
                             careerName,
                             about: userProfile.about,
                             pets: userProfile.pets,
