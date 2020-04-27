@@ -10,40 +10,23 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [photos, setPhotos] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
+  const [hobbies, setHobbies] = useState([]);
+  const [userHobbies, setUserHobbies] = useState([]);
+  const [usersHobbies, setUsersHobbies] = useState([]);
 
   const history = useHistory();
   const goToCreateEvent = () => history.push('/create/invite/event');
-  //const [userToBeInvited, setUserToBeInvited] = useState([]);
-  //console.log(profiles, 'profiles');
 
-  //const usersId = auth.id;
-
-  // console.log(favorite);
-  // let fave = favorites.data.find(({ userId }) => userId === favoriteId);
-  // console.log(fave);
-
-  //for createUserWithInvite
   const inviteUser = (userToInvite) => {
     console.log(userToInvite, 'invite button');
     setUserToBeInvited(userToInvite);
   };
 
   const findFave = (friendId) => {
-    //console.log('FI', friendId);
-    // for (let i = 0; i <= favorite.length; i++) {
-    //   if (favorite[i].userId === friendId) {
-    //     console.log("UF", favorites[i]);
-    //   }
-    // }
     const userFave = favorite.find((fave) => fave.userId === friendId);
-    //console.log('UF', userFave);
+    return userFave;
   };
 
-  // const redHeart = () => {
-  //   // document.getElementsByClassName("gray")[0].style.backgroundColor = "red";
-  //   document.getElementById("heart").style.backgroundColor = "red";
-  //   //  = favorites.find(findFave);
-  // };
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
@@ -57,32 +40,19 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       setProfiles(response.data);
     });
     axios.get('/api/careers').then((response) => setCareers(response.data));
+
+    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
+
+    axios
+      .get('/api/user_hobbies')
+      .then((response) => setUserHobbies(response.data));
   }, []);
 
   const userZip = profile.zipcode;
 
-  // useEffect(() => {
-  //   axios.get('/api/careers').then((response) => setCareers(response.data));
-  // }, []);
-
-  // useEffect(() => {
-  //   // find userids of profiles with same zip code
-  //   axios.get('/api/profiles').then((response) => setProfiles(response.data));
-  // }, []);
-
-  //need to rename this to userProfilesInZip
   const userProfiles = profiles.filter(
     (p) => p.zipcode === userZip && p.userId !== auth.id
   );
-
-  // console.log(
-  //   profile,
-  //   'profile',
-  //   userZip,
-  //   'user zip',
-  //   userProfiles,
-  //   'user profiles'
-  // );
 
   const getUsername = (id) => {
     const user = users.find((u) => u.id === id);
@@ -90,31 +60,20 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       return user.username;
     }
   };
-  //console.log(getUsername())
+
   const getCareerName = (cid) => {
     const career = careers.find((c) => c.id === cid);
     if (career) {
       return career.career_name;
     }
   };
-  useEffect(() => {
-    axios
-      .get('/api/user_hobbies')
-      .then((response) => setUsersHobbies(response.data));
-  }, []);
-
-  useEffect(() => {
-    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
-  }, []);
 
   const getUserHobbies = (uid) => {
-    // console.log('uh', usersHobbies);
-    const uHobs = usersHobbies.find((h) => h.user_id === uid);
-    return uHobs;
+    const uHobs = userHobbies.find((h) => h.user_id === uid);
+    setUsersHobbies(uHobs);
   };
 
   const getHobbyName = (hobbyId) => {
-    // console.log('hobbyid', hobbyId);
     const hobNm = hobbies.find((b) => b.id === hobbyId.hobby_id);
     return hobNm.hobby_name;
   };
@@ -131,7 +90,6 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   };
 
   const getProfilePic = (friendId) => {
-    // if (photos) {
     const profilePic = photos.find((photo) => photo.userId === friendId);
     if (!profilePic.filename) {
       const filename = '/avatar.jpg';
@@ -140,8 +98,6 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       return src;
     }
     if (profilePic) {
-      console.log(profilePic);
-
       const filename = profilePic.filename;
       const filepath = profilePic.filepath;
       const src = filepath + filename;
@@ -154,9 +110,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       .post('/api/createFavorite', fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
-  // useEffect(() => {
-  //   axios.get('/api/favorites').then((response) => setFavorite(response.data));
-  // }, []);
+
   const onSubmit = (fav) => {
     const user1 = auth.id;
     const user2 = fav;
@@ -166,9 +120,6 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     };
     saveAsFavorite(faveUser);
   };
-  // function myFunction(x) {
-  //   x.classList.toggle("fa fa-heart");
-  // }
 
   if (!users || !photos) {
     Loading;
@@ -184,16 +135,6 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
         </h3>
         <div className="row">
           {userProfiles.map((userProfile) => {
-            // const use = users.find((u) => u.id === userProfile.userId);
-
-            // const profilePic = photos.find(
-            //   (photo) => photo.userId === userProfile.userId
-            // );
-
-            // console.log(userProfile.userId, 'username');
-            //console.log(profilePic, 'profile pic');
-
-            // console.log('ID', userProfile.userId);
             return (
               <div key={userProfile.id} className="col-sm-4">
                 <div className="card profile-card">
@@ -204,7 +145,6 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                         src={getProfilePic(userProfile.userId)}
                         alt={getUsername(userProfile.userId)}
                       />
-                      {/* {getProfilePic(userProfile.userId)} */}
                     </div>
                     <div className="card-info">
                       <h5 className="card-title d-inline p-2 card-name">
@@ -228,16 +168,6 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                     >
                       {' '}
                     </button>
-                    {/* <p className="card-text">
-                      Age {findAge(userProfile.birthdate)}{' '}
-                    </p> */}
-
-                    {/* <a href="#" className="btn btn-primary">
-                    Go somewhere
-                  </a> */}
-
-                    {/* //TEST */}
-
                     <div
                       className="modal fade"
                       id="exampleModalCenter"
@@ -332,7 +262,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                       <div className="modal-dialog modal-lg" role="document">
                         <div className="modal-content">
                           <div className="modal-body mb-0 p-0">
-                            <div class="embed-responsive profile-photo">
+                            <div className="embed-responsive profile-photo">
                               <img
                                 src="/images/scuba-diver.jpg"
                                 alt={getUsername(userProfile.userId)}
@@ -381,20 +311,32 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                                 {userProfile.employmentstatus}
                               </i>
                             </div>
+                            <div className="about-user mb-2">
+                              My hobbies:
+                              <ul>
+                                {usersHobbies.map((userHobby) => {
+                                  return (
+                                    <li key={userHobby.id}>
+                                      {getHobbyName(userHobby.hobby_id)}
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            </div>
                           </div>
                           <div className="modal-footer justify-content-center flex-column flex-md-row">
-                            <span class="mr-4">Wanna Hang?</span>
+                            <span className="mr-4">Wanna Hang?</span>
                             <div>
-                              <a class="px-2 fa-lg fb-ic">
-                                <i class="fab fa-facebook-f"></i>
+                              <a className="px-2 fa-lg fb-ic">
+                                <i className="fab fa-facebook-f"></i>
                               </a>
 
-                              <a class="px-2 fa-lg tw-ic">
-                                <i class="fab fa-twitter"></i>
+                              <a className="px-2 fa-lg tw-ic">
+                                <i className="fab fa-twitter"></i>
                               </a>
 
-                              <a class="px-2 fa-lg li-ic">
-                                <i class="fab fa-linkedin-in"></i>
+                              <a className="px-2 fa-lg li-ic">
+                                <i className="fab fa-linkedin-in"></i>
                               </a>
 
                               <button
@@ -425,34 +367,10 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                             >
                               Close
                             </button>
-                            {/* <button
-                              type="submit"
-                              className="btn btn-primary"
-                              onClick={() => onSubmit(userProfile.userId)}
-                              data-dismiss="modal"
-                            >
-                              Save as favorite?
-                            </button> */}
-                            {/* <button
-                              //to="/create/invite/event"
-                              type="button"
-                              data-dismiss="modal"
-                              className="btn btn-primary"
-                              onClick={() =>
-                                inviteUser({
-                                  id: userProfile.userId,
-                                  name: getUsername(userProfile.userId),
-                                })
-                              }
-                            >
-                              Invite user
-                            </button> */}
                           </div>
                         </div>
                       </div>
                     </div>
-
-                    {/* TESTING */}
                   </div>
                 </div>
               </div>
