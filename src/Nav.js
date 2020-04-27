@@ -69,6 +69,11 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                   Private Invites
                 </Link>
               </div>
+              <div className="nav-item">
+                <Link className="nav-link" to="/user/created/invites">
+                  User created Invites
+                </Link>
+              </div>
             </div>
           </li>
 

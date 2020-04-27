@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
-import InvitationDetail from './InvitationDetail';
-import AcceptedInvites from './AcceptedInvites';
-import DeclinedInvites from './DeclinedInvites';
+import CreatedInviteDetail from './CreatedInviteDetail';
+import AcceptedCreatedInvites from './AcceptedCreatedInvites';
+import DeclinedCreatedInvites from './DeclinedCreatedInvites';
+// import AcceptedInvites from './AcceptedInvites';
+// import DeclinedInvites from './DeclinedInvites';
 
-export default function Invitations({
+export default function UserCreatedInvites({
   headers,
   auth,
   userEvents,
@@ -14,33 +16,29 @@ export default function Invitations({
   setEvents,
   setInvitesCount,
 }) {
-  const [invites, setInvites] = useState([]);
+  const [createdInvites, setCreatedInvites] = useState([]);
   //const [showDetail, setShowDetail] = useState('');
   const [inviteDetail, setInviteDetail] = useState('');
 
   useEffect(() => {
     //console.log(inviteDetail, 'inviteDetail');
     axios
-      .get(`/api/invites/${auth.id}`)
-      .then((response) => setInvites(response.data));
+      .get(`/api/created/invites/${auth.id}`)
+      .then((response) => setCreatedInvites(response.data));
   }, [inviteDetail]);
-  //console.log(invites, 'invites', userEvents);
+  // console.log(createdInvites, 'createdInvites', userEvents);
 
-  const invitations = invites.filter((invite) => invite.status === 'invited');
+  const invitations = createdInvites.filter(
+    (invite) => invite.status === 'invited'
+  );
   //console.log(invitations, 'status invited');
 
-  useEffect(() => {
-    setInvitesCount(invitations.length);
-
-    //console.log(inviteDetail, 'inviteDetail');
-  }, [invitations]);
-
-  const acceptedInvites = invites.filter(
+  const acceptedInvites = createdInvites.filter(
     (invite) => invite.status === 'accepted'
   );
   // console.log(acceptedInvites, 'status accepted');
 
-  const declinedInvites = invites.filter(
+  const declinedInvites = createdInvites.filter(
     (invite) => invite.status === 'declined'
   );
   //console.log(declinedInvites, 'status declined');
@@ -48,7 +46,7 @@ export default function Invitations({
   if (inviteDetail) {
     return (
       <div>
-        <InvitationDetail
+        <CreatedInviteDetail
           inviteDetail={inviteDetail}
           setInviteDetail={setInviteDetail}
           events={events}
@@ -59,7 +57,7 @@ export default function Invitations({
   } else {
     return (
       <div>
-        <h5>You have been invited to {invitations.length} events</h5>
+        <h5>You have created {invitations.length} invites</h5>
         {invitations.map((invite) => {
           return (
             <div key={invite.id}>
@@ -73,11 +71,6 @@ export default function Invitations({
                   <p className="card-text">
                     {moment(invite.date).format('MMMM Do YYYY, h:mm a')}
                   </p>
-                  {invite.isAccepted ? (
-                    <p>You accepted to go</p>
-                  ) : (
-                    <p>not going</p>
-                  )}
                   <button
                     className="btn btn-primary"
                     onClick={() => {
@@ -85,7 +78,7 @@ export default function Invitations({
                       //setShowDetail(true);
                     }}
                   >
-                    view Detail
+                    View Detail
                   </button>
                 </div>
               </div>
@@ -94,7 +87,7 @@ export default function Invitations({
         })}
         <div>
           {acceptedInvites ? (
-            <AcceptedInvites
+            <AcceptedCreatedInvites
               acceptedInvites={acceptedInvites}
               setInviteDetail={setInviteDetail}
             />
@@ -104,7 +97,7 @@ export default function Invitations({
         </div>
         <div>
           {declinedInvites ? (
-            <DeclinedInvites
+            <DeclinedCreatedInvites
               declinedInvites={declinedInvites}
               setInviteDetail={setInviteDetail}
             />

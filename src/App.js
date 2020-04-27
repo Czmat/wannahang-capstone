@@ -28,6 +28,7 @@ import Invitations from './components/Invites/Invitations';
 import CreateEventWithInvite from './components/Event/CreateEventWithInvite';
 import Home from './Home';
 import Chat from './Chat';
+import UserCreatedInvites from './components/CreatedInvites/UserCreatedInvites';
 
 const headers = () => {
   const token = window.localStorage.getItem('token');
@@ -240,6 +241,18 @@ const App = () => {
           </Route>
           <Route path="/invites">
             <Invitations
+              setEvents={setEvents}
+              events={events}
+              users={users}
+              auth={auth}
+              userEvents={userEvents}
+              setUserEvents={setUserEvents}
+              headers={headers}
+              setInvitesCount={setInvitesCount}
+            />
+          </Route>
+          <Route path="/user/created/invites">
+            <UserCreatedInvites
               setEvents={setEvents}
               events={events}
               users={users}
