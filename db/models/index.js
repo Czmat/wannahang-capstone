@@ -13,6 +13,6 @@ module.exports = {
   hobbies: require("./hobbies"),
   searches: require("./searches"),
   photos: require("./photos"),
-  photosBkd: require("./photosBkgd"),
+  photosBkgd: require("./photosBkgd"),
   favorites: require("./favorites"),
 };
