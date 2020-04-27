@@ -49,7 +49,7 @@ const DeleteCreatedInvitePopUp = ({ deleteInvite }) => {
                 //goEdited();
               }}
             >
-              Save changes
+              Delete
             </button>
           </div>
         </div>
@@ -57,4 +57,4 @@ const DeleteCreatedInvitePopUp = ({ deleteInvite }) => {
     </div>
   );
 };
-export default UpdatePopUp;
+export default DeleteCreatedInvitePopUp;

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import UserDetailPopUp from '../User/UserDetailPopUp';
+import DeleteCreatedInvitePopUp from './DeleteCreatedInvitePopUp';
 
 export default function CreatedInviteDetail({
   inviteDetail,
@@ -13,7 +14,7 @@ export default function CreatedInviteDetail({
   const [isGoing, setIsGoing] = useState('');
   //console.log(isGoing, 'isGoing', inviteDetail);
   const deleteInvite = (userEventId) => {
-    axios.delete(`/api/user_events/${userEventId}`).then(() => {
+    axios.delete(`/api/user_events/${inviteDetail.id}`).then(() => {
       // setUserEvents(
       //   myUserEvents.filter((_userEvent) => _userEvent.id !== isGoing.id)
       // );
@@ -57,14 +58,13 @@ export default function CreatedInviteDetail({
               {inviteDetail.username}
             </Link>{' '}
           </p>
-
           <button
+            type="button"
             className="btn btn-primary"
-            onClick={() => {
-              deleteInvite(inviteDetail.id);
-            }}
+            data-toggle="modal"
+            data-target="#exampleModal"
           >
-            delete event
+            Delete invite
           </button>
         </div>
       </div>

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import CreatedInviteDetail from './CreatedInviteDetail';
+import AcceptedCreatedInvites from './AcceptedCreatedInvites';
+import DeclinedCreatedInvites from './DeclinedCreatedInvites';
 // import AcceptedInvites from './AcceptedInvites';
 // import DeclinedInvites from './DeclinedInvites';
 
@@ -24,7 +26,7 @@ export default function UserCreatedInvites({
       .get(`/api/created/invites/${auth.id}`)
       .then((response) => setCreatedInvites(response.data));
   }, [inviteDetail]);
-  console.log(createdInvites, 'createdInvites', userEvents);
+  // console.log(createdInvites, 'createdInvites', userEvents);
 
   const invitations = createdInvites.filter(
     (invite) => invite.status === 'invited'
@@ -83,26 +85,26 @@ export default function UserCreatedInvites({
             </div>
           );
         })}
-        {/* <div>
-        {acceptedInvites ? (
-          <AcceptedInvites
-          // acceptedInvites={acceptedInvites}
-          // setInviteDetail={setInviteDetail}
-          />
-        ) : (
-          <p>You have no accepted invites</p>
-        )}
-      </div>
-      <div>
-        {declinedInvites ? (
-          <DeclinedInvites
-          // declinedInvites={declinedInvites}
-          // setInviteDetail={setInviteDetail}
-          />
-        ) : (
-          <p>You have no declined invites</p>
-        )}
-      </div> */}
+        <div>
+          {acceptedInvites ? (
+            <AcceptedCreatedInvites
+              acceptedInvites={acceptedInvites}
+              setInviteDetail={setInviteDetail}
+            />
+          ) : (
+            <p>You have no accepted invites</p>
+          )}
+        </div>
+        <div>
+          {declinedInvites ? (
+            <DeclinedCreatedInvites
+              declinedInvites={declinedInvites}
+              setInviteDetail={setInviteDetail}
+            />
+          ) : (
+            <p>You have no declined invites</p>
+          )}
+        </div>
       </div>
     );
   }

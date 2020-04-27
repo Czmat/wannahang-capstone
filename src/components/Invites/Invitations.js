@@ -31,8 +31,9 @@ export default function Invitations({
 
   useEffect(() => {
     setInvitesCount(invitations.length);
+
     //console.log(inviteDetail, 'inviteDetail');
-  }, [inviteDetail]);
+  }, [invitations]);
 
   const acceptedInvites = invites.filter(
     (invite) => invite.status === 'accepted'
