@@ -368,12 +368,24 @@ app.post('/api/userEvents/array/delete', (req, res, next) => {
   );
 });
 
+// get invitations
 app.get('/api/invites/:id', (req, res, next) => {
   const userEvents = req.body;
-  console.log(req.params.id, 'invites', req.body);
+  //console.log(req.params.id, "invites", req.body);
 
   models.invites
     .read(req.params.id)
+    .then((items) => res.send(items))
+    .catch(next);
+});
+
+// get created invitations
+app.get('/api/created/invites/:id', (req, res, next) => {
+  const userEvents = req.body;
+  //console.log(req.params.id, "invites", req.body);
+
+  models.invites
+    .show(req.params.id)
     .then((items) => res.send(items))
     .catch(next);
 });
