@@ -99,13 +99,15 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     saveAsFavorite(faveUser);
   };
 
+  const usersid = auth.id;
+
   if (!users || !photos) {
     return <p>Loading</p>;
   } else {
     return (
       <div className="container">
         <div>
-          <SearchFilter />
+          <SearchFilter usersid={usersid} />
         </div>
         <h3>
           Future Friends Nearby{' '}

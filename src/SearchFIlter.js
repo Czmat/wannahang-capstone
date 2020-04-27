@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SearchFIlter = ({ auth }) => {
+const SearchFIlter = ({ usersid }) => {
   const [filter, setFilter] = useState('');
   const [hobbyFilter, setHobbyFilter] = useState('');
   const [hobbies, setHobbies] = useState([]);
@@ -11,16 +11,15 @@ const SearchFIlter = ({ auth }) => {
   const [profiles, setProfiles] = useState([]);
   const [careers, setCareers] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState([]);
-  console.log('auth', auth);
+
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
     axios.get('/api/photos').then((response) => setPhotos(response.data));
 
     axios.get('/api/profiles').then((response) => {
-      console.log('why', response.data);
       const findProfile = response.data.find(
-        ({ userId }) => userId === auth.id
+        ({ userId }) => userId === usersid
       );
       setProfile(findProfile);
       setProfiles(response.data);
@@ -63,17 +62,17 @@ const SearchFIlter = ({ auth }) => {
   const userBirthday = profile.birthdate;
 
   const searchCriteria = (input) => {
-    console.log('profl', profile);
     setFilter(...filter, input);
-    console.log('fil', filter);
     if (filter === userOccupation) {
       axios.post('/api/search/career', { careerid: input }).then((response) => {
         setFilteredProfiles(response.data);
       });
     } else if (filter === userGender) {
-      axios
-        .post('/api/search/gender', { gender: input })
-        .then((response) => setFilteredProfiles(response.data));
+      axios.post('/api/search/gender', { gender: input }).then((response) => {
+        const resp = response.data;
+        console.log(resp);
+        setFilteredProfiles((filteredProfiles) => [...filteredProfiles, resp]);
+      });
     } else if (filter === userBirthday) {
       const bDay = input.substring(0, 4);
       axios
@@ -110,13 +109,13 @@ const SearchFIlter = ({ auth }) => {
   const submitCriteria = (event) => {
     event.preventDefault();
     searchCriteria(filter);
-    console.log(filteredProfiles);
+    console.log('fp', filteredProfiles);
   };
 
   const submitHobby = (event) => {
     event.preventDefault();
     searchHobby(hobbyFilter);
-    console.log(filteredProfiles);
+    console.log('FP', filteredProfiles);
   };
 
   return (
