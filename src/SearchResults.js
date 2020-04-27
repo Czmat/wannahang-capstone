@@ -157,15 +157,15 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   // useEffect(() => {
   //   axios.get('/api/favorites').then((response) => setFavorite(response.data));
   // }, []);
-  // const onSubmit = (fav) => {
-  //   const user1 = auth.id;
-  //   const user2 = fav;
-  //   const faveUser = {
-  //     userId: user1,
-  //     favoriteId: user2,
-  //   };
-  //   saveAsFavorite(faveUser);
-  // };
+  const onSubmit = (fav) => {
+    const user1 = auth.id;
+    const user2 = fav;
+    const faveUser = {
+      userId: user1,
+      favoriteId: user2,
+    };
+    saveAsFavorite(faveUser);
+  };
   // function myFunction(x) {
   //   x.classList.toggle("fa fa-heart");
   // }
