@@ -631,6 +631,14 @@ const sync = async () => {
       user_id: pattiid,
       hobby_id: gamesHobby,
     }),
+    hobbies.createUserHobbies({
+      user_id: willid,
+      hobby_id: booksHobby,
+    }),
+    hobbies.createUserHobbies({
+      user_id: willid,
+      hobby_id: moviesHobby,
+    }),
   ]);
 
   Promise.all([
