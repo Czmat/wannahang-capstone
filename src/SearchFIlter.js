@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SearchFIlter = ({ auth, userProfiles }) => {
+const SearchFIlter = ({ auth }) => {
   const [filter, setFilter] = useState('');
   const [hobbyFilter, setHobbyFilter] = useState('');
   const [hobbies, setHobbies] = useState([]);
@@ -10,15 +10,15 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   const [profile, setProfile] = useState([]);
   const [profiles, setProfiles] = useState([]);
   const [careers, setCareers] = useState([]);
-  const [allProfiles, setAllProfiles] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState([]);
-
+  console.log('auth', auth);
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
     axios.get('/api/photos').then((response) => setPhotos(response.data));
 
     axios.get('/api/profiles').then((response) => {
+      console.log('why', response.data);
       const findProfile = response.data.find(
         ({ userId }) => userId === auth.id
       );
@@ -63,7 +63,9 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   const userBirthday = profile.birthdate;
 
   const searchCriteria = (input) => {
+    console.log('profl', profile);
     setFilter(...filter, input);
+    console.log('fil', filter);
     if (filter === userOccupation) {
       axios.post('/api/search/career', { careerid: input }).then((response) => {
         setFilteredProfiles(response.data);
@@ -108,16 +110,17 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   const submitCriteria = (event) => {
     event.preventDefault();
     searchCriteria(filter);
+    console.log(filteredProfiles);
   };
 
   const submitHobby = (event) => {
     event.preventDefault();
     searchHobby(hobbyFilter);
+    console.log(filteredProfiles);
   };
 
   return (
     <div>
-      <h2>Test</h2>
       <div>
         <form onSubmit={(e) => submitCriteria(e)}>
           <div className="form-group mt-3">

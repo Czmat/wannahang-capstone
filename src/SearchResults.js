@@ -133,7 +133,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                   : (src = profilePic.filepath);
               }
             }
-            console.log('SRC', src);
+
             //photosbkgd
             const profilePicBkgd = photosBkgd.find(
               (photoBkgd) => photoBkgd.userId === userProfile.userId
