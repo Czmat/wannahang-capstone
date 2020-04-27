@@ -282,6 +282,18 @@ app.post('/api/search/hobbies', (req, res, next) => {
     .then((users) => res.send(users))
     .catch(next);
 });
+
+app.get('/api/find/user_hobbies', (req, res, next) => {
+  console.log('body', req.body);
+  console.log('body.id', req.body.userid);
+  console.log('body.userid', req.body.user_id);
+  console.log('params.id', req.params.id);
+  console.log('param', req.param.id);
+  models.hobbies
+    .findUserHobbies(req.body.id)
+    .then((hobbies) => res.send(hobbies))
+    .catch(next);
+});
 app.get('/api/political_parties', (req, res, next) => {
   db.readPoliticalParties()
     .then((party) => res.send(party))

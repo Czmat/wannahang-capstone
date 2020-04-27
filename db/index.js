@@ -156,8 +156,7 @@ const sync = async () => {
     birthdate DATE,
     zipCode VARCHAR(10),
     employmentStatus VARCHAR(100),
-    about VARCHAR(250),
-    communicationPreference VARCHAR(5)
+    about VARCHAR(250)
   );
 
   CREATE TABLE user_search_criteria(
@@ -639,6 +638,14 @@ const sync = async () => {
       user_id: willid,
       hobby_id: moviesHobby,
     }),
+    hobbies.createUserHobbies({
+      user_id: lucyid,
+      hobby_id: booksHobby,
+    }),
+    hobbies.createUserHobbies({
+      user_id: lucyid,
+      hobby_id: moviesHobby,
+    }),
   ]);
 
   Promise.all([
@@ -718,7 +725,6 @@ const sync = async () => {
       employmentStatus: 'Full time',
       about:
         'I am an extrovert. I totally love to travel. My travel-buddy got married and now I need a new person who wants to see the world.',
-      communicationPreference: 'Email',
     }),
     profiles.createProfile({
       userId: lucyid,
@@ -732,7 +738,6 @@ const sync = async () => {
       zipCode: '32207',
       employmentStatus: 'Full time',
       about: 'Extrovert',
-      communicationPreference: 'Email',
     }),
     profiles.createProfile({
       userId: moeid,
@@ -746,7 +751,6 @@ const sync = async () => {
       zipCode: '32073',
       employmentStatus: 'Retired',
       about: 'Introvert',
-      communicationPreference: 'Text',
     }),
     profiles.createProfile({
       userId: curlyid,
@@ -760,7 +764,6 @@ const sync = async () => {
       zipCode: '32210',
       employmentStatus: 'Part time',
       about: 'Life of the party!',
-      communicationPreference: 'Email',
     }),
     profiles.createProfile({
       userId: larryid,
@@ -774,7 +777,6 @@ const sync = async () => {
       zipCode: '32207',
       employmentStatus: 'Full time',
       about: 'Shy',
-      communicationPreference: 'Email',
     }),
     profiles.createProfile({
       userId: joeid,
@@ -788,7 +790,6 @@ const sync = async () => {
       zipCode: '32073',
       employmentStatus: 'Retired',
       about: 'IDK',
-      communicationPreference: 'Text',
     }),
     profiles.createProfile({
       userId: shempid,
@@ -802,7 +803,6 @@ const sync = async () => {
       zipCode: '32210',
       employmentStatus: 'Part time',
       about: 'Substitute',
-      communicationPreference: 'Email',
     }),
     profiles.createProfile({
       userId: pattiid,
@@ -817,7 +817,6 @@ const sync = async () => {
       employmentStatus: 'Full time',
       about:
         'Hey! I an new to the area. Just looking for a friend to hang out with. Maybe go to the movies or who wants to go to the dog park with me.',
-      communicationPreference: 'Email',
     }),
     profiles.createProfile({
       userId: sallyid,
@@ -831,7 +830,6 @@ const sync = async () => {
       zipCode: '32073',
       employmentStatus: 'Retired',
       about: 'Football',
-      communicationPreference: 'Text',
     }),
     profiles.createProfile({
       userId: marcieid,
@@ -845,7 +843,6 @@ const sync = async () => {
       zipCode: '32207',
       employmentStatus: 'Part time',
       about: 'Glasses',
-      communicationPreference: 'Email',
     }),
     profiles.createProfile({
       userId: danielid,
@@ -860,7 +857,6 @@ const sync = async () => {
       employmentStatus: 'Part time',
       about:
         "I am kind of science nerd. I like sci-fi movies, I read sci-fi books and I go to WorldCon every year. Star Wars is my favorite movie and Ender's Game is my favorite book. Anybody want to go to sci-fi stuff with me?",
-      communicationPreference: 'Email',
     }),
     profiles.createProfile({
       userId: georgiaid,
@@ -875,7 +871,6 @@ const sync = async () => {
       employmentStatus: 'Part time',
       about:
         "I have just recently been widowed and want to get back out there - I just don't know how. I'd like to find some girl friends to have dinner with, visit a few vineyards, maybe go shopping with...",
-      communicationPreference: 'Email',
     }),
   ]);
 
@@ -924,7 +919,7 @@ const findUsersWithZipCode = async (userid) => {
 const readUsernameProfiles = async () => {
   return (
     await client.query(`SELECT
-  user_profiles."userId", user_profiles.gender, user_profiles.politicalaffiliation, user_profiles.religiousaffiliation, user_profiles.careerid, user_profiles.education, user_profiles.pets, user_profiles.birthdate, user_profiles.zipcode, user_profiles.employmentstatus, user_profiles.about, user_profiles.communicationpreference
+  user_profiles."userId", user_profiles.gender, user_profiles.politicalaffiliation, user_profiles.religiousaffiliation, user_profiles.careerid, user_profiles.education, user_profiles.pets, user_profiles.birthdate, user_profiles.zipcode, user_profiles.employmentstatus, user_profiles.about
   FROM user_profiles JOIN users ON user_profiles."userId" = users.id`)
   ).rows;
 };

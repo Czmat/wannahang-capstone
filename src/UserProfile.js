@@ -4,30 +4,39 @@ import moment from 'moment';
 import axios from 'axios';
 import DeleteAccountPopUp from './components/User/DeleteAccountPopUp';
 
-const UserProfile = ({ logout, auth, params }) => {
+const UserProfile = ({
+  logout,
+  auth,
+  hobbies,
+  setHobbies,
+  userHobbies,
+  setUserHobbies,
+}) => {
   const deleteAccount = () => {
     axios.delete(`/api/users/${auth.id}`);
   };
 
   const [profile, setProfile] = useState([]);
   const [photo, setPhoto] = useState([]);
+  // const [hobbies, setHobbies] = useState([]);
+  const [usersHobbies, setUsersHobbies] = useState([]);
   useEffect(() => {
     axios
       .get('/api/profiles')
       .then((response) =>
         setProfile(response.data.find(({ userId }) => userId === auth.id))
       );
-  }, []);
-  // console.log("RES", response);
-  // console.log("P", photo);
-
-  useEffect(() => {
     axios
       .get('/api/photos')
       .then((response) =>
         setPhoto(response.data.find(({ userId }) => userId === auth.id))
       );
+    // axios.get('/api/hobbies').then((response) => setHobbies(response.data));
+    axios
+      .get('/api/find/user_hobbies', auth.id)
+      .then((response) => setUsersHobbies(response.data));
   }, []);
+
   let myPhotoPath;
   if (photo == undefined) {
     myPhotoPath = '/uploads/avatar-1577909_1280.png';
@@ -35,11 +44,24 @@ const UserProfile = ({ logout, auth, params }) => {
     myPhotoPath = photo.filepath + '/' + photo.filename;
   }
 
-  // console.log("photo", photo);
-  let birthday = moment(profile.birthdate).format('MMMM Do YYYY');
+  const getHobbyName = (hobbyId) => {
+    const hobNm = hobbies.find((b) => b.id === hobbyId.hobby_id);
+    return hobNm.hobby_name;
+  };
 
-  // let birth = profile.birthdate;
-  // let birthday = DATE_FORMAT(birthdate, "%M %e, %Y");
+  let birthday = moment(profile.birthdate).format('MMMM Do YYYY');
+  console.log('before', userHobbies);
+
+  const usersId = auth.id;
+
+  useEffect(() => {
+    axios
+      .get('/api/find/user_hobbies', usersId)
+      .then((response) => setUsersHobbies(response.data));
+  }, []);
+
+  console.log('after', usersHobbies);
+
   return (
     <div className="container">
       <h3 className="userName">
@@ -59,7 +81,6 @@ const UserProfile = ({ logout, auth, params }) => {
 
           <div className="col-md-12">
             <div className="col-md-6">
-              {/* <img className="userPhoto" src="/avatar-1577909_1280.png" /> */}
               <img className="userPhoto" src={myPhotoPath} />
             </div>
             <div className="col-md-6">
@@ -136,6 +157,30 @@ const UserProfile = ({ logout, auth, params }) => {
             Edit
           </Link>
         </div>{' '}
+      </div>
+      <div>
+        {/* //============HOBBY INFO===============// */}
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">User Hobbies</h5>
+            <ul className="list-group list-group-flush">
+              {/* {userHobbies.map((userHobby) => {
+                return (
+                  <li key={userHobby.id}>{getHobbyName(userHobby.hobby_id)}</li>
+                );
+              })} */}
+              Hobbies:
+            </ul>
+            <Link
+              className="card-link"
+              to="/userhobbies/edit"
+              label="UserHobbiesEdit"
+              profile={profile}
+            >
+              Edit
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
