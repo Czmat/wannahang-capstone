@@ -69,6 +69,11 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                   Private Invites
                 </Link>
               </div>
+              <div className="nav-item">
+                <Link className="nav-link" to="/user/created/invites">
+                  User created Invites
+                </Link>
+              </div>
             </div>
           </li>
 
@@ -118,7 +123,7 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                 </Link>
               </div>
 
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link
                   className="nav-link"
                   to="/search/criteria"
@@ -126,9 +131,9 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                 >
                   Search Criteria
                 </Link>
-              </div>
+              </div> */}
 
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link
                   className="nav-link"
                   to="/search/results"
@@ -136,9 +141,9 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                 >
                   Search Results
                 </Link>
-              </div>
+              </div> */}
 
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link
                   className="nav-link"
                   to="/search/filter"
@@ -146,7 +151,7 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                 >
                   Search Filter
                 </Link>
-              </div>
+              </div> */}
 
               <div className="nav-item">
                 <Link className="nav-link" to="/file/upload" label="FileUpload">

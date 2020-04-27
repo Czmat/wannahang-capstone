@@ -87,8 +87,8 @@ const FileUpload = ({ auth, params }) => {
       }
     }
   };
-  console.log('file', { uploadedFile });
-  console.log('Path', uploadedFile.filePath);
+  // console.log('file', { uploadedFile });
+  // console.log('Path', uploadedFile.filePath);
 
   // const nextPage;
   //   if (filePath) {

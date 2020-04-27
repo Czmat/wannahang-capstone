@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Player } from "video-react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import qs from "qs";
+import React, { useState } from 'react';
+import { Player } from 'video-react';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
+import qs from 'qs';
 
-const Home = (login) => {
+const Home = () => {
   return (
     <div>
       <header className="v-header container-wrap w-50 d-flex justify-content-center">
@@ -22,7 +22,7 @@ const Home = (login) => {
             alt="WannaHang Logo"
             className="logo"
           />
-          <h1>WannaHang</h1>{" "}
+          <h1>WannaHang</h1>{' '}
           <p>
             The online community of friends you have yet to meet!
             {/* <br />
@@ -42,7 +42,7 @@ const Home = (login) => {
             >
               Log In
             </Link>
-          </form>{" "}
+          </form>{' '}
         </div>
       </header>
 
