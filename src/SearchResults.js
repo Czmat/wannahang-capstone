@@ -293,7 +293,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                               My interests:
                               <br />
                               {/* ========REPLACE WITH HOBBIES========= */}
-                              <i>I like sports and outdoors, music, camping</i>
+                              <i>I like </i>
                             </div>
                             <div className="about-user mb-2">
                               My stats:
@@ -310,18 +310,6 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                                 &nbsp;&bull;&nbsp;{' '}
                                 {userProfile.employmentstatus}
                               </i>
-                            </div>
-                            <div className="about-user mb-2">
-                              My hobbies:
-                              <ul>
-                                {usersHobbies.map((userHobby) => {
-                                  return (
-                                    <li key={userHobby.id}>
-                                      {getHobbyName(userHobby.hobby_id)}
-                                    </li>
-                                  );
-                                })}
-                              </ul>
                             </div>
                           </div>
                           <div className="modal-footer justify-content-center flex-column flex-md-row">
