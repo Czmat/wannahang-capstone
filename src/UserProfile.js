@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import moment from "moment";
-import axios from "axios";
-import DeleteAccountPopUp from "./components/User/DeleteAccountPopUp";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import moment from 'moment';
+import axios from 'axios';
+import DeleteAccountPopUp from './components/User/DeleteAccountPopUp';
 
 const UserProfile = ({ logout, auth, params }) => {
   const deleteAccount = () => {
@@ -13,37 +13,37 @@ const UserProfile = ({ logout, auth, params }) => {
   const [photo, setPhoto] = useState([]);
   useEffect(() => {
     axios
-      .get("/api/profiles")
+      .get('/api/profiles')
       .then((response) =>
         setProfile(response.data.find(({ userId }) => userId === auth.id))
       );
   }, []);
   // console.log("RES", response);
-  console.log("P", photo);
+  // console.log("P", photo);
 
   useEffect(() => {
     axios
-      .get("/api/photos")
+      .get('/api/photos')
       .then((response) =>
         setPhoto(response.data.find(({ userId }) => userId === auth.id))
       );
   }, []);
   let myPhotoPath;
   if (photo == undefined) {
-    myPhotoPath = "/uploads/avatar-1577909_1280.png";
+    myPhotoPath = '/uploads/avatar-1577909_1280.png';
   } else {
-    myPhotoPath = photo.filepath + "/" + photo.filename;
+    myPhotoPath = photo.filepath + '/' + photo.filename;
   }
 
-  console.log("photo", photo);
-  let birthday = moment(profile.birthdate).format("MMMM Do YYYY");
+  // console.log("photo", photo);
+  let birthday = moment(profile.birthdate).format('MMMM Do YYYY');
 
   // let birth = profile.birthdate;
   // let birthday = DATE_FORMAT(birthdate, "%M %e, %Y");
   return (
     <div className="container">
       <h3 className="userName">
-        All About {auth.username}{" "}
+        All About {auth.username}{' '}
         <button
           type="button"
           className="btn btn-primary btn-sm"
@@ -82,7 +82,7 @@ const UserProfile = ({ logout, auth, params }) => {
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">
-            Would you like to reset your password?{" "}
+            Would you like to reset your password?{' '}
             <Link to="/useraccount/password" className="btn btn-primary btn-sm">
               Change password
             </Link>
@@ -135,7 +135,7 @@ const UserProfile = ({ logout, auth, params }) => {
           >
             Edit
           </Link>
-        </div>{" "}
+        </div>{' '}
       </div>
     </div>
   );
