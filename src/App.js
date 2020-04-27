@@ -4,6 +4,7 @@ import qs from 'qs';
 import axios from 'axios';
 import Login from './Login';
 import FileUpload from './components/FileUpload';
+import FileUploadBkgd from './components/FileUploadBkgd';
 import Nav from './Nav';
 import NavTop from './NavTop';
 import CreateNewUser from './components/User/CreateNewUser';
@@ -177,6 +178,9 @@ const App = () => {
         <Switch>
           <Route path="/file/upload" exact>
             <FileUpload auth={auth} logout={logout} />
+          </Route>
+          <Route path="/file/upload/bkgd" exact>
+            <FileUploadBkgd auth={auth} logout={logout} />
           </Route>
           <Route path="/FileUpload">
             <FileUpload />
