@@ -204,7 +204,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                         src={getProfilePic(userProfile.userId)}
                         alt={getUsername(userProfile.userId)}
                       />
-                      {/* {getProfilePic(userProfile.userId)} */}
+                      {getProfilePic(userProfile.userId)}
                     </div>
                     <div className="card-info">
                       <h5 className="card-title d-inline p-2 card-name">
