@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SearchFIlter = ({ auth, userProfiles }) => {
+const SearchFIlter = ({ usersid }) => {
   const [filter, setFilter] = useState('');
   const [hobbyFilter, setHobbyFilter] = useState('');
   const [hobbies, setHobbies] = useState([]);
@@ -10,20 +10,16 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   const [profile, setProfile] = useState([]);
   const [profiles, setProfiles] = useState([]);
   const [careers, setCareers] = useState([]);
-  const [allProfiles, setAllProfiles] = useState([]);
   const [filteredProfiles, setFilteredProfiles] = useState([]);
-
-  //console.log(profile);
-  //console.log(filter, 'filter');
 
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
     axios.get('/api/photos').then((response) => setPhotos(response.data));
-    // gets zip code of current user
+
     axios.get('/api/profiles').then((response) => {
       const findProfile = response.data.find(
-        ({ userId }) => userId === auth.id
+        ({ userId }) => userId === usersid
       );
       setProfile(findProfile);
       setProfiles(response.data);
@@ -34,7 +30,6 @@ const SearchFIlter = ({ auth, userProfiles }) => {
 
   const getCareerName = (cid) => {
     const career = careers.find((c) => c.id === cid);
-    // console.log(cid, 'cid', career);
     if (career) {
       return career.career_name;
     }
@@ -59,7 +54,6 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   };
 
   const userEmployment = profile.employmentstatus;
-  const userAge = findAge(profile.birthdate);
   const userGender = profile.gender;
   const userPets = profile.pets;
   const userPolitics = profile.politicalaffiliation;
@@ -69,88 +63,37 @@ const SearchFIlter = ({ auth, userProfiles }) => {
 
   const searchCriteria = (input) => {
     setFilter(...filter, input);
-    // switch (filter) {
-    //   case userOccupation:
-    //     console.log('input in occup', input);
-    //     axios
-    //       .post('/api/search/career', { careerid: input })
-    //       .then((response) => {
-    //         console.log(response.data, 'occup data back');
-    //         setFilteredProfiles(response.data);
-    //       });
-    //     break;
-    //   case userGender:
-    //     axios
-    //       .post('/api/search/gender', { gender: input })
-    //       .then((response) => setFilteredProfiles(response.data));
-    //     break;
-    //   case userBirthday:
-    //     axios
-    //       .post('/api/search/age', { birthdate: input })
-    //       .then((response) => setFilteredProfiles(response.data));
-    //     break;
-    //   case userPets:
-    //     axios
-    //       .post('/api/search/pets', { pets: input })
-    //       .then((response) => setFilteredProfiles(response.data));
-    //     break;
-    //   case userReligion:
-    //     axios
-    //       .post('/api/search/religion', { religiousaffiliation: input })
-    //       .then((response) => setFilteredProfiles(response.data));
-    //     break;
-    //   case userPolitics:
-    //     axios
-    //       .post('/api/search/politics', { politicalaffiliation: input })
-    //       .then((response) => setFilteredProfiles(response.data));
-    //     break;
-    //   case userEmployment:
-    //     axios
-    //       .post('/api/search/employment_status', { employmentstatus: input })
-    //       .then((response) => setFilteredProfiles(response.data));
-    //     console.log('empprof', filteredProfiles);
-    //     break;
-    //   default:
-    //     console.log('show all users w message');
-    //     break;
-    // }
     if (filter === userOccupation) {
       axios.post('/api/search/career', { careerid: input }).then((response) => {
-        // console.log(response.data, 'occup data back');
         setFilteredProfiles(response.data);
-        // console.log('FP', filteredProfiles);
       });
     } else if (filter === userGender) {
-      axios
-        .post('/api/search/gender', { gender: input })
-        .then((response) => setFilteredProfiles(response.data));
-      // console.log('FP', filteredProfiles);
+      axios.post('/api/search/gender', { gender: input }).then((response) => {
+        const resp = response.data;
+        console.log(resp);
+        setFilteredProfiles((filteredProfiles) => [...filteredProfiles, resp]);
+      });
     } else if (filter === userBirthday) {
       const bDay = input.substring(0, 4);
       axios
         .post('/api/search/age', { birthdate: bDay })
         .then((response) => setFilteredProfiles(response.data));
-      // console.log('FP', filteredProfiles);
     } else if (filter === userPets) {
       axios
         .post('/api/search/pets', { pets: input })
         .then((response) => setFilteredProfiles(response.data));
-      // console.log('FP', filteredProfiles);
     } else if (filter === userReligion) {
       axios
         .post('/api/search/religion', { religiousaffiliation: input })
         .then((response) => setFilteredProfiles(response.data));
-      // console.log('FP', filteredProfiles);
     } else if (filter === userPolitics) {
       axios
         .post('/api/search/politics', { politicalaffiliation: input })
         .then((response) => setFilteredProfiles(response.data));
-      // console.log('FP', filteredProfiles);
     } else if (filter === userEmployment) {
       axios
         .post('/api/search/employment_status', { employmentstatus: input })
         .then((response) => setFilteredProfiles(response.data));
-      // console.log('FP', filteredProfiles);
     } else {
       console.log('no results');
     }
@@ -161,28 +104,32 @@ const SearchFIlter = ({ auth, userProfiles }) => {
       const usernamesWithHobby = response.data;
       setFilteredProfiles([...filteredProfiles, usernamesWithHobby]);
     });
-    // console.log('frprof', filteredProfiles);
   };
 
   const submitCriteria = (event) => {
     event.preventDefault();
-    // console.log(filteredProfiles, 'filtered profiles');
     searchCriteria(filter);
+    console.log('fp', filteredProfiles);
   };
-
-  // const onSubmit = (event) => {
-  //   event.preventDefault();
-  //   searchCriteria(filter);
-  // };
 
   const submitHobby = (event) => {
     event.preventDefault();
     searchHobby(hobbyFilter);
+    console.log('FP', filteredProfiles);
+  };
+
+  const showAllUsers = () => {
+    const all = document.querySelector('#allUsers');
+    all.className = ' ';
+  };
+
+  const submitAll = (event) => {
+    event.preventDefault();
+    showAllUsers();
   };
 
   return (
     <div>
-      <h2>Test</h2>
       <div>
         <form onSubmit={(e) => submitCriteria(e)}>
           <div className="form-group mt-3">
@@ -210,7 +157,7 @@ const SearchFIlter = ({ auth, userProfiles }) => {
               </option>
             </select>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Show</button>
         </form>
       </div>
       <div>
@@ -233,25 +180,31 @@ const SearchFIlter = ({ auth, userProfiles }) => {
               })}
             </select>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Show</button>
         </form>
       </div>
       <div>
-        <h4>Search Results</h4>
-        <ul>
+        {/* <h4>Search Results</h4> */}
+        {/* <ul>
           {filteredProfiles.map((profl) => {
             return <li key={profl.id}>{getUsername(profl.userId)}</li>;
           })}
-        </ul>
+        </ul> */}
       </div>
       <div>
         <div>
-          <h4>All users</h4>
-          <ul>
-            {userProfiles.map((prof) => {
-              return <li key={prof.id}>{getUsername(prof.userId)}</li>;
-            })}
-          </ul>
+          <h4>I just want to see all users with no filters</h4>
+          <button type="button" onClick={(e) => submitAll(e)}>
+            Show
+          </button>
+          <div id="allUsers" className="hide">
+            <h4>All users</h4>
+            <ul>
+              {users.map((user) => {
+                return <li key={user.id}>{user.username}</li>;
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
