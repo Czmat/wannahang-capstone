@@ -200,15 +200,15 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     // });
   };
 
-  // const onSubmit = (fav) => {
-  //   const user1 = auth.id;
-  //   const user2 = fav;
-  //   const faveUser = {
-  //     userId: user1,
-  //     favoriteId: user2,
-  //   };
-  //   saveAsFavorite(faveUser);
-  // };
+  const onSubmit = (fav) => {
+    //   const user1 = auth.id;
+    //   const user2 = fav;
+    //   const faveUser = {
+    //     userId: user1,
+    //     favoriteId: user2,
+    //   };
+    //   saveAsFavorite(faveUser);
+  };
 
   const usersid = auth.id;
   console.log(isFav, 'is Fav', aboutMe);
