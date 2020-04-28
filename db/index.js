@@ -20,10 +20,7 @@ const models = ({
   photos,
   photosBkgd,
   favorites,
-<<<<<<< HEAD
-=======
   deleteUser,
->>>>>>> master
 } = require('./models'));
 
 const { changePassword } = require('./userMethods');

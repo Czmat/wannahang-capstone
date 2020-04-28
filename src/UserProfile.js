@@ -4,14 +4,7 @@ import moment from 'moment';
 import axios from 'axios';
 import DeleteAccountPopUp from './components/User/DeleteAccountPopUp';
 
-const UserProfile = ({
-  logout,
-  auth,
-  hobbies,
-  setHobbies,
-  // userHobbies,
-  // setUserHobbies,
-}) => {
+const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
   const deleteAccount = () => {
     axios.delete(`/api/users/${auth.id}`);
   };
@@ -155,7 +148,9 @@ const UserProfile = ({
             <ul className="list-group list-group-flush">
               <li>Hobbies:</li>
               {usersHobbies.map((userHobby) => {
-                return <li key={userHobby.id}>{userHobby.hobby_id}</li>;
+                return (
+                  <li key={userHobby.id}>getHobbyName({userHobby.hobby_id})</li>
+                );
               })}
             </ul>
             <Link
