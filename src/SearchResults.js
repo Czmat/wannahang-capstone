@@ -6,7 +6,6 @@ import SearchResultAboutModal from './components/SearchResultAboutModal';
 import FavModal from './components/FavModal';
 import NotFavModal from './components/NotFavModal';
 import SearchFilter from './SearchFIlter';
-import { response } from 'express';
 
 const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [filter, setFilter] = useState('');
@@ -218,89 +217,126 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     return <p>Loading</p>;
   } else {
     return (
-      <div className="container">
-        <div>
-          <div>
-            <div>
-              <form onSubmit={(e) => onSubmitCriteria(e)}>
-                <div className="form-group mt-3">
-                  <label htmlFor="about">
-                    Search for someone that matches my:
-                  </label>
-                  <select
-                    type="text"
-                    id="searchFilter"
-                    name="searchFilter"
-                    onChange={(ev) => setFilter(ev.target.value)}
-                  >
-                    <option value="">--select your option--</option>
-                    <option value={getCareerName(profile.careerid)}>
-                      Occupation
-                    </option>
-                    <option value={profile.employmentstatus}>
-                      Employment Status
-                    </option>
-                    <option value={profile.pets}>Pets </option>
-                    <option value={userBirthday}>Age</option>
-                    <option value={profile.gender}>Gender</option>
-                    <option value={profile.politicalaffiliation}>
-                      Political affiliation
-                    </option>
-                    <option value={profile.religiousaffiliation}>
-                      Religious affiliation
-                    </option>
-                  </select>
-                </div>
-                <button type="submit">Show</button>
-              </form>
-            </div>
-            <div>
-              <form onSubmit={(e) => onSubmitHobby(e)}>
-                <div>
-                  <label htmlFor="about">
-                    Search for someone whose hobby is:
-                  </label>
-                  <select
-                    className="form-control"
-                    id="hobbies"
-                    defaultValue
-                    onChange={(ev) => setHobbyFilter(ev.target.value)}
-                  >
-                    <option value={hobbyFilter}>
-                      {' '}
-                      --select your option--{' '}
-                    </option>
-                    {hobbies.map((hobby) => {
-                      return (
-                        <option key={hobby.id} value={hobby.hobby_name}>
-                          {hobby.hobby_name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <button type="submit">Show</button>
-              </form>
-            </div>
-            <div>
-              <div>
-                <h4>Search for someone nearby:</h4>
-                <button type="button" onClick={(e) => onSubmitZip(e)}>
+      <div className="container-fluid ">
+        <h3>Search for future friends by:</h3>
+        <div class="form-inline search-btn-group">
+          <form
+            onSubmit={(e) => submitCriteria(e)}
+            class="form-inline mt-3 col-xs-12"
+          >
+            <div className="form-group col-xs-6">
+              {/* <label htmlFor="about" class="col-form-label">
+                Search:
+              </label> */}
+
+              <select
+                class="btn btn-secondary search-btn search-criteria"
+                type="text"
+                id="searchFilter"
+                name="searchFilter"
+                onChange={(ev) => setFilter(ev.target.value)}
+              >
+                <option value="">Personal Info</option>
+                <option value={getCareerName(profile.careerid)}>
+                  Occupation
+                </option>
+                <option value={profile.employmentstatus}>
+                  Employment Status
+                </option>
+                <option value={profile.pets}>Pets </option>
+                <option value={userBirthday}>Age</option>
+                <option value={profile.gender}>Gender</option>
+                <option value={profile.politicalaffiliation}>
+                  Political affiliation
+                </option>
+                <option value={profile.religiousaffiliation}>
+                  Religious affiliation
+                </option>
+              </select>
+              <div className="form-group col-xs-5 mr-4">
+                <button type="submit" class="btn btn-info search-btn show2">
                   Show
                 </button>
               </div>
             </div>
-            <div>
-              <div>
-                <h4>I just want to see all users with no filters</h4>
-                <button type="button" onClick={(e) => onSubmitAll(e)}>
+          </form>
+          {/* PART 2 */}
+
+          <form
+            class="form-inline mt-3  col-xs-12"
+            onSubmit={(e) => onSubmitHobby(e)}
+          >
+            <div className="form-group  col-xs-5">
+              {/* <label htmlFor="about" class="col-xs-2 col-form-label">
+                Hobby:
+              </label> */}
+
+              <div class="">
+                <select
+                  class="btn btn-secondary search-btn "
+                  type="text"
+                  id="hobbies"
+                  defaultValue
+                  onChange={(ev) => setHobbyFilter(ev.target.value)}
+                >
+                  <option value={hobbyFilter}>Interests</option>
+                  {hobbies.map((hobby) => {
+                    return (
+                      <option key={hobby.id} value={hobby.hobby_name}>
+                        {hobby.hobby_name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="form-group col-xs-5">
+                <button
+                  class="btn btn-info search-btn mr-4 show2"
+                  type="submit"
+                >
                   Show
                 </button>
               </div>
+            </div>
+          </form>
+          {/* PART 3 */}
+          <div class="form-inline col-xs-12">
+            <div className="form-group   col-xs-6">
+              {/* <label htmlFor="about" class="col-sm-2 col-form-label">
+                NearBy:
+              </label> */}
+
+              {/* <div className="form-group mr-2"> */}
+              <div className="form-group col-xs-6">
+                <button
+                  class="btn btn-secondary search-btn mr-4"
+                  type="button"
+                  onClick={(e) => onSubmitZip(e)}
+                >
+                  Near Me
+                </button>
+              </div>
+            </div>
+            {/* </div> */}
+
+            {/* PART 4 */}
+
+            <div className="form-group  col-xs-6">
+              <button
+                type="button"
+                class="btn btn-secondary search-btn mr-4"
+                onClick={(e) => onSubmitAll(e)}
+              >
+                Everyone
+              </button>
+              {/* </div> */}
             </div>
           </div>
         </div>
-        <h3 className="smaller-headline">Results ({userProfiles.length})</h3>
+        {/* <==============TESTING==============++> */}
+        <div className="row search-btn-group">
+          <h3 className="smaller-headline">Results ({userProfiles.length})</h3>
+        </div>
         {/* <h3>
           Future Friends Nearby{' '}
           <span className="smaller-headline">

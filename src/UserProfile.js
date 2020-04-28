@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import axios from 'axios';
-import DeleteAccountPopUp from './components/User/DeleteAccountPopUp';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import axios from "axios";
+import DeleteAccountPopUp from "./components/User/DeleteAccountPopUp";
+import FileUploadPlain from "./components/FileUploadPlain";
+import FileUploadBkgd from "./components/FileUploadBkgd";
 
 const UserProfile = ({ logout, auth, params }) => {
   const [profile, setProfile] = useState([]);
   const [photo, setPhoto] = useState([]);
   useEffect(() => {
     axios
-      .get('/api/profiles')
+      .get("/api/profiles")
       .then((response) =>
         setProfile(response.data.find(({ userId }) => userId === auth.id))
       );
@@ -19,27 +21,27 @@ const UserProfile = ({ logout, auth, params }) => {
 
   useEffect(() => {
     axios
-      .get('/api/photos')
+      .get("/api/photos")
       .then((response) =>
         setPhoto(response.data.find(({ userId }) => userId === auth.id))
       );
   }, []);
   let myPhotoPath;
-  if (photo === undefined) {
-    myPhotoPath = '/uploads/avatar-1577909_1280.png';
+  if (photo == undefined) {
+    myPhotoPath = "/uploads/avatar.jpg";
   } else {
-    myPhotoPath = photo.filepath + '/' + photo.filename;
+    myPhotoPath = photo.filepath;
   }
 
   // console.log("photo", photo);
-  let birthday = moment(profile.birthdate).format('MMMM Do YYYY');
+  let birthday = moment(profile.birthdate).format("MMMM Do YYYY");
 
   // let birth = profile.birthdate;
   // let birthday = DATE_FORMAT(birthdate, "%M %e, %Y");
   return (
     <div className="container">
       <h3 className="userName">
-        All About {auth.username}{' '}
+        All About {auth.username}{" "}
         <button
           type="button"
           className="btn btn-primary btn-sm"
@@ -78,7 +80,7 @@ const UserProfile = ({ logout, auth, params }) => {
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">
-            Would you like to reset your password?{' '}
+            Would you like to reset your password?{" "}
             <Link to="/useraccount/password" className="btn btn-primary btn-sm">
               Change password
             </Link>
@@ -127,7 +129,21 @@ const UserProfile = ({ logout, auth, params }) => {
           >
             Edit
           </Link>
-        </div>{' '}
+        </div>{" "}
+      </div>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="card col-md-6">
+            <div className="card-body">
+              <FileUploadPlain auth={auth} />
+            </div>
+          </div>
+          <div className="card  col-md-6">
+            <div className="card-body">
+              <FileUploadBkgd auth={auth} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
