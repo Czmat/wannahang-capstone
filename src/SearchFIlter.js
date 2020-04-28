@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SearchFIlter = ({ auth, userProfiles }) => {
+const SearchFIlter = ({ usersid }) => {
   const [filter, setFilter] = useState('');
   const [hobbyFilter, setHobbyFilter] = useState('');
   const [hobbies, setHobbies] = useState([]);
@@ -16,9 +16,13 @@ const SearchFIlter = ({ auth, userProfiles }) => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
     axios.get('/api/photos').then((response) => setPhotos(response.data));
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
     axios.get('/api/profiles').then((response) => {
       const findProfile = response.data.find(
-        ({ userId }) => userId === auth.id
+        ({ userId }) => userId === usersid
       );
       setProfile(findProfile);
       setProfiles(response.data);
@@ -53,7 +57,6 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   };
 
   const userEmployment = profile.employmentstatus;
-  const userAge = findAge(profile.birthdate);
   const userGender = profile.gender;
   const userPets = profile.pets;
   const userPolitics = profile.politicalaffiliation;
@@ -107,16 +110,27 @@ const SearchFIlter = ({ auth, userProfiles }) => {
   const submitCriteria = (event) => {
     event.preventDefault();
     searchCriteria(filter);
+    console.log('fp', filteredProfiles);
   };
 
   const submitHobby = (event) => {
     event.preventDefault();
     searchHobby(hobbyFilter);
+    console.log('FP', filteredProfiles);
+  };
+
+  const showAllUsers = () => {
+    const all = document.querySelector('#allUsers');
+    all.className = ' ';
+  };
+
+  const submitAll = (event) => {
+    event.preventDefault();
+    showAllUsers();
   };
 
   return (
     <div>
-      <h2>Test</h2>
       <div>
         <form onSubmit={(e) => submitCriteria(e)}>
           <div className="form-group mt-3">
@@ -144,7 +158,7 @@ const SearchFIlter = ({ auth, userProfiles }) => {
               </option>
             </select>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Show</button>
         </form>
       </div>
       <div>
@@ -167,25 +181,31 @@ const SearchFIlter = ({ auth, userProfiles }) => {
               })}
             </select>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit">Show</button>
         </form>
       </div>
       <div>
-        <h4>Search Results</h4>
-        <ul>
+        {/* <h4>Search Results</h4> */}
+        {/* <ul>
           {filteredProfiles.map((profl) => {
             return <li key={profl.id}>{getUsername(profl.userId)}</li>;
           })}
-        </ul>
+        </ul> */}
       </div>
       <div>
         <div>
-          <h4>All users</h4>
-          <ul>
-            {userProfiles.map((prof) => {
-              return <li key={prof.id}>{getUsername(prof.userId)}</li>;
-            })}
-          </ul>
+          <h4>I just want to see all users with no filters</h4>
+          <button type="button" onClick={(e) => submitAll(e)}>
+            Show
+          </button>
+          <div id="allUsers" className="hide">
+            <h4>All users</h4>
+            <ul>
+              {users.map((user) => {
+                return <li key={user.id}>{user.username}</li>;
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
