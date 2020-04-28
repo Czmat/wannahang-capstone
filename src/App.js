@@ -4,6 +4,8 @@ import qs from 'qs';
 import axios from 'axios';
 import Login from './Login';
 import FileUpload from './components/FileUpload';
+import FileUploadPlain from './components/FileUploadPlain';
+
 import FileUploadBkgd from './components/FileUploadBkgd';
 import Nav from './Nav';
 import NavTop from './NavTop';
@@ -185,6 +187,9 @@ const App = () => {
           <Route path="/FileUpload">
             <FileUpload />
           </Route>
+          <Route path="/FileUpload">
+            <FileUploadPlain />
+          </Route>
           <Route path="/userprofile" exact>
             <UserProfile
               logout={logout}
@@ -273,6 +278,7 @@ const App = () => {
               setInvitesCount={setInvitesCount}
             />
           </Route>
+
           <Route path="/user/created/invites">
             <UserCreatedInvites
               setEvents={setEvents}

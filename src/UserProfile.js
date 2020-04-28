@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 import DeleteAccountPopUp from './components/User/DeleteAccountPopUp';
+import FileUploadPlain from './components/FileUploadPlain';
+import FileUploadBkgd from './components/FileUploadBkgd';
 
 const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
   const deleteAccount = () => {
@@ -34,10 +36,10 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
   }, []);
 
   let myPhotoPath;
-  if (photo === undefined) {
-    myPhotoPath = '/uploads/avatar-1577909_1280.png';
+  if (photo == undefined) {
+    myPhotoPath = '/uploads/avatar.jpg';
   } else {
-    myPhotoPath = photo.filepath + '/' + photo.filename;
+    myPhotoPath = photo.filepath;
   }
 
   console.log('hb', hobbies);
@@ -140,6 +142,20 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
             Edit
           </Link>
         </div>{' '}
+      </div>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="card col-md-6">
+            <div className="card-body">
+              <FileUploadPlain auth={auth} />
+            </div>
+          </div>
+          <div className="card  col-md-6">
+            <div className="card-body">
+              <FileUploadBkgd auth={auth} />
+            </div>
+          </div>
+        </div>
       </div>
       <div>
         {/* //============HOBBY INFO===============// */}
