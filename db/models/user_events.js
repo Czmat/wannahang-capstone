@@ -1,6 +1,14 @@
 const client = require('../client');
 
 const user_events = {
+  show: async (id) => {
+    return (
+      await client.query(
+        'SELECT username, events.name, events.id AS "eventId", user_events.id AS "userEventId" FROM  users, events , user_events WHERE "userId" = $1 AND "eventId" =  events.id  AND "joinedUserId" = users.id',
+        [id]
+      )
+    ).rows;
+  },
   read: async () => {
     return (await client.query('SELECT * from user_events')).rows;
   },

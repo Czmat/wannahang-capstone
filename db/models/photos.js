@@ -1,7 +1,7 @@
-const client = require("../client");
+const client = require('../client');
 
 const readPhotos = async () => {
-  return (await client.query("SELECT * from user_photos")).rows;
+  return (await client.query('SELECT * from user_photos')).rows;
 };
 
 const createPhoto = async (user_photos) => {
@@ -28,4 +28,19 @@ const deletePhoto = async (id) => {
   ]);
 };
 
-module.exports = { readPhotos, createPhoto, updatePhoto, deletePhoto };
+const showUserPhotos = async (id) => {
+  return (
+    await client.query(
+      `select user_photos.id from user_photos where "userId" = $1`,
+      [id]
+    )
+  ).rows;
+};
+
+module.exports = {
+  readPhotos,
+  createPhoto,
+  updatePhoto,
+  deletePhoto,
+  showUserPhotos,
+};
