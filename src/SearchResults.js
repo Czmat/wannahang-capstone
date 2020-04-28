@@ -1,13 +1,13 @@
 /* eslint-disable max-statements */
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
-import SearchResultAboutModal from './components/SearchResultAboutModal';
-import FavModal from './components/FavModal';
-import SearchFilter from './SearchFIlter';
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
+import SearchResultAboutModal from "./components/SearchResultAboutModal";
+import FavModal from "./components/FavModal";
+import SearchFilter from "./SearchFIlter";
 
 const SearchResults = ({ auth, setUserToBeInvited }) => {
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [users, setUsers] = useState([]);
   const [profile, setProfile] = useState([]);
   const [profiles, setProfiles] = useState([]);
@@ -20,11 +20,11 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [hobbies, setHobbies] = useState([]);
   const [userHobbies, setUserHobbies] = useState([]);
   const [usersHobbies, setUsersHobbies] = useState([]);
-  const [hobbyFilter, setHobbyFilter] = useState('');
-  const [aboutMe, setAboutMe] = useState('');
+  const [hobbyFilter, setHobbyFilter] = useState("");
+  const [aboutMe, setAboutMe] = useState("");
 
   const history = useHistory();
-  const goToCreateEvent = () => history.push('/create/invite/event');
+  const goToCreateEvent = () => history.push("/create/invite/event");
 
   const inviteUser = (userToInvite) => {
     setUserToBeInvited(userToInvite);
@@ -43,26 +43,26 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   };
 
   useEffect(() => {
-    axios.get('/api/users').then((response) => setUsers(response.data));
+    axios.get("/api/users").then((response) => setUsers(response.data));
 
-    axios.get('/api/photos').then((response) => setPhotos(response.data));
+    axios.get("/api/photos").then((response) => setPhotos(response.data));
     axios
-      .get('/api/photosBkgd')
+      .get("/api/photosBkgd")
       .then((response) => setPhotosBkgd(response.data));
 
-    axios.get('/api/profiles').then((response) => {
+    axios.get("/api/profiles").then((response) => {
       const findProfile = response.data.find(
         ({ userId }) => userId === auth.id
       );
       setProfile(findProfile);
       setProfiles(response.data);
     });
-    axios.get('/api/careers').then((response) => setCareers(response.data));
+    axios.get("/api/careers").then((response) => setCareers(response.data));
 
-    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
+    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
 
     axios
-      .get('/api/user_hobbies')
+      .get("/api/user_hobbies")
       .then((response) => setUserHobbies(response.data));
   }, []);
 
@@ -76,7 +76,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const userBirthday = profile.birthdate;
 
   const searchZipCriteria = () => {
-    axios.get('/api/profiles').then((response) => {
+    axios.get("/api/profiles").then((response) => {
       const rd = response.data;
       setUserProfiles(
         rd.filter((up) => up.zipcode === userZip && up.userId !== auth.id)
@@ -85,14 +85,14 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   };
 
   const searchHobby = (inp) => {
-    axios.post('/api/search/hobbies', { hobby_name: inp }).then((response) => {
+    axios.post("/api/search/hobbies", { hobby_name: inp }).then((response) => {
       const rd = response.data;
       setUserProfiles(rd.filter((up) => up.userId !== auth.id));
     });
   };
 
   const searchAll = () => {
-    axios.get('/api/profiles').then((response) => {
+    axios.get("/api/profiles").then((response) => {
       const rd = response.data;
       setUserProfiles(rd.filter((up) => up.userId !== auth.id));
     });
@@ -111,49 +111,49 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const searchCriteria = (input) => {
     setFilter(...filter, input);
     if (filter === userOccupation) {
-      axios.post('/api/search/career', { careerid: input }).then((response) => {
+      axios.post("/api/search/career", { careerid: input }).then((response) => {
         const rd = response.data;
         setUserProfiles(rd.filter((up) => up.userId !== auth.id));
       });
     } else if (filter === userGender) {
-      axios.post('/api/search/gender', { gender: input }).then((response) => {
+      axios.post("/api/search/gender", { gender: input }).then((response) => {
         const rd = response.data;
         setUserProfiles(rd.filter((up) => up.userId !== auth.id));
       });
     } else if (filter === userBirthday) {
       const bDay = input.substring(0, 4);
-      axios.post('/api/search/age', { birthdate: bDay }).then((response) => {
+      axios.post("/api/search/age", { birthdate: bDay }).then((response) => {
         const rd = response.data;
         setUserProfiles(rd.filter((up) => up.userId !== auth.id));
       });
     } else if (filter === userPets) {
-      axios.post('/api/search/pets', { pets: input }).then((response) => {
+      axios.post("/api/search/pets", { pets: input }).then((response) => {
         const rd = response.data;
         setUserProfiles(rd.filter((up) => up.userId !== auth.id));
       });
     } else if (filter === userReligion) {
       axios
-        .post('/api/search/religion', { religiousaffiliation: input })
+        .post("/api/search/religion", { religiousaffiliation: input })
         .then((response) => {
           const rd = response.data;
           setUserProfiles(rd.filter((up) => up.userId !== auth.id));
         });
     } else if (filter === userPolitics) {
       axios
-        .post('/api/search/politics', { politicalaffiliation: input })
+        .post("/api/search/politics", { politicalaffiliation: input })
         .then((response) => {
           const rd = response.data;
           setUserProfiles(rd.filter((up) => up.userId !== auth.id));
         });
     } else if (filter === userEmployment) {
       axios
-        .post('/api/search/employment_status', { employmentstatus: input })
+        .post("/api/search/employment_status", { employmentstatus: input })
         .then((response) => {
           const rd = response.data;
           setUserProfiles(rd.filter((up) => up.userId !== auth.id));
         });
     } else {
-      console.log('Sorry, no results');
+      console.log("Sorry, no results");
     }
   };
 
@@ -190,7 +190,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
 
   const saveAsFavorite = async (fave) => {
     await axios
-      .post('/api/createFavorite', fave)
+      .post("/api/createFavorite", fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
 
@@ -210,89 +210,126 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     return <p>Loading</p>;
   } else {
     return (
-      <div className="container">
-        <div>
-          <div>
-            <div>
-              <form onSubmit={(e) => onSubmitCriteria(e)}>
-                <div className="form-group mt-3">
-                  <label htmlFor="about">
-                    Search for someone that matches my:
-                  </label>
-                  <select
-                    type="text"
-                    id="searchFilter"
-                    name="searchFilter"
-                    onChange={(ev) => setFilter(ev.target.value)}
-                  >
-                    <option value="">--select your option--</option>
-                    <option value={getCareerName(profile.careerid)}>
-                      Occupation
-                    </option>
-                    <option value={profile.employmentstatus}>
-                      Employment Status
-                    </option>
-                    <option value={profile.pets}>Pets </option>
-                    <option value={userBirthday}>Age</option>
-                    <option value={profile.gender}>Gender</option>
-                    <option value={profile.politicalaffiliation}>
-                      Political affiliation
-                    </option>
-                    <option value={profile.religiousaffiliation}>
-                      Religious affiliation
-                    </option>
-                  </select>
-                </div>
-                <button type="submit">Show</button>
-              </form>
-            </div>
-            <div>
-              <form onSubmit={(e) => onSubmitHobby(e)}>
-                <div>
-                  <label htmlFor="about">
-                    Search for someone whose hobby is:
-                  </label>
-                  <select
-                    className="form-control"
-                    id="hobbies"
-                    defaultValue
-                    onChange={(ev) => setHobbyFilter(ev.target.value)}
-                  >
-                    <option value={hobbyFilter}>
-                      {' '}
-                      --select your option--{' '}
-                    </option>
-                    {hobbies.map((hobby) => {
-                      return (
-                        <option key={hobby.id} value={hobby.hobby_name}>
-                          {hobby.hobby_name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-                <button type="submit">Show</button>
-              </form>
-            </div>
-            <div>
-              <div>
-                <h4>Search for someone nearby:</h4>
-                <button type="button" onClick={(e) => onSubmitZip(e)}>
+      <div className="container-fluid ">
+        <h3>Search for future friends by:</h3>
+        <div class="form-inline search-btn-group">
+          <form
+            onSubmit={(e) => submitCriteria(e)}
+            class="form-inline mt-3 col-xs-12"
+          >
+            <div className="form-group col-xs-6">
+              {/* <label htmlFor="about" class="col-form-label">
+                Search:
+              </label> */}
+
+              <select
+                class="btn btn-secondary search-btn search-criteria"
+                type="text"
+                id="searchFilter"
+                name="searchFilter"
+                onChange={(ev) => setFilter(ev.target.value)}
+              >
+                <option value="">Personal Info</option>
+                <option value={getCareerName(profile.careerid)}>
+                  Occupation
+                </option>
+                <option value={profile.employmentstatus}>
+                  Employment Status
+                </option>
+                <option value={profile.pets}>Pets </option>
+                <option value={userBirthday}>Age</option>
+                <option value={profile.gender}>Gender</option>
+                <option value={profile.politicalaffiliation}>
+                  Political affiliation
+                </option>
+                <option value={profile.religiousaffiliation}>
+                  Religious affiliation
+                </option>
+              </select>
+              <div className="form-group col-xs-5 mr-4">
+                <button type="submit" class="btn btn-info search-btn show2">
                   Show
                 </button>
               </div>
             </div>
-            <div>
-              <div>
-                <h4>I just want to see all users with no filters</h4>
-                <button type="button" onClick={(e) => onSubmitAll(e)}>
+          </form>
+          {/* PART 2 */}
+
+          <form
+            class="form-inline mt-3  col-xs-12"
+            onSubmit={(e) => onSubmitHobby(e)}
+          >
+            <div className="form-group  col-xs-5">
+              {/* <label htmlFor="about" class="col-xs-2 col-form-label">
+                Hobby:
+              </label> */}
+
+              <div class="">
+                <select
+                  class="btn btn-secondary search-btn "
+                  type="text"
+                  id="hobbies"
+                  defaultValue
+                  onChange={(ev) => setHobbyFilter(ev.target.value)}
+                >
+                  <option value={hobbyFilter}>Interests</option>
+                  {hobbies.map((hobby) => {
+                    return (
+                      <option key={hobby.id} value={hobby.hobby_name}>
+                        {hobby.hobby_name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="form-group col-xs-5">
+                <button
+                  class="btn btn-info search-btn mr-4 show2"
+                  type="submit"
+                >
                   Show
                 </button>
               </div>
+            </div>
+          </form>
+          {/* PART 3 */}
+          <div class="form-inline col-xs-12">
+            <div className="form-group   col-xs-6">
+              {/* <label htmlFor="about" class="col-sm-2 col-form-label">
+                NearBy:
+              </label> */}
+
+              {/* <div className="form-group mr-2"> */}
+              <div className="form-group col-xs-6">
+                <button
+                  class="btn btn-secondary search-btn mr-4"
+                  type="button"
+                  onClick={(e) => onSubmitZip(e)}
+                >
+                  Near Me
+                </button>
+              </div>
+            </div>
+            {/* </div> */}
+
+            {/* PART 4 */}
+
+            <div className="form-group  col-xs-6">
+              <button
+                type="button"
+                class="btn btn-secondary search-btn mr-4"
+                onClick={(e) => onSubmitAll(e)}
+              >
+                Everyone
+              </button>
+              {/* </div> */}
             </div>
           </div>
         </div>
-        <h3 className="smaller-headline">Results ({userProfiles.length})</h3>
+        {/* <==============TESTING==============++> */}
+        <div className="row search-btn-group">
+          <h3 className="smaller-headline">Results ({userProfiles.length})</h3>
+        </div>
         {/* <h3>
           Future Friends Nearby{' '}
           <span className="smaller-headline">
@@ -315,7 +352,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (profilePic) {
               {
                 !profilePic.filename
-                  ? (src = '/images/avatar.jpg')
+                  ? (src = "/images/avatar.jpg")
                   : (src = profilePic.filepath);
               }
             }
@@ -328,7 +365,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (profilePicBkgd) {
               {
                 !profilePicBkgd.filename
-                  ? (srcBkgd = '/images/no-bkgd.jpg')
+                  ? (srcBkgd = "/images/no-bkgd.jpg")
                   : (srcBkgd = profilePicBkgd.filepath);
               }
             }
@@ -350,10 +387,10 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                       <h5 className="card-title d-inline p-2 card-name">
                         {username
                           ? username.charAt(0).toUpperCase() + username.slice(1)
-                          : ''}
+                          : ""}
                       </h5>
                       <p className="card-text d-inline p-2 card-age">
-                        {findAge(userProfile.birthdate)}{' '}
+                        {findAge(userProfile.birthdate)}{" "}
                       </p>
                     </div>
                     <button
@@ -380,7 +417,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                         });
                       }}
                     >
-                      {' '}
+                      {" "}
                     </button>
                     <div className="side-by-side">
                       <button
