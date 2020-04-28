@@ -260,6 +260,7 @@ const App = () => {
               setInvitesCount={setInvitesCount}
             />
           </Route>
+
           <Route path="/user/created/invites">
             <UserCreatedInvites
               setEvents={setEvents}
