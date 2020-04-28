@@ -437,6 +437,14 @@ app.delete(`/api/delete/user/:id`, (req, res, next) => {
     .catch(next);
 });
 
+//fav delete
+app.delete('/api/favorites/:id', (req, res, next) => {
+  models.favorites
+    .delete(req.params.id)
+    .then((items) => res.send(items))
+    .catch(next);
+});
+
 Object.keys(models).forEach((key) => {
   //console.log(models);
   app.get(`/api/${key}`, isLoggedIn, (req, res, next) => {

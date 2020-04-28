@@ -3,13 +3,13 @@ import React from 'react';
 export default function SearchResultAboutModal({
   aboutMe,
   onSubmit,
-  addToFavorites,
+  removeFromFavorites,
   auth,
 }) {
   return (
     <div
       className="modal fade"
-      id="exampleModalFav"
+      id="exampleModalNotFav"
       tabIndex="-1"
       role="dialog"
       aria-labelledby="exampleModalCenterTitle"
@@ -19,7 +19,7 @@ export default function SearchResultAboutModal({
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="exampleModalCenterTitle">
-              Details of user {aboutMe.username}. Save this user as a favorite?
+              Details of user {aboutMe.username}. Remove from favorite?
             </h5>
             {/* =======FAVE X BTN======= */}
 
@@ -45,7 +45,10 @@ export default function SearchResultAboutModal({
               type="submit"
               className="btn btn-primary"
               onClick={() => {
-                addToFavorites({ userId: auth.id, favoriteId: aboutMe.userId });
+                removeFromFavorites({
+                  userId: auth.id,
+                  favoriteId: aboutMe.userId,
+                });
                 onSubmit(aboutMe.userId);
               }}
               data-dismiss="modal"
