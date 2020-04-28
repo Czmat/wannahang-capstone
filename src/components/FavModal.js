@@ -1,15 +1,10 @@
 import React from 'react';
 
-export default function SearchResultAboutModal({
-  aboutMe,
-  onSubmit,
-  setIsFav,
-}) {
-  console.log('inside modal', aboutMe);
+export default function SearchResultAboutModal({ aboutMe, onSubmit }) {
   return (
     <div
       className="modal fade"
-      id="exampleModalFav"
+      id="exampleModalCenter"
       tabIndex="-1"
       role="dialog"
       aria-labelledby="exampleModalCenterTitle"
@@ -22,12 +17,12 @@ export default function SearchResultAboutModal({
               Details of user {aboutMe.username}. Save this user as a favorite?
             </h5>
             {/* =======FAVE X BTN======= */}
+
             <button
               type="button"
               className="close"
               data-dismiss="modal"
               aria-label="Close"
-              onClick={() => setIsFav('')}
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -38,17 +33,13 @@ export default function SearchResultAboutModal({
               type="button"
               className="btn btn-secondary"
               data-dismiss="modal"
-              onClick={() => setIsFav('')}
             >
               Cancel
             </button>
             <button
               type="submit"
               className="btn btn-primary"
-              onClick={() => {
-                setIsFav('');
-                onSubmit(aboutMe.userId);
-              }}
+              onClick={() => onSubmit(aboutMe.userId)}
               data-dismiss="modal"
             >
               Save
