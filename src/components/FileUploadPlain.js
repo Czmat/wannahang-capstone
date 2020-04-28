@@ -10,7 +10,7 @@ import {
   useHistory,
 } from "react-router-dom";
 
-const FileUploadBkgd = ({ auth, params }) => {
+const FileUploadPlain = ({ auth, params }) => {
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
   const [uploadedFile, setUploadedFile] = useState({});
@@ -102,7 +102,7 @@ const FileUploadBkgd = ({ auth, params }) => {
       <div>
         <div className="">
           <h5 className="display-6 text-center mb-4">
-            Add your background photo
+            Add your profile picture
           </h5>
           {message ? <Message msg={message} /> : null}
           <form onSubmit={onSubmit}>
@@ -157,4 +157,4 @@ const FileUploadBkgd = ({ auth, params }) => {
   );
 };
 
-export default FileUploadBkgd;
+export default FileUploadPlain;

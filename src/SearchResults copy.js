@@ -1,51 +1,55 @@
+/* eslint-disable max-statements */
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
+import SearchResultAboutModal from "./components/SearchResultAboutModal";
+import FavModal from "./components/FavModal";
+import SearchFilter from "./SearchFIlter";
 
 const SearchResults = ({ auth, setUserToBeInvited }) => {
+  const [filter, setFilter] = useState("");
   const [users, setUsers] = useState([]);
   const [profile, setProfile] = useState([]);
   const [profiles, setProfiles] = useState([]);
+  const [userProfiles, setUserProfiles] = useState([]);
   const [careers, setCareers] = useState([]);
   const [photos, setPhotos] = useState([]);
+  const [photosBkgd, setPhotosBkgd] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [favorite, setFavorite] = useState([]);
-  //const [userToBeInvited, setUserToBeInvited] = useState([]);
-  //console.log(profiles, 'profiles');
+  const [hobbies, setHobbies] = useState([]);
+  const [userHobbies, setUserHobbies] = useState([]);
+  const [usersHobbies, setUsersHobbies] = useState([]);
+  const [hobbyFilter, setHobbyFilter] = useState("");
+  const [aboutMe, setAboutMe] = useState("");
 
-  //const usersId = auth.id;
+  const history = useHistory();
+  const goToCreateEvent = () => history.push("/create/invite/event");
 
-  // console.log(favorite);
-  // let fave = favorites.data.find(({ userId }) => userId === favoriteId);
-  // console.log(fave);
-
-  //for createUserWithInvite
   const inviteUser = (userToInvite) => {
-    console.log(userToInvite, "invite button");
     setUserToBeInvited(userToInvite);
   };
 
   const findFave = (friendId) => {
-    //console.log('FI', friendId);
-    // for (let i = 0; i <= favorite.length; i++) {
-    //   if (favorite[i].userId === friendId) {
-    //     console.log("UF", favorites[i]);
-    //   }
-    // }
     const userFave = favorite.find((fave) => fave.userId === friendId);
-    //console.log('UF', userFave);
+    return userFave;
   };
 
-  // const redHeart = () => {
-  //   // document.getElementsByClassName("gray")[0].style.backgroundColor = "red";
-  //   document.getElementById("heart").style.backgroundColor = "red";
-  //   //  = favorites.find(findFave);
-  // };
+  const getCareerName = (cid) => {
+    const career = careers.find((c) => c.id === cid);
+    if (career) {
+      return career.career_name;
+    }
+  };
+
   useEffect(() => {
     axios.get("/api/users").then((response) => setUsers(response.data));
 
     axios.get("/api/photos").then((response) => setPhotos(response.data));
-    // gets zip code of current user
+    axios
+      .get("/api/photosBkgd")
+      .then((response) => setPhotosBkgd(response.data));
+
     axios.get("/api/profiles").then((response) => {
       const findProfile = response.data.find(
         ({ userId }) => userId === auth.id
@@ -54,64 +58,121 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       setProfiles(response.data);
     });
     axios.get("/api/careers").then((response) => setCareers(response.data));
+
+    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
+
+    axios
+      .get("/api/user_hobbies")
+      .then((response) => setUserHobbies(response.data));
   }, []);
 
   const userZip = profile.zipcode;
+  const userEmployment = profile.employmentstatus;
+  const userGender = profile.gender;
+  const userPets = profile.pets;
+  const userPolitics = profile.politicalaffiliation;
+  const userReligion = profile.religiousaffiliation;
+  const userOccupation = getCareerName(profile.careerid);
+  const userBirthday = profile.birthdate;
 
-  // useEffect(() => {
-  //   axios.get('/api/careers').then((response) => setCareers(response.data));
-  // }, []);
+  const searchZipCriteria = () => {
+    axios.get("/api/profiles").then((response) => {
+      const rd = response.data;
+      setUserProfiles(
+        rd.filter((up) => up.zipcode === userZip && up.userId !== auth.id)
+      );
+    });
+  };
 
-  // useEffect(() => {
-  //   // find userids of profiles with same zip code
-  //   axios.get('/api/profiles').then((response) => setProfiles(response.data));
-  // }, []);
+  const searchHobby = (inp) => {
+    axios.post("/api/search/hobbies", { hobby_name: inp }).then((response) => {
+      const rd = response.data;
+      setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+    });
+  };
 
-  //need to rename this to userProfilesInZip
-  const userProfiles = profiles.filter(
-    (p) => p.zipcode === userZip && p.userId !== auth.id
-  );
+  const searchAll = () => {
+    axios.get("/api/profiles").then((response) => {
+      const rd = response.data;
+      setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+    });
+  };
 
-  // console.log(
-  //   profile,
-  //   'profile',
-  //   userZip,
-  //   'user zip',
-  //   userProfiles,
-  //   'user profiles'
-  // );
+  const onSubmitHobby = (event) => {
+    event.preventDefault();
+    searchHobby(hobbyFilter);
+  };
 
-  const getUsername = (id) => {
-    const user = users.find((u) => u.id === id);
-    if (user) {
-      return user.username;
+  const onSubmitAll = (event) => {
+    event.preventDefault();
+    searchAll();
+  };
+
+  const searchCriteria = (input) => {
+    setFilter(...filter, input);
+    if (filter === userOccupation) {
+      axios.post("/api/search/career", { careerid: input }).then((response) => {
+        const rd = response.data;
+        setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+      });
+    } else if (filter === userGender) {
+      axios.post("/api/search/gender", { gender: input }).then((response) => {
+        const rd = response.data;
+        setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+      });
+    } else if (filter === userBirthday) {
+      const bDay = input.substring(0, 4);
+      axios.post("/api/search/age", { birthdate: bDay }).then((response) => {
+        const rd = response.data;
+        setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+      });
+    } else if (filter === userPets) {
+      axios.post("/api/search/pets", { pets: input }).then((response) => {
+        const rd = response.data;
+        setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+      });
+    } else if (filter === userReligion) {
+      axios
+        .post("/api/search/religion", { religiousaffiliation: input })
+        .then((response) => {
+          const rd = response.data;
+          setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+        });
+    } else if (filter === userPolitics) {
+      axios
+        .post("/api/search/politics", { politicalaffiliation: input })
+        .then((response) => {
+          const rd = response.data;
+          setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+        });
+    } else if (filter === userEmployment) {
+      axios
+        .post("/api/search/employment_status", { employmentstatus: input })
+        .then((response) => {
+          const rd = response.data;
+          setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+        });
+    } else {
+      console.log("Sorry, no results");
     }
   };
-  //console.log(getUsername())
-  const getCareerName = (cid) => {
-    const career = careers.find((c) => c.id === cid);
-    if (career) {
-      return career.career_name;
-    }
-  };
-  useEffect(() => {
-    axios
-      .get("/api/user_hobbies")
-      .then((response) => setUsersHobbies(response.data));
-  }, []);
 
-  useEffect(() => {
-    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
-  }, []);
+  const onSubmitZip = (event) => {
+    event.preventDefault();
+    searchZipCriteria();
+  };
+
+  const onSubmitCriteria = (event) => {
+    event.preventDefault();
+    searchCriteria(filter);
+  };
 
   const getUserHobbies = (uid) => {
-    // console.log('uh', usersHobbies);
-    const uHobs = usersHobbies.find((h) => h.user_id === uid);
-    return uHobs;
+    const uHobs = userHobbies.find((h) => h.user_id === uid);
+    setUsersHobbies(uHobs);
   };
 
   const getHobbyName = (hobbyId) => {
-    // console.log('hobbyid', hobbyId);
     const hobNm = hobbies.find((b) => b.id === hobbyId.hobby_id);
     return hobNm.hobby_name;
   };
@@ -127,299 +188,221 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     return age;
   };
 
-  const getProfilePic = (friendId) => {
-    // if (photos) {
-    const profilePic = photos.find((photo) => photo.userId === friendId);
-    if (!profilePic.filename) {
-      const filename = "/avatar.jpg";
-      const filepath = "/images";
-      const src = filepath + filename;
-      return src;
-    }
-    if (profilePic) {
-      console.log(profilePic);
-
-      const filename = profilePic.filename;
-      const filepath = profilePic.filepath;
-      const src = filepath + filename;
-      return src;
-    }
-  };
-
   const saveAsFavorite = async (fave) => {
     await axios
       .post("/api/createFavorite", fave)
       .then((response) => setFavorites([response.data, ...favorites]));
   };
-  // useEffect(() => {
-  //   axios.get('/api/favorites').then((response) => setFavorite(response.data));
-  // }, []);
-  // const onSubmit = (fav) => {
-  //   const user1 = auth.id;
-  //   const user2 = fav;
-  //   const faveUser = {
-  //     userId: user1,
-  //     favoriteId: user2,
-  //   };
-  //   saveAsFavorite(faveUser);
-  // };
-  // function myFunction(x) {
-  //   x.classList.toggle("fa fa-heart");
-  // }
-  $("#exampleModal").on("show.bs.modal", function (event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var recipient = button.data("whatever"); // Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
-    modal.find(".modal-title").text("Save  " + recipient + " as a favorite?");
-    modal.find(".modal-body input").val(recipient);
-  });
 
-  $("#bigModal").on("show.bs.modal", function (event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    // var recipient = button.data("whatever");
-    var body = button.data("main");
+  const onSubmit = (fav) => {
+    const user1 = auth.id;
+    const user2 = fav;
+    const faveUser = {
+      userId: user1,
+      favoriteId: user2,
+    };
+    saveAsFavorite(faveUser);
+  };
 
-    var modal = $(this);
-    // modal.find(".modal-title").text(recipient + " info");
-    modal.find(".modal-body input").val(body + "WHAT");
-  });
-  if (!users) {
-    Loading;
+  const usersid = auth.id;
+
+  if (!users || !photos || !profiles) {
+    return <p>Loading</p>;
   } else {
     return (
       <div className="container">
-        {/* <i onclick="myFunction(this)" className="fa fa-thumbs-up"></i> */}
-        <h3>
-          Future Friends Nearby{" "}
+        <div>
+          <div>
+            <div>
+              <form onSubmit={(e) => onSubmitCriteria(e)}>
+                <div className="form-group mt-3">
+                  <label htmlFor="about">
+                    Search for someone that matches my:
+                  </label>
+                  <select
+                    type="text"
+                    id="searchFilter"
+                    name="searchFilter"
+                    onChange={(ev) => setFilter(ev.target.value)}
+                  >
+                    <option value="">--select your option--</option>
+                    <option value={getCareerName(profile.careerid)}>
+                      Occupation
+                    </option>
+                    <option value={profile.employmentstatus}>
+                      Employment Status
+                    </option>
+                    <option value={profile.pets}>Pets </option>
+                    <option value={userBirthday}>Age</option>
+                    <option value={profile.gender}>Gender</option>
+                    <option value={profile.politicalaffiliation}>
+                      Political affiliation
+                    </option>
+                    <option value={profile.religiousaffiliation}>
+                      Religious affiliation
+                    </option>
+                  </select>
+                </div>
+                <button type="submit">Show</button>
+              </form>
+            </div>
+            <div>
+              <form onSubmit={(e) => onSubmitHobby(e)}>
+                <div>
+                  <label htmlFor="about">
+                    Search for someone whose hobby is:
+                  </label>
+                  <select
+                    className="form-control"
+                    id="hobbies"
+                    defaultValue
+                    onChange={(ev) => setHobbyFilter(ev.target.value)}
+                  >
+                    <option value={hobbyFilter}>
+                      {" "}
+                      --select your option--{" "}
+                    </option>
+                    {hobbies.map((hobby) => {
+                      return (
+                        <option key={hobby.id} value={hobby.hobby_name}>
+                          {hobby.hobby_name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <button type="submit">Show</button>
+              </form>
+            </div>
+            <div>
+              <div>
+                <h4>Search for someone nearby:</h4>
+                <button type="button" onClick={(e) => onSubmitZip(e)}>
+                  Show
+                </button>
+              </div>
+            </div>
+            <div>
+              <div>
+                <h4>I just want to see all users with no filters</h4>
+                <button type="button" onClick={(e) => onSubmitAll(e)}>
+                  Show
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3 className="smaller-headline">Results ({userProfiles.length})</h3>
+        {/* <h3>
+          Future Friends Nearby{' '}
           <span className="smaller-headline">
             (There are {userProfiles.length} in your zip: {userZip} )
           </span>
-        </h3>
+        </h3> */}
         <div className="row">
           {userProfiles.map((userProfile) => {
-            // const use = users.find((u) => u.id === userProfile.userId);
+            //users
+            const user = users.find((u) => u.id === userProfile.userId);
+            let username;
+            if (user) {
+              username = user.username;
+            }
+            //photos
+            const profilePic = photos.find(
+              (photo) => photo.userId === userProfile.userId
+            );
+            let src;
+            if (profilePic) {
+              {
+                !profilePic.filename
+                  ? (src = "/images/avatar.jpg")
+                  : (src = profilePic.filepath);
+              }
+            }
 
-            // const profilePic = photos.find(
-            //   (photo) => photo.userId === userProfile.userId
-            // );
+            //photosbkgd
+            const profilePicBkgd = photosBkgd.find(
+              (photoBkgd) => photoBkgd.userId === userProfile.userId
+            );
+            let srcBkgd;
+            if (profilePicBkgd) {
+              {
+                !profilePicBkgd.filename
+                  ? (srcBkgd = "/images/no-bkgd.jpg")
+                  : (srcBkgd = profilePicBkgd.filepath);
+              }
+            }
+            //career
+            const career = careers.find((c) => c.id === userProfile.careerid);
+            let careerName;
+            if (career) {
+              careerName = career.career_name;
+            }
 
-            // console.log(userProfile.userId, 'username');
-            //console.log(profilePic, 'profile pic');
-
-            // console.log('ID', userProfile.userId);
             return (
-              <div
-                key={userProfile.id}
-                className="col-md-4 col-sm-12 col-xs-12"
-              >
+              <div key={userProfile.id} className="col-sm-4">
                 <div className="card profile-card">
                   <div className="card-body">
                     <div>
-                      <img
-                        className="profile-photo"
-                        src={getProfilePic(userProfile.userId)}
-                        alt={getUsername(userProfile.userId)}
-                      />
-                      {/* {getProfilePic(userProfile.userId)} */}
+                      <img className="profile-photo" src={src} alt={username} />
                     </div>
                     <div className="card-info">
                       <h5 className="card-title d-inline p-2 card-name">
-                        {getUsername(userProfile.userId)
-                          .charAt(0)
-                          .toUpperCase() +
-                          getUsername(userProfile.userId).slice(1)}{" "}
+                        {username
+                          ? username.charAt(0).toUpperCase() + username.slice(1)
+                          : ""}
                       </h5>
                       <p className="card-text d-inline p-2 card-age">
                         {findAge(userProfile.birthdate)}{" "}
                       </p>
                     </div>
-                    {/* EXAMPLE */}
                     <button
                       type="button"
-                      className="fas fa-heart fa-lg gray"
-                      data-toggle="modal"
-                      data-target="#exampleModal"
-                      data-whatever={
-                        getUsername(userProfile.userId)
-                          .charAt(0)
-                          .toUpperCase() +
-                        getUsername(userProfile.userId).slice(1)
-                      }
-                    ></button>
-
-                    <div
-                      className="modal fade"
-                      id="exampleModal"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
-                              New Message
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          {/* <div className="modal-body">
-                            <form>
-                              <div className="form-group">
-                                <label
-                                  for="recipient-name"
-                                  className="col-form-label"
-                                >
-                                  Recipient:
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="recipient-name"
-                                />
-                              </div>
-                              <div className="form-group">
-                                <label
-                                  for="message-text"
-                                  className="col-form-label"
-                                >
-                                  Message:
-                                </label>
-                                <textarea
-                                  className="form-control"
-                                  id="message-text"
-                                ></textarea>
-                              </div>
-                            </form>
-                          </div> */}
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              data-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-primary"
-                              onClick={() => onSubmit(userProfile.userId)}
-                              data-dismiss="modal"
-                            >
-                              Save
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* EXAMPLE */}
-                    {/* <button
-                      type="button"
-                      className="fas fa-heart fa-lg gray"
-                      data-toggle="modal"
-                      data-target="#exampleModal"
-                      data-whatever={getUsername(userProfile.userId)}
-                    ></button> */}
-
-                    {/* <button
-                      type="button"
-                      id="exampleModal"
+                      id="heart"
                       className="fas fa-heart fa-lg gray"
                       onClick={(e) => findFave(userProfile.userId)}
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
                       data-dismiss="modal"
-                      data-id={userProfile.userId}
-                      data-whatever={getUsername(userProfile.userId)}
+                      onClick={() => {
+                        setAboutMe({
+                          userId: userProfile.userId,
+                          username,
+                          src,
+                          srcBkgd,
+                          careerName,
+                          about: userProfile.about,
+                          pets: userProfile.pets,
+                          political: userProfile.politicalaffiliation,
+                          religion: userProfile.religiousaffiliation,
+                          education: userProfile.education,
+                          employment: userProfile.employmentstatus,
+                        });
+                      }}
                     >
                       {" "}
-                    </button> */}
-
-                    {/* <div
-                      className="modal fade"
-                      id="#exampleModal"
-                      tabIndex="-1"
-                      role="dialog"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div
-                        className="modal-dialog modal-dialog-centered"
-                        role="document"
-                      > */}
-                    {/* =======FAVE MODAL SECTION======= */}
-
-                    {/* <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
-                              Details of user {getUsername(userProfile.userId)}
-                              Save this user as a favorite?
-                            </h5> */}
-                    {/* =======FAVE X BTN======= */}
-
-                    {/* <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              data-dismiss="modal"
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              type="submit"
-                              className="btn btn-primary"
-                              onClick={() => onSubmit(userProfile.userId)}
-                              data-dismiss="modal"
-                            >
-                              Save
-                            </button>
-                          </div>
-                        </div> */}
-                    {/* =======FAVE MODAL SECTION ENDS======= */}
-                    {/* </div>
-                    </div> */}
-                    {/* =======CARD VIEW DETAILS BTN======= */}
+                    </button>
                     <div className="side-by-side">
                       <button
                         type="button"
                         className="btn-outline-primary btn-rounded btn-sm p-2 d-inline mr-2 sbs"
                         data-toggle="modal"
-                        data-target="#bigModal"
-                        data-whatever={
-                          getUsername(userProfile.userId)
-                            .charAt(0)
-                            .toUpperCase() +
-                          getUsername(userProfile.userId).slice(1)
-                        }
-                        data-main={
-                          <div>
-                            <img
-                              className="profile-photo round-photo-inset"
-                              src={getProfilePic(userProfile.userId)}
-                              alt={getUsername(userProfile.userId)}
-                            />
-                          </div>
-                        }
+                        data-target="#exampleModalCenter2"
+                        onClick={() => {
+                          setAboutMe({
+                            userId: userProfile.userId,
+                            username,
+                            src,
+                            srcBkgd,
+                            careerName,
+                            about: userProfile.about,
+                            pets: userProfile.pets,
+                            political: userProfile.politicalaffiliation,
+                            religion: userProfile.religiousaffiliation,
+                            education: userProfile.education,
+                            employment: userProfile.employmentstatus,
+                          });
+                        }}
                       >
                         About Me
                       </button>
@@ -427,88 +410,31 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                       <button
                         type="button"
                         className="btn-outline-success btn-rounded btn-sm p-2 d-inline sbs"
-                        onClick={() => inviteUser(userProfile.userId)}
+                        onClick={() => {
+                          inviteUser({
+                            id: userProfile.userId,
+                            name: username,
+                          });
+                          goToCreateEvent();
+                        }}
                       >
-                        Invite Me
+                        Invite me
                       </button>
                     </div>
-                    {/* ==================SECOND MODAL================== */}
-                    <div
-                      className="modal fade"
-                      id="bigModal"
-                      tabindex="-1"
-                      role="dialog"
-                      aria-labelledby="exampleModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
-                              New message
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          {/* ============BODY=========== */}
-                          <div className="modal-body">
-                            <form>
-                              <div className="form-group">
-                                <label
-                                  for="main-name"
-                                  className="col-form-label"
-                                >
-                                  Main:
-                                </label>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="main"
-                                />
-                              </div>
-                              <div className="form-group">
-                                <label
-                                  for="message-text"
-                                  className="col-form-label"
-                                >
-                                  Message:
-                                </label>
-                                <textarea
-                                  className="form-control"
-                                  id="message-text"
-                                ></textarea>
-                              </div>
-                            </form>
-                          </div>
-                          {/* ========FOOTER======== */}
-                          <div className="modal-footer">
-                            <button
-                              type="button"
-                              className="btn btn-secondary"
-                              data-dismiss="modal"
-                            >
-                              Close
-                            </button>
-                            <button type="button" className="btn btn-primary">
-                              Send message
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* TESTING */}
                   </div>
                 </div>
               </div>
             );
           })}
         </div>
+        <SearchResultAboutModal
+          aboutMe={aboutMe}
+          setAboutMe={setAboutMe}
+          inviteUser={inviteUser}
+          onSubmit={onSubmit}
+          goToCreateEvent={goToCreateEvent}
+        />
+        <FavModal aboutMe={aboutMe} onSubmit={onSubmit} />
       </div>
     );
   }

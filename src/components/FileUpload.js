@@ -1,27 +1,27 @@
-import React, { Fragment, useState } from 'react';
-import Message from './Message';
-import Progress from './Progress';
-import axios from 'axios';
-import qs from 'qs';
+import React, { Fragment, useState } from "react";
+import Message from "./Message";
+import Progress from "./Progress";
+import axios from "axios";
+import qs from "qs";
 import {
   BrowserRouter as Router,
   Link,
   Redirect,
   useHistory,
-} from 'react-router-dom';
+} from "react-router-dom";
 
 const FileUpload = ({ auth, params }) => {
-  const [file, setFile] = useState('');
-  const [filename, setFilename] = useState('Choose File');
+  const [file, setFile] = useState("");
+  const [filename, setFilename] = useState("Upload");
   const [uploadedFile, setUploadedFile] = useState({});
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [page, setPage] = useState(
     <p className="medium-type">Skip This Step</p>
   );
 
   const history = useHistory();
-  const goToProfile = () => history.push('/UserInfo');
+  const goToProfile = () => history.push("/UserInfo");
 
   const redirect = () => {
     goToProfile();
@@ -33,9 +33,9 @@ const FileUpload = ({ auth, params }) => {
 
   const createUserPhoto = (fileName, filePath, userId) => {
     axios
-      .post('/api/createPhoto', fileName, filePath, userId)
+      .post("/api/createPhoto", fileName, filePath, userId)
       .then((response) => {
-        console.log('Response', response);
+        console.log("Response", response);
       });
   };
   const onChange = (e) => {
@@ -45,13 +45,13 @@ const FileUpload = ({ auth, params }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
     try {
-      const res = await axios.post('/upload', formData, {
+      const res = await axios.post("/upload", formData, {
         // const res = await axios.post("http://localhost:3090/upload", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
         onUploadProgress: (progressEvent) => {
           setUploadPercentage(
@@ -68,20 +68,20 @@ const FileUpload = ({ auth, params }) => {
 
       setUploadedFile({ fileName, filePath });
       // console.log("filePath", filePath);
-      setMessage('File Uploaded');
+      setMessage("File Uploaded");
       setPage(<p className="medium-type">Next Page</p>);
       createUserPhoto({
         fileName,
         filePath,
         userId,
       });
-      console.log('HERE', fileName, filePath, userId);
+      console.log("HERE", fileName, filePath, userId);
     } catch (err) {
       if (err.response.status === 500) {
-        console.log('PROBLEM WITH SERVER');
-        setMessage('There was a problem with the server');
+        console.log("PROBLEM WITH SERVER");
+        setMessage("There was a problem with the server");
       } else {
-        console.log('PROBLEM HERE', err.response.data.msg);
+        console.log("PROBLEM HERE", err.response.data.msg);
 
         setMessage(err.response.data.msg);
       }
@@ -111,7 +111,7 @@ const FileUpload = ({ auth, params }) => {
           <div className="header-content text-md-center">
             <span>
               <div className="container">
-                <h4 className="display-4 text-center mb-4 welcome">
+                <h4 className="display-4 text-center mb-4 welcome mt-0">
                   Welcome, {auth.firstname}!
                 </h4>
                 <h5 className="display-6 text-center mb-4">
@@ -140,7 +140,7 @@ const FileUpload = ({ auth, params }) => {
                   />
                   <button
                     type="button"
-                    className="btn btn-primary btn-block mt-4"
+                    className="btn btn-primary btn-block mt-1"
                     onClick={() => redirect()}
                   >
                     Next
@@ -152,9 +152,9 @@ const FileUpload = ({ auth, params }) => {
                     <div className="col-md-6 m-auto">
                       <h3 className="text-center">{uploadedFile.fileName}</h3>
                       <img
-                        style={{ width: '100%' }}
+                        style={{ width: "100%" }}
                         src={uploadedFile.filePath}
-                        alt=""
+                        alt={uploadedFile.fileName}
                       />
                     </div>
                   </div>
@@ -171,17 +171,14 @@ const FileUpload = ({ auth, params }) => {
 
         <section className="section section-a">
           <div className="container">
-            <h2>WannaHang</h2>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde,
-              impedit amet minima iste autem cumque et maiores blanditiis
-              doloribus aut dolorum quaerat non est voluptatum, tempore ut
-              dolorem voluptas quod quae accusantium, ex inventore ducimus.
-              Beatae mollitia exercitationem, quam similique, consectetur
-              ratione reprehenderit delectus neque eligendi facere soluta dolor
-              ducimus!
+            <h2 className="heading">WannaHang</h2>
+            <p className="paragraph-footer">
+              Are you looking for a friend in your area? Someone who shares the
+              same interests as you? Someone who wants to go to the movies or
+              the beach or chat about a book? WannaHang is the online community
+              of friends you have yet to meet. So, come hang with us!
             </p>
-            <p>©2020 The TEC Group</p>
+            <p className="paragraph">©2020 The TEC Group</p>
           </div>
         </section>
       </div>
