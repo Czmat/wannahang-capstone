@@ -249,6 +249,12 @@ body {
 .logo-nav {
   width: 250px;
 }
+.search-btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .my-nav {
   color: #333;
 }
@@ -256,6 +262,22 @@ body {
   padding-top: 3px;
   padding-bottom: 3px;
   margin-top: 0;
+}
+.search-btn {
+  height: 30px;
+  margin-top: 2px;
+  padding: 2px 15px;
+  font-size: 0.8rem;
+
+  /* border-style: none;
+  background-color: teal; */
+}
+
+.show2 {
+  background-color: #666666;
+  margin-left: -14px;
+  padding-left: 16px;
+  border: none;
 }
 .up-photo {
   border-radius: 50%;

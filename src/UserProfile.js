@@ -163,8 +163,8 @@ const UserProfile = ({ logout, auth, params }) => {
           </Link>
         </div>{" "}
       </div>
-      <div class="container-fluid">
-        <div class="row">
+      <div className="container-fluid">
+        <div className="row">
           <div className="card col-md-6">
             <div className="card-body">
               <FileUploadPlain auth={auth} />

@@ -130,81 +130,40 @@ const SearchFIlter = ({ usersid }) => {
 
   return (
     <div>
-      <div>
-        <form onSubmit={(e) => submitCriteria(e)}>
-          <div className="form-group mt-3">
-            <label htmlFor="about">Search for someone that matches my:</label>
-            <select
-              type="text"
-              id="searchFilter"
-              name="searchFilter"
-              onChange={(ev) => setFilter(ev.target.value)}
-            >
-              <option value={getCareerName(profile.careerid)}>
-                Occupation
-              </option>
-              <option value={profile.employmentstatus}>
-                Employment Status
-              </option>
-              <option value={profile.pets}>Pets </option>
-              <option value={userBirthday}>Age</option>
-              <option value={profile.gender}>Gender</option>
-              <option value={profile.politicalaffiliation}>
-                Political affiliation
-              </option>
-              <option value={profile.religiousaffiliation}>
-                Religious affiliation
-              </option>
-            </select>
-          </div>
-          <button type="submit">Show</button>
-        </form>
-      </div>
-      <div>
-        <form onSubmit={(e) => submitHobby(e)}>
-          <div>
-            <label htmlFor="about">Search for someone whose hobby is:</label>
-            <select
-              className="form-control"
-              id="hobbies"
-              defaultValue
-              onChange={(ev) => setHobbyFilter(ev.target.value)}
-            >
-              <option value={hobbyFilter}> --select your option-- </option>
-              {hobbies.map((hobby) => {
-                return (
-                  <option key={hobby.id} value={hobby.hobby_name}>
-                    {hobby.hobby_name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <button type="submit">Show</button>
-        </form>
-      </div>
-      <div>
-        {/* <h4>Search Results</h4> */}
-        {/* <ul>
-          {filteredProfiles.map((profl) => {
-            return <li key={profl.id}>{getUsername(profl.userId)}</li>;
-          })}
-        </ul> */}
-      </div>
-      <div>
-        <div>
-          <h4>I just want to see all users with no filters</h4>
-          <button type="button" onClick={(e) => submitAll(e)}>
-            Show
+      <div
+        class="btn-toolbar"
+        role="toolbar"
+        aria-label="Toolbar with button groups"
+      >
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+          <button type="button" class="btn btn-secondary">
+            1
           </button>
-          <div id="allUsers" className="hide">
-            <h4>All users</h4>
-            <ul>
-              {users.map((user) => {
-                return <li key={user.id}>{user.username}</li>;
-              })}
-            </ul>
-          </div>
+          <button type="button" class="btn btn-secondary">
+            2
+          </button>
+          <button type="button" class="btn btn-secondary">
+            3
+          </button>
+          <button type="button" class="btn btn-secondary">
+            4
+          </button>
+        </div>
+        <div class="btn-group mr-2" role="group" aria-label="Second group">
+          <button type="button" class="btn btn-secondary">
+            5
+          </button>
+          <button type="button" class="btn btn-secondary">
+            6
+          </button>
+          <button type="button" class="btn btn-secondary">
+            7
+          </button>
+        </div>
+        <div class="btn-group" role="group" aria-label="Third group">
+          <button type="button" class="btn btn-secondary">
+            8
+          </button>
         </div>
       </div>
     </div>
