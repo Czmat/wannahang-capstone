@@ -33,11 +33,7 @@ const Login = ({ login }) => {
         <div className="header-overlay"></div>
         <div className="header-content text-md-center">
           <h1>WannaHang</h1>{" "}
-          <p>
-            The online community of friends you have yet to meet!
-            <br />
-            Login{" "}
-          </p>
+          <p>The online community of friends you have yet to meet!</p>
           <div className=" ">
             <form className="" onSubmit={onSubmit}>
               {error ? (
