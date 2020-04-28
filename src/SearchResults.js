@@ -4,7 +4,9 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import SearchResultAboutModal from './components/SearchResultAboutModal';
 import FavModal from './components/FavModal';
+import NotFavModal from './components/NotFavModal';
 import SearchFilter from './SearchFIlter';
+import { response } from 'express';
 
 const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [filter, setFilter] = useState('');
@@ -16,6 +18,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [photos, setPhotos] = useState([]);
   const [photosBkgd, setPhotosBkgd] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [isFav, setIsFav] = useState('');
   const [favorite, setFavorite] = useState([]);
   const [hobbies, setHobbies] = useState([]);
   const [userHobbies, setUserHobbies] = useState([]);
@@ -64,6 +67,10 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     axios
       .get('/api/user_hobbies')
       .then((response) => setUserHobbies(response.data));
+
+    axios.get(`/api/favorites/${auth.id}`).then((response) => {
+      setFavorites(response.data);
+    });
   }, []);
 
   const userZip = profile.zipcode;
@@ -189,22 +196,23 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   };
 
   const saveAsFavorite = async (fave) => {
-    await axios
-      .post('/api/createFavorite', fave)
-      .then((response) => setFavorites([response.data, ...favorites]));
+    // axios.post(`/api/favorites`, fave).then((response) => {
+    //   setFavorites(...favorites, response.data);
+    // });
   };
 
-  const onSubmit = (fav) => {
-    const user1 = auth.id;
-    const user2 = fav;
-    const faveUser = {
-      userId: user1,
-      favoriteId: user2,
-    };
-    saveAsFavorite(faveUser);
-  };
+  // const onSubmit = (fav) => {
+  //   const user1 = auth.id;
+  //   const user2 = fav;
+  //   const faveUser = {
+  //     userId: user1,
+  //     favoriteId: user2,
+  //   };
+  //   saveAsFavorite(faveUser);
+  // };
 
   const usersid = auth.id;
+  console.log(isFav, 'is Fav', aboutMe);
 
   if (!users || !photos || !profiles) {
     return <p>Loading</p>;
@@ -338,6 +346,17 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (career) {
               careerName = career.career_name;
             }
+            //favorites
+            const isFavorite = favorites.find(
+              (f) => f.favoriteId === userProfile.userId
+            );
+            // console.log(
+            //   isFavorite,
+            //   'isFavorite',
+            //   username,
+            //   'username',
+            //   userProfile.userId
+            // );
 
             return (
               <div key={userProfile.id} className="col-sm-4">
@@ -356,15 +375,23 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                         {findAge(userProfile.birthdate)}{' '}
                       </p>
                     </div>
+                    {/* ======fav btn====== */}
                     <button
                       type="button"
                       id="heart"
-                      className="fas fa-heart fa-lg gray"
-                      onClick={(e) => findFave(userProfile.userId)}
+                      className={
+                        isFavorite
+                          ? 'fas fa-heart fa-lg red'
+                          : 'fas fa-heart fa-lg gray'
+                      }
+                      // onClick={(e) => findFave(userProfile.userId)}
                       data-toggle="modal"
-                      data-target="#exampleModalCenter"
+                      data-target={
+                        isFavorite ? '#exampleModalNotFav' : '#exampleModalFav'
+                      }
                       data-dismiss="modal"
                       onClick={() => {
+                        setIsFav(isFavorite);
                         setAboutMe({
                           userId: userProfile.userId,
                           username,
@@ -379,9 +406,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                           employment: userProfile.employmentstatus,
                         });
                       }}
-                    >
-                      {' '}
-                    </button>
+                    ></button>
                     <div className="side-by-side">
                       <button
                         type="button"
@@ -434,7 +459,12 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
           onSubmit={onSubmit}
           goToCreateEvent={goToCreateEvent}
         />
-        <FavModal aboutMe={aboutMe} onSubmit={onSubmit} />
+        <FavModal aboutMe={aboutMe} onSubmit={onSubmit} setIsFav={setIsFav} />
+        <NotFavModal
+          aboutMe={aboutMe}
+          onSubmit={onSubmit}
+          setIsFav={setIsFav}
+        />
       </div>
     );
   }

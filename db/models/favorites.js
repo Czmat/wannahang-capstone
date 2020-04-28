@@ -1,7 +1,7 @@
 const client = require('../client');
 
 const favorites = {
-  read: async (id) => {
+  show: async (id) => {
     return (
       await client.query('SELECT * from user_favorites where "userId" =$1', [
         id,

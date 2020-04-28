@@ -450,7 +450,7 @@ const sync = async () => {
     larry,
     joe,
     shemp,
-    petti,
+    patti,
     sally,
     marcie,
     will,
@@ -585,24 +585,24 @@ const sync = async () => {
       userId: lucy.id,
       favoriteId: will.id,
     },
-    // lpatti: {
-    //   userId: lucy.id,
-    //   favoriteId: patti.id,
-    // },
-    // mwill: {
-    //   userId: moe.id,
-    //   favoriteId: will.id,
-    // },
-    // mmarcie: {
-    //   userId: moe.id,
-    //   favoriteId: marcie.id,
-    // },
+    lpatti: {
+      userId: lucy.id,
+      favoriteId: patti.id,
+    },
+    mwill: {
+      userId: moe.id,
+      favoriteId: will.id,
+    },
+    mmarcie: {
+      userId: lucy.id,
+      favoriteId: marcie.id,
+    },
   };
   const [flucy, fwill, fcurly, fjoke, fdog] = await Promise.all(
     Object.values(_favorites).map((favorite) => favorites.create(favorite))
   );
 
-  const favoritesMap = (await favorites.read(lucy.id)).reduce(
+  const favoritesMap = (await favorites.show(lucy.id)).reduce(
     (acc, favorite) => {
       acc[favorite.userId] = favorite;
       return acc;
