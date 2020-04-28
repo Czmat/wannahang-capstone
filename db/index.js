@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 const client = require('./client');
 const fs = require('fs');
 
@@ -636,6 +637,14 @@ const sync = async () => {
       hobby_id: moviesHobby,
     }),
     hobbies.createUserHobbies({
+      user_id: lucyid,
+      hobby_id: booksHobby,
+    }),
+    hobbies.createUserHobbies({
+      user_id: lucyid,
+      hobby_id: moviesHobby,
+    }),
+    hobbies.createUserHobbies({
       user_id: pattiid,
       hobby_id: gamesHobby,
     }),
@@ -645,14 +654,6 @@ const sync = async () => {
     }),
     hobbies.createUserHobbies({
       user_id: willid,
-      hobby_id: moviesHobby,
-    }),
-    hobbies.createUserHobbies({
-      user_id: lucyid,
-      hobby_id: booksHobby,
-    }),
-    hobbies.createUserHobbies({
-      user_id: lucyid,
       hobby_id: moviesHobby,
     }),
   ]);

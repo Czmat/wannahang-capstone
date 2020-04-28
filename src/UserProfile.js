@@ -9,8 +9,8 @@ const UserProfile = ({
   auth,
   hobbies,
   setHobbies,
-  userHobbies,
-  setUserHobbies,
+  // userHobbies,
+  // setUserHobbies,
 }) => {
   const deleteAccount = () => {
     axios.delete(`/api/users/${auth.id}`);
@@ -32,10 +32,12 @@ const UserProfile = ({
       .then((response) =>
         setPhoto(response.data.find(({ userId }) => userId === auth.id))
       );
-    // axios.get('/api/hobbies').then((response) => setHobbies(response.data));
+    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
     axios
-      .get('/api/find/user_hobbies', auth.id)
-      .then((response) => setUsersHobbies(response.data));
+      .get('/api/user_hobbies')
+      .then((response) =>
+        setUsersHobbies(response.data.filter((p) => p.user_id === auth.id))
+      );
   }, []);
 
   let myPhotoPath;
@@ -51,17 +53,7 @@ const UserProfile = ({
   };
 
   let birthday = moment(profile.birthdate).format('MMMM Do YYYY');
-  console.log('before', userHobbies);
-
-  const usersId = auth.id;
-
-  useEffect(() => {
-    axios
-      .get('/api/find/user_hobbies', usersId)
-      .then((response) => setUsersHobbies(response.data));
-  }, []);
-
-  console.log('after', usersHobbies);
+  console.log('before', hobbies);
 
   return (
     <div className="container">
@@ -143,9 +135,9 @@ const UserProfile = ({
               Employment Status: {profile.employmentstatus}
             </li>
             <li className="list-group-item">About: {profile.about}</li>
-            <li className="list-group-item">
+            {/* <li className="list-group-item">
               I prefer to be contacted by: {profile.communicationpreference}
-            </li>
+            </li> */}
             {/* careerid: "7196afea-99c0-46b5-8bcf-f33e526a5467" */}
           </ul>
 
@@ -165,12 +157,10 @@ const UserProfile = ({
           <div className="card-body">
             <h5 className="card-title">User Hobbies</h5>
             <ul className="list-group list-group-flush">
-              {/* {userHobbies.map((userHobby) => {
-                return (
-                  <li key={userHobby.id}>{getHobbyName(userHobby.hobby_id)}</li>
-                );
-              })} */}
-              Hobbies:
+              <li>Hobbies:</li>
+              {usersHobbies.map((userHobby) => {
+                return <li key={userHobby.id}>{userHobby.hobby_id}</li>;
+              })}
             </ul>
             <Link
               className="card-link"
