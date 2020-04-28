@@ -436,6 +436,13 @@ app.delete(`/api/delete/user/:id`, (req, res, next) => {
     .then(() => res.sendStatus(204))
     .catch(next);
 });
+//fav delete
+app.delete('/api/favorites/:id', (req, res, next) => {
+  models.favorites
+    .delete(req.params.id)
+    .then((items) => res.send(items))
+    .catch(next);
+});
 
 Object.keys(models).forEach((key) => {
   //console.log(models);
