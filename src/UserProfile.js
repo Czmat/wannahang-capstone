@@ -40,6 +40,7 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
     myPhotoPath = photo.filepath + '/' + photo.filename;
   }
 
+  console.log('hb', hobbies);
   const getHobbyName = (hobbyId) => {
     const hobNm = hobbies.find((b) => b.id === hobbyId.hobby_id);
     return hobNm.hobby_name;
@@ -149,7 +150,8 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
               <li>Hobbies:</li>
               {usersHobbies.map((userHobby) => {
                 return (
-                  <li key={userHobby.id}>getHobbyName({userHobby.hobby_id})</li>
+                  // <li key={userHobby.id}>{getHobbyName(userHobby.hobby_id)}</li>
+                  <li key={userHobby.id}>{userHobby.hobby_id}</li>
                 );
               })}
             </ul>

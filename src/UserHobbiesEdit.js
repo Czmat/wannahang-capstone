@@ -7,7 +7,10 @@ const UserHobbiesEdit = ({ auth, hobbies }) => {
   const history = useHistory();
   const goToProfile = () => history.push('/UserProfile');
   const [usersHobbies, setUsersHobbies] = useState([]);
-  const [userHobby, setUserHobby] = useState([]);
+  const [userHobby, setUserHobby] = useState({
+    user_id: auth.id,
+    hobby_id: '',
+  });
   useEffect(() => {
     axios
       .get('/api/user_hobbies')
@@ -29,16 +32,13 @@ const UserHobbiesEdit = ({ auth, hobbies }) => {
   const createUserHobby = (userhobby) => {
     axios
       .post('/api/createUserHobbies', userhobby)
-      .then((response) => setUsersHobbies(response.data));
+      .then((response) => console.log(response.data));
   };
 
   const onSubmit = (event) => {
-    console.log('click');
     event.preventDefault(event);
-    createUserHobby({
-      userid,
-      userHobby,
-    });
+    console.log('click');
+    createUserHobby(userHobby);
   };
   const onReturn = (event) => {
     event.preventDefault();
@@ -67,26 +67,28 @@ const UserHobbiesEdit = ({ auth, hobbies }) => {
               ))}
             </ul>
             <div>
-              <label htmlFor="about">Add another hobby</label>
-              <select
-                className="form-control"
-                id="hobbies"
-                onChange={(ev) => setUserHobby(ev.target.value)}
-              >
-                <option value=""> --select your option-- </option>
-                {hobbies.map((hobby) => {
-                  return (
-                    <option key={hobby.id} value={hobby.hobby_name}>
-                      {hobby.hobby_name}
-                    </option>
-                  );
-                })}
-              </select>
+              <form>
+                <label htmlFor="about">Add another hobby</label>
+                <select
+                  className="form-control"
+                  id="hobbies"
+                  onChange={(ev) => setUserHobby(ev.target.value)}
+                >
+                  <option value=""> --select your option-- </option>
+                  {hobbies.map((hobby) => {
+                    return (
+                      <option key={hobby.id} value={hobby.hobby_id}>
+                        {hobby.hobby_name}
+                      </option>
+                    );
+                  })}
+                </select>
+                <button type="submit" onClick={(e) => onSubmit(e)}>
+                  Save Hobby
+                </button>
+              </form>
             </div>
             <div>
-              <button type="submit" onSubmit={(e) => onSubmit(e)}>
-                Save Hobby
-              </button>
               <button type="button" onClick={(e) => onReturn(e)}>
                 Return to Profile
               </button>
