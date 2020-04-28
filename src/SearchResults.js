@@ -365,7 +365,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (profilePicBkgd) {
               {
                 !profilePicBkgd.filename
-                  ? (srcBkgd = "/images/no-bkgd.jpg")
+                  ? (srcBkgd = "/uploads/no-bkgd.jpg")
                   : (srcBkgd = profilePicBkgd.filepath);
               }
             }

@@ -299,14 +299,23 @@ body {
     rgba(212, 243, 231, 1) 100%
   );
 }
-a.invites:link {
+.invites {
   color: #999;
 }
-a.invites:hover {
+.invites:link {
+  color: #999;
+  margin-right: 2px;
+}
+.invites:hover {
   color: white;
 }
 .links-nav {
   color: rgb(206, 206, 206);
+}
+.invitesNum {
+  color: white;
+  margin-left: 5px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 a.links-nav:hover {
   color: rgb(74, 209, 198);
