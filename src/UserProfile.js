@@ -5,34 +5,6 @@ import axios from 'axios';
 import DeleteAccountPopUp from './components/User/DeleteAccountPopUp';
 
 const UserProfile = ({ logout, auth, params }) => {
-  const [myUserEvents, setMyUserEvents] = useState([]);
-  const [myEvents, setMyEvent] = useState([]);
-
-  useEffect(() => {
-    console.log(auth.id, 'auth id');
-    axios.get(`/api/events/${auth.id}`).then((response) => {
-      //console.log(response.data);
-      setMyEvent(response.data);
-    });
-    axios.get(`/api/user_events/${auth.id}`).then((response) => {
-      //console.log(response.data);
-      setMyUserEvents(response.data);
-    });
-    axios.get(`/api/user/hobbies/${auth.id}`).then((response) => {
-      //console.log(response.data, 'hobbies');
-      //setMyUserHobbies(response.data);
-    });
-    axios.get(`/api/user/photos/${auth.id}`).then((response) => {
-      console.log(response.data, 'photos');
-      //setMyUserPhotos(response.data);
-    });
-  }, []);
-
-  const deleteAccount = () => {
-    axios.delete(`/api/users/${auth.id}`);
-  };
-  //console.log(auth.id, 'auth id');
-
   const [profile, setProfile] = useState([]);
   const [photo, setPhoto] = useState([]);
   useEffect(() => {
@@ -53,7 +25,7 @@ const UserProfile = ({ logout, auth, params }) => {
       );
   }, []);
   let myPhotoPath;
-  if (photo == undefined) {
+  if (photo === undefined) {
     myPhotoPath = '/uploads/avatar-1577909_1280.png';
   } else {
     myPhotoPath = photo.filepath + '/' + photo.filename;
@@ -114,11 +86,7 @@ const UserProfile = ({ logout, auth, params }) => {
         </div>
       </div>
 
-      <DeleteAccountPopUp
-        auth={auth}
-        deleteAccount={deleteAccount}
-        logout={logout}
-      />
+      <DeleteAccountPopUp auth={auth} logout={logout} />
 
       {/* //============MORE INFO===============// */}
       <div className="card">

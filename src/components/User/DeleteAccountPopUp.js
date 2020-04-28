@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
-const DeleteAccountPopUp = ({ deleteAccount, logout }) => {
+const DeleteAccountPopUp = ({ logout, auth }) => {
   const history = useHistory();
   const goToDeleted = () => history.push('');
+
+  const deleteAccount = () => {
+    axios
+      .delete(`/api/delete/user/${auth.id}`)
+      .then(() => console.log('Goodbye'));
+  };
 
   return (
     <div
