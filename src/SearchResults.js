@@ -35,6 +35,13 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     return userFave;
   };
 
+  const getCareerName = (cid) => {
+    const career = careers.find((c) => c.id === cid);
+    if (career) {
+      return career.career_name;
+    }
+  };
+
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
@@ -65,13 +72,16 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const userPets = profile.pets;
   const userPolitics = profile.politicalaffiliation;
   const userReligion = profile.religiousaffiliation;
-  const userOccupation = profile.careerid;
+  const userOccupation = getCareerName(profile.careerid);
   const userBirthday = profile.birthdate;
 
   const searchZipCriteria = () => {
-    axios
-      .post('/api/search/zipcode', { zipcode: userZip })
-      .then((response) => setUserProfiles(response.data));
+    axios.get('/api/profiles').then((response) => {
+      const rd = response.data;
+      setUserProfiles(
+        rd.filter((up) => up.zipcode === userZip && up.userId !== auth.id)
+      );
+    });
   };
 
   const searchHobby = (inp) => {
@@ -86,13 +96,6 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       const rd = response.data;
       setUserProfiles(rd.filter((up) => up.userId !== auth.id));
     });
-  };
-
-  const getCareerName = (cid) => {
-    const career = careers.find((c) => c.id === cid);
-    if (career) {
-      return career.career_name;
-    }
   };
 
   const onSubmitHobby = (event) => {
