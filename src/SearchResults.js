@@ -211,18 +211,19 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
 
   const addToFavorites = (favOdj) => {
     console.log(favOdj, 'add to fave');
-    // axios.post('/api/favorites', favOdj).then((response) => {
-    //   //setFavorites(...favorites, response.data);
-    // });
+    axios.post('/api/favorites', favOdj).then((response) => {
+      //setFavorites(...favorites, response.data);
+    });
   };
   console.log(favorites, 'favorites');
   const removeFromFavorites = (favToRemove) => {
     console.log(favToRemove, 'remove to fave');
-    // axios
-    //   .delete(`/api/favorites/${favToRemove.favoriteId}`)
-    //   .then((response) => {
-    //     console.log(response.data, 'remove resp');
-    //   });
+    axios
+      .delete(`/api/favorites/${favToRemove.favoriteId}`)
+      .then((response) => {
+        console.log(response.data, 'remove resp');
+        setFavorites();
+      });
   };
 
   const usersid = auth.id;
@@ -498,19 +499,19 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
           aboutMe={aboutMe}
           setAboutMe={setAboutMe}
           inviteUser={inviteUser}
-          onSubmit={onSubmit}
           goToCreateEvent={goToCreateEvent}
+          addToFavorites={addToFavorites}
+          removeFromFavorites={removeFromFavorites}
+          auth={auth}
         />
         <FavModal
           aboutMe={aboutMe}
-          onSubmit={onSubmit}
           addToFavorites={addToFavorites}
           auth={auth}
         />
 
         <NotFavModal
           aboutMe={aboutMe}
-          onSubmit={onSubmit}
           removeFromFavorites={removeFromFavorites}
           auth={auth}
         />

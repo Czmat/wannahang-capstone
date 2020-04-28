@@ -1,13 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function SearchResultAboutModal({
   aboutMe,
   setAboutMe,
   inviteUser,
-  onSubmit,
   goToCreateEvent,
+  favorites,
+  auth,
 }) {
+  const isFavorite = favorites.find((f) => f.favoriteId === aboutMe.userId);
+
   return (
     <div
       className="modal fade"
@@ -33,11 +36,11 @@ export default function SearchResultAboutModal({
             </div>
             <div className="about-user mb-3 mt-2">
               <h5>
-                Hi! I am{" "}
+                Hi! I am{' '}
                 {aboutMe.username
                   ? aboutMe.username.charAt(0).toUpperCase() +
                     aboutMe.username.slice(1)
-                  : ""}
+                  : ''}
                 .
               </h5>
             </div>
@@ -79,12 +82,31 @@ export default function SearchResultAboutModal({
                 <i className="fab fa-linkedin-in"></i>
               </a>
 
-              <button
-                type="submit"
-                className="fas fa-heart fa-lg gray-modal"
-                onClick={() => onSubmit(aboutMe.userId)}
-                data-dismiss="modal"
-              ></button>
+              {!isFavorite ? (
+                <button
+                  type="submit"
+                  className="fas fa-heart fa-lg gray-modal"
+                  onClick={() =>
+                    addToFavorites({
+                      userId: auth.id,
+                      favoriteId: aboutMe.userId,
+                    })
+                  }
+                  data-dismiss="modal"
+                ></button>
+              ) : (
+                <button
+                  type="submit"
+                  className="fas fa-heart fa-lg red-modal"
+                  onClick={() =>
+                    removeFromFavorites({
+                      userId: auth.id,
+                      favoriteId: aboutMe.userId,
+                    })
+                  }
+                  data-dismiss="modal"
+                ></button>
+              )}
               <button
                 type="button"
                 className="btn-outline-success btn-rounded btn-sm mr-1"

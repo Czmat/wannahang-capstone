@@ -2,7 +2,6 @@ import React from 'react';
 
 export default function SearchResultAboutModal({
   aboutMe,
-  onSubmit,
   removeFromFavorites,
   auth,
 }) {
@@ -49,7 +48,6 @@ export default function SearchResultAboutModal({
                   userId: auth.id,
                   favoriteId: aboutMe.userId,
                 });
-                onSubmit(aboutMe.userId);
               }}
               data-dismiss="modal"
             >

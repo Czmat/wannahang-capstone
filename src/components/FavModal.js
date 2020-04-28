@@ -2,7 +2,6 @@ import React from 'react';
 
 export default function SearchResultAboutModal({
   aboutMe,
-  onSubmit,
   addToFavorites,
   auth,
 }) {
@@ -46,7 +45,6 @@ export default function SearchResultAboutModal({
               className="btn btn-primary"
               onClick={() => {
                 addToFavorites({ userId: auth.id, favoriteId: aboutMe.userId });
-                onSubmit(aboutMe.userId);
               }}
               data-dismiss="modal"
             >
