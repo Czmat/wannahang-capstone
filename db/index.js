@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 const client = require('./client');
 const fs = require('fs');
 
@@ -21,6 +20,10 @@ const models = ({
   photos,
   photosBkgd,
   favorites,
+<<<<<<< HEAD
+=======
+  deleteUser,
+>>>>>>> master
 } = require('./models'));
 
 const { changePassword } = require('./userMethods');
@@ -450,7 +453,7 @@ const sync = async () => {
     acc[user.username] = user;
     return acc;
   }, {});
-
+  //console.log(lucy, moe, curly);
   //seed events
   const _events = {
     park: {
@@ -525,13 +528,7 @@ const sync = async () => {
       joinedUserId: lucy.id,
       eventId: soccer.id,
       isFavorite: true,
-      status: null,
-    },
-    soccercurly: {
-      joinedUserId: curly.id,
-      eventId: soccer.id,
-      isFavorite: true,
-      status: null,
+      status: 'invited',
     },
     joke: {
       joinedUserId: lucy.id,
@@ -548,6 +545,12 @@ const sync = async () => {
     beach: {
       joinedUserId: moe.id,
       eventId: beach.id,
+      isFavorite: false,
+      status: 'invited',
+    },
+    park: {
+      joinedUserId: curly.id,
+      eventId: park.id,
       isFavorite: false,
       status: 'invited',
     },

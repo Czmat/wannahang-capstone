@@ -19,4 +19,8 @@ const deleteFavorite = async (id) => {
   );
 };
 
-module.exports = { readFavorites, createFavorite, deleteFavorite };
+module.exports = {
+  readFavorites,
+  createFavorite,
+  deleteFavorite,
+};

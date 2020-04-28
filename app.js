@@ -152,7 +152,7 @@ app.post('/api/search/user_search_criteria', (req, res, next) => {
 
 app.post('/api/search/zipcode', (req, res, next) => {
   models.searches
-    .searchZipCode(req.body)
+    .searchUsersByZipCode(req.body)
     .then((usernames) => res.send(usernames))
     .catch(next);
 });
@@ -390,7 +390,7 @@ app.put('/api/user/password/:id', (req, res, next) => {
 //delete array of userEvents
 app.post('/api/userEvents/array/delete', (req, res, next) => {
   const userEvents = req.body;
-  console.log(req.params.id, 'user event delete', req.body);
+  //console.log(req.params.id, 'user event delete', req.body);
   userEvents.map((userEvent) =>
     models.user_events
       .delete(userEvent.id)
@@ -411,28 +411,48 @@ app.get('/api/invites/:id', (req, res, next) => {
 // get created invitations
 app.get('/api/created/invites/:id', (req, res, next) => {
   const userEvents = req.body;
-  //console.log(req.params.id, "invites", req.body);
-
   models.invites
     .show(req.params.id)
     .then((items) => res.send(items))
     .catch(next);
 });
 
-//user Hobbies
-app.get(`/api/user/hobbies/:id`, (req, res, next) => {
-  //console.log(req.params.id, 'here');
-  models.hobbies
-    .showUserHobbies(req.params.id)
-    .then((items) => res.send(items))
-    .catch(next);
-});
-//user Photos
-app.get(`/api/user/photos/:id`, (req, res, next) => {
-  //console.log(req.params.id, 'here');
-  models.photos
-    .showUserPhotos(req.params.id)
-    .then((items) => res.send(items))
+//delete User Account
+app.delete(`/api/delete/user/:id`, (req, res, next) => {
+  //console.log(req.params.id, 'user delet');
+  models.deleteUser
+    .deleteUserAccount(req.params.id)
+    .then(() => res.sendStatus(204));
+  models.deleteUser
+    .deleteUserJoined(req.params.id)
+    .then(() => res.sendStatus(204));
+  models.deleteUser.deleteEvents(req.params.id).then(() => res.sendStatus(204));
+  models.deleteUser
+    .deleteFavoriteId(req.params.id)
+    .then(() => res.sendStatus(204));
+  models.deleteUser
+    .deleteFavorites(req.params.id)
+    .then(() => res.sendStatus(204));
+  models.deleteUser.deleteGroups(req.params.id).then(() => res.sendStatus(204));
+  models.deleteUser
+    .deleteHobbies(req.params.id)
+    .then(() => res.sendStatus(204));
+  models.deleteUser.deletePhotos(req.params.id).then(() => res.sendStatus(204));
+  models.deleteUser
+    .deletePhotosBkgd(req.params.id)
+    .then(() => res.sendStatus(204));
+  models.deleteUser
+    .deleteRatings(req.params.id)
+    .then(() => res.sendStatus(204));
+  models.deleteUser
+    .deleteSearchCriteria(req.params.id)
+    .then(() => res.sendStatus(204));
+  models.deleteUser
+    .deleteProfiles(req.params.id)
+    .then(() => res.sendStatus(204));
+  models.deleteUser
+    .deleteUser(req.params.id)
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
 

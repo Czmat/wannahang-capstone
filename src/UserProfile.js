@@ -41,7 +41,7 @@ const UserProfile = ({
   }, []);
 
   let myPhotoPath;
-  if (photo == undefined) {
+  if (photo === undefined) {
     myPhotoPath = '/uploads/avatar-1577909_1280.png';
   } else {
     myPhotoPath = photo.filepath + '/' + photo.filename;
@@ -104,11 +104,7 @@ const UserProfile = ({
         </div>
       </div>
 
-      <DeleteAccountPopUp
-        auth={auth}
-        deleteAccount={deleteAccount}
-        logout={logout}
-      />
+      <DeleteAccountPopUp auth={auth} logout={logout} />
 
       {/* //============MORE INFO===============// */}
       <div className="card">

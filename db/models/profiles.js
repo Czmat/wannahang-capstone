@@ -118,6 +118,7 @@ const deleteProfile = async (id) => {
     [id]
   );
 };
+
 module.exports = {
   readProfiles,
   createProfile,

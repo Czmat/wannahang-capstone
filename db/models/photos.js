@@ -23,9 +23,10 @@ const updatePhoto = async ({ fileName, filePath }, id) => {
   return updatedPhoto;
 };
 const deletePhoto = async (id) => {
-  return await client.query(`DELETE FROM "photos" WHERE id=$1 returning *`, [
-    id,
-  ]);
+  return await client.query(
+    `DELETE FROM "user_photos" WHERE id=$1 returning *`,
+    [id]
+  );
 };
 
 const showUserPhotos = async (id) => {

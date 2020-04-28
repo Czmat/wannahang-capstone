@@ -1,7 +1,7 @@
-const client = require("../client");
+const client = require('../client');
 
 const readPhotosBkgd = async () => {
-  return (await client.query("SELECT * from user_photos_bkgd")).rows;
+  return (await client.query('SELECT * from user_photos_bkgd')).rows;
 };
 
 const createPhotoBkgd = async (user_photos_bkgd) => {
@@ -23,9 +23,10 @@ const updatePhotoBkgd = async ({ fileName, filePath }, id) => {
   return updatedPhoto;
 };
 const deletePhotoBkgd = async (id) => {
-  return await client.query(`DELETE FROM "photos" WHERE id=$1 returning *`, [
-    id,
-  ]);
+  return await client.query(
+    `DELETE FROM "user_photos_bkgd" WHERE id=$1 returning *`,
+    [id]
+  );
 };
 
 module.exports = {
