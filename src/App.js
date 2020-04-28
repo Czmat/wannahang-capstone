@@ -4,6 +4,8 @@ import qs from "qs";
 import axios from "axios";
 import Login from "./Login";
 import FileUpload from "./components/FileUpload";
+import FileUploadPlain from "./components/FileUploadPlain";
+
 import FileUploadBkgd from "./components/FileUploadBkgd";
 import Nav from "./Nav";
 import NavTop from "./NavTop";
@@ -179,6 +181,9 @@ const App = () => {
           </Route>
           <Route path="/FileUpload">
             <FileUpload />
+          </Route>
+          <Route path="/FileUpload">
+            <FileUploadPlain />
           </Route>
           <Route path="/userprofile" exact>
             <UserProfile logout={logout} auth={auth} setAuth={setAuth} />
