@@ -34,6 +34,13 @@ const showUserHobbies = async (id) => {
     )
   ).rows;
 };
+
+const deleteUserHobby = async (id) => {
+  return await client.query(
+    `DELETE FROM user_hobbies WHERE id=$1 returning *`,
+    [id]
+  );
+};
 module.exports = {
   readUserHobbies,
   findUserHobbies,
@@ -41,4 +48,5 @@ module.exports = {
   findHobbyId,
   findHobbyName,
   showUserHobbies,
+  deleteUserHobby,
 };

@@ -166,7 +166,8 @@ const UserProfile = ({
               className="card-link"
               to="/userhobbies/edit"
               label="UserHobbiesEdit"
-              profile={profile}
+              auth={auth}
+              hobbies={hobbies}
             >
               Edit
             </Link>

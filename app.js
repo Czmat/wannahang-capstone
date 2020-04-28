@@ -329,6 +329,13 @@ app.get('/api/user_hobbies', (req, res, next) => {
     .catch(next);
 });
 
+app.delete('/api/user_hobbies/:id', (req, res, next) => {
+  models.hobbies
+    .deleteUserHobby(req.params.id)
+    .then(() => res.sendStatus(204))
+    .catch(next);
+});
+
 app.get('/api/usernamepprofiles', (req, res, next) => {
   db.readUsernameProfiles()
     .then((usernamepprofiles) => {
