@@ -35,11 +35,12 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarText">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item dropdown">
+          {/* <li className="nav-item dropdown">
             <Link
               to="/userinfo"
               className="nav-link dropdown-toggle links-nav"
-              // href="#"
+
+              href="#"
               id="navbarDropdown"
               role="button"
               data-toggle="dropdown"
@@ -48,8 +49,8 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
             >
               My Hangouts
             </Link>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              {/* <div className="nav-item">
+            <div className="dropdown-menu" aria-labelledby="navbarDropdown"> */}
+          {/* <div className="nav-item">
                 <Link className="nav-link" to="/meetups">
                   Public Meetups
                 </Link>
@@ -69,13 +70,13 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                   Private Invites
                 </Link>
               </div> */}
-              <div className="nav-item">
-                <Link className="nav-link" to="/user/created/invites">
-                  User created Invites
-                </Link>
-              </div>
-            </div>
-          </li>
+          <div className="nav-item">
+            <Link className="nav-link links-nav" to="/user/created/invites">
+              My Hangouts
+            </Link>
+          </div>
+          {/* </div> */}
+          {/* </li> */}
 
           {/* 2nd dropdown */}
 

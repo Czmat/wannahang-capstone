@@ -119,6 +119,12 @@ h3 {
 }
 .red {
   color: red;
+  border: none;
+  z-index: 5;
+  position: absolute;
+  top: 40px;
+  left: 30px;
+  background: 0%;
 }
 * {
   box-sizing: border-box;
@@ -198,11 +204,11 @@ body {
 }
 
 .header-content {
-  z-index: 2;
+  margin-top: -100px;
 }
 
 .header-content h1 {
-  font-size: 50px;
+  font-size: 40px;
   margin-bottom: 0;
 }
 

@@ -230,7 +230,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
               </label> */}
 
               <select
-                class="btn btn-secondary search-btn search-criteria"
+                class="btn btn-primary search-btn search-criteria"
                 type="text"
                 id="searchFilter"
                 name="searchFilter"
@@ -273,7 +273,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
 
               <div class="">
                 <select
-                  class="btn btn-secondary search-btn "
+                  class="btn btn-primary search-btn "
                   type="text"
                   id="hobbies"
                   defaultValue
@@ -309,7 +309,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
               {/* <div className="form-group mr-2"> */}
               <div className="form-group col-xs-6">
                 <button
-                  class="btn btn-secondary search-btn mr-4"
+                  class="btn btn-primary search-btn mr-4"
                   type="button"
                   onClick={(e) => onSubmitZip(e)}
                 >
@@ -324,7 +324,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             <div className="form-group  col-xs-6">
               <button
                 type="button"
-                class="btn btn-secondary search-btn mr-4"
+                class="btn btn-primary search-btn mr-4"
                 onClick={(e) => onSubmitAll(e)}
               >
                 Everyone
@@ -372,8 +372,8 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (profilePicBkgd) {
               {
                 !profilePicBkgd.filename
-                  ? (srcBkgd = "/images/no-bkgd.jpg")
-                  : (srcBkgd = profilePicBkgd.filepath);
+                  ? (srcBkgd = profilePicBkgd.filepath)
+                  : (srcBkgd = "/images/no-bkgd.jpg");
               }
             }
             //career
@@ -395,7 +395,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             // );
 
             return (
-              <div key={userProfile.id} className="col-sm-4">
+              <div key={userProfile.id} className="col-sm-3">
                 <div className="card profile-card">
                   <div className="card-body">
                     <div>
