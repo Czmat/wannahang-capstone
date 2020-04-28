@@ -49,7 +49,7 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
               My Hangouts
             </Link>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link className="nav-link" to="/meetups">
                   Public Meetups
                 </Link>
@@ -68,7 +68,7 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                 <Link className="nav-link" to="/invites">
                   Private Invites
                 </Link>
-              </div>
+              </div> */}
               <div className="nav-item">
                 <Link className="nav-link" to="/user/created/invites">
                   User created Invites
@@ -158,7 +158,7 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                   Upload My Photo
                 </Link>
               </div>
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link
                   className="nav-link"
                   to="/create/event"
@@ -175,7 +175,7 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                 >
                   Create Event With Invite
                 </Link>
-              </div>
+              </div> */}
 
               {/* <div className="dropdown-divider"></div> */}
 

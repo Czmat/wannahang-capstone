@@ -16,10 +16,6 @@ const SearchFIlter = ({ usersid }) => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
     axios.get('/api/photos').then((response) => setPhotos(response.data));
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     axios.get('/api/profiles').then((response) => {
       const findProfile = response.data.find(
         ({ userId }) => userId === usersid

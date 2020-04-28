@@ -1,6 +1,14 @@
 const client = require('../client');
 
 const events = {
+  show: async (id) => {
+    return (
+      await client.query(
+        `select events.id , events.name from events where "userId" = $1`,
+        [id]
+      )
+    ).rows;
+  },
   read: async () => {
     return (await client.query('SELECT * from events ORDER BY date')).rows;
   },

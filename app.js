@@ -395,8 +395,6 @@ app.post('/api/userEvents/array/delete', (req, res, next) => {
 // get invitations
 app.get('/api/invites/:id', (req, res, next) => {
   const userEvents = req.body;
-  //console.log(req.params.id, "invites", req.body);
-
   models.invites
     .read(req.params.id)
     .then((items) => res.send(items))
@@ -410,6 +408,23 @@ app.get('/api/created/invites/:id', (req, res, next) => {
 
   models.invites
     .show(req.params.id)
+    .then((items) => res.send(items))
+    .catch(next);
+});
+
+//user Hobbies
+app.get(`/api/user/hobbies/:id`, (req, res, next) => {
+  //console.log(req.params.id, 'here');
+  models.hobbies
+    .showUserHobbies(req.params.id)
+    .then((items) => res.send(items))
+    .catch(next);
+});
+//user Photos
+app.get(`/api/user/photos/:id`, (req, res, next) => {
+  //console.log(req.params.id, 'here');
+  models.photos
+    .showUserPhotos(req.params.id)
     .then((items) => res.send(items))
     .catch(next);
 });
@@ -441,6 +456,13 @@ Object.keys(models).forEach((key) => {
     models[key]
       .delete(req.params.id)
       .then(() => res.sendStatus(204))
+      .catch(next);
+  });
+  app.get(`/api/${key}/:id`, (req, res, next) => {
+    //console.log(req.body, 'user put');
+    models[key]
+      .show(req.params.id)
+      .then((items) => res.send(items))
       .catch(next);
   });
 });

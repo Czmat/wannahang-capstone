@@ -26,10 +26,19 @@ const findHobbyName = async (hobbyid) => {
   const SQL = `SELECT hobby_name FROM hobbies WHERE id = $1`;
   return (await client.query(SQL, [hobbyid])).rows[0];
 };
+const showUserHobbies = async (id) => {
+  return (
+    await client.query(
+      `select user_hobbies.id from user_hobbies where user_id = $1`,
+      [id]
+    )
+  ).rows;
+};
 module.exports = {
   readUserHobbies,
   findUserHobbies,
   createUserHobbies,
   findHobbyId,
   findHobbyName,
+  showUserHobbies,
 };

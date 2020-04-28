@@ -15,6 +15,7 @@ const UserProfile = ({
   const deleteAccount = () => {
     axios.delete(`/api/users/${auth.id}`);
   };
+  //console.log(auth.id, 'auth id');
 
   const [profile, setProfile] = useState([]);
   const [photo, setPhoto] = useState([]);

@@ -1,13 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 import DeleteAccountPopUp from './DeleteAccountPopUp';
 
 const UserAccount = ({ logout, auth, params }) => {
+  const [userEvents, setUserEvents] = useState([]);
+  const [myEvents, setMyEvent] = useState([]);
+
   const deleteAccount = () => {
     axios.delete(`/api/users/${auth.id}`);
   };
+
+  const deleteEvent = (eventToDelete) => {
+    const userEventsForSelectedEvents = userEvents.filter(
+      (ue) => ue.eventId === eventDetail.id
+    );
+
+    //user events
+    axios.delete(`/api/user_events/${isGoing.id}`).then(() => {
+      setUserEvents(
+        myUserEvents.filter((_userEvent) => _userEvent.id !== isGoing.id)
+      );
+    });
+    // console.log(
+    //   { userEventsForSelectedEvent },
+    //   'userEventsForSelectedEvent',
+    //   eventToDelete
+    // );
+    if (userEventsForSelectedEvents.length) {
+      axios
+        .post(`/api/userEvents/array/delete`, userEventsForSelectedEvents)
+        .then(() => {
+          const updated = userEvents.filter(
+            (userEvent) => userEvent.eventId !== eventToDelete.id
+          );
+          setUserEvents(updated);
+          axios
+            .delete(`/api/events/${eventToDelete.id}`)
+            .then(() =>
+              setEvents(events.filter((e) => e.id !== eventToDelete.id))
+            );
+        });
+    } else {
+      axios
+        .delete(`/api/events/${eventToDelete.id}`)
+        .then(() => setEvents(events.filter((e) => e.id !== eventToDelete.id)));
+    }
+  };
+
   return (
     <div className="account-container">
       <h1>{auth.username}'s Account</h1>
