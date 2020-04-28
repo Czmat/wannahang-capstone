@@ -152,7 +152,7 @@ app.post('/api/search/user_search_criteria', (req, res, next) => {
 
 app.post('/api/search/zipcode', (req, res, next) => {
   models.searches
-    .searchZipCode(req.body)
+    .searchUsersByZipCode(req.body)
     .then((usernames) => res.send(usernames))
     .catch(next);
 });
