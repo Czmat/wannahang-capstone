@@ -76,16 +76,16 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
 
   const searchHobby = (inp) => {
     axios.post('/api/search/hobbies', { hobby_name: inp }).then((response) => {
-      setUserProfiles(response.data);
+      const rd = response.data;
+      setUserProfiles(rd.filter((up) => up.userId !== auth.id));
     });
   };
 
   const searchAll = () => {
-    axios
-      .get('/api/profiles')
-      .then((response) =>
-        setUserProfiles(response.data.find(({ userId }) => userId !== auth.id))
-      );
+    axios.get('/api/profiles').then((response) => {
+      const rd = response.data;
+      setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+    });
   };
 
   const getCareerName = (cid) => {
@@ -109,33 +109,46 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     setFilter(...filter, input);
     if (filter === userOccupation) {
       axios.post('/api/search/career', { careerid: input }).then((response) => {
-        setUserProfiles(response.data);
+        const rd = response.data;
+        setUserProfiles(rd.filter((up) => up.userId !== auth.id));
       });
     } else if (filter === userGender) {
-      axios
-        .post('/api/search/gender', { gender: input })
-        .then((response) => setUserProfiles(response.data));
+      axios.post('/api/search/gender', { gender: input }).then((response) => {
+        const rd = response.data;
+        setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+      });
     } else if (filter === userBirthday) {
       const bDay = input.substring(0, 4);
-      axios
-        .post('/api/search/age', { birthdate: bDay })
-        .then((response) => setUserProfiles(response.data));
+      axios.post('/api/search/age', { birthdate: bDay }).then((response) => {
+        const rd = response.data;
+        setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+      });
     } else if (filter === userPets) {
-      axios
-        .post('/api/search/pets', { pets: input })
-        .then((response) => setUserProfiles(response.data));
+      axios.post('/api/search/pets', { pets: input }).then((response) => {
+        const rd = response.data;
+        setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+      });
     } else if (filter === userReligion) {
       axios
         .post('/api/search/religion', { religiousaffiliation: input })
-        .then((response) => setUserProfiles(response.data));
+        .then((response) => {
+          const rd = response.data;
+          setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+        });
     } else if (filter === userPolitics) {
       axios
         .post('/api/search/politics', { politicalaffiliation: input })
-        .then((response) => setUserProfiles(response.data));
+        .then((response) => {
+          const rd = response.data;
+          setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+        });
     } else if (filter === userEmployment) {
       axios
         .post('/api/search/employment_status', { employmentstatus: input })
-        .then((response) => setUserProfiles(response.data));
+        .then((response) => {
+          const rd = response.data;
+          setUserProfiles(rd.filter((up) => up.userId !== auth.id));
+        });
     } else {
       console.log('Sorry, no results');
     }
