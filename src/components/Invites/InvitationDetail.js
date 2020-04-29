@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import moment from "moment";
-import UserDetailPopUp from "../User/UserDetailPopUp";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import moment from 'moment';
+import UserDetailPopUp from '../User/UserDetailPopUp';
 
 export default function InvitationDetail({
   inviteDetail,
@@ -10,20 +10,15 @@ export default function InvitationDetail({
   events,
   setEvents,
 }) {
-  const [isGoing, setIsGoing] = useState("");
-  //console.log(isGoing, 'isGoing', inviteDetail);
+  const [isGoing, setIsGoing] = useState('');
 
   const acceptInvite = (acceptEvent) => {
     axios
       .put(`/api/user_events/${acceptEvent.id}`, acceptEvent)
       .then((response) => {
         const userEvent = response.data;
-        // const updated = myUserEvents.map((_userEvent) =>
-        //   _userEvent.id === userEvent.id ? userEvent : _userEvent
-        // );
-        // setUserEvents(updated);
         setIsGoing(userEvent);
-        setInviteDetail({ ...inviteDetail, status: "accepted" });
+        setInviteDetail({ ...inviteDetail, status: 'accepted' });
       });
     axios
       .put(`/api/events/${inviteDetail.eventId}`, {
@@ -37,7 +32,6 @@ export default function InvitationDetail({
       })
       .then((response) => {
         const returnedE = response.data;
-        console.log(returnedE, "new ");
         const updated = events.map((_event) =>
           _event.id === returnedE.id ? returnedE : _event
         );
@@ -46,18 +40,12 @@ export default function InvitationDetail({
   };
 
   const declineInvite = (declineEvent) => {
-    //console.log(declineEvent, 'declineInvite');
-
     axios
       .put(`/api/user_events/${declineEvent.id}`, declineEvent)
       .then((response) => {
         const userEvent = response.data;
-        // const updated = myUserEvents.map((_userEvent) =>
-        //   _userEvent.id === userEvent.id ? userEvent : _userEvent
-        // );
-        // setUserEvents(updated);
         setIsGoing(userEvent);
-        setInviteDetail({ ...inviteDetail, status: "declined" });
+        setInviteDetail({ ...inviteDetail, status: 'declined' });
       });
     axios
       .put(`/api/events/${inviteDetail.eventId}`, {
@@ -71,7 +59,6 @@ export default function InvitationDetail({
       })
       .then((response) => {
         const returnedE = response.data;
-        console.log(returnedE, "new ");
         const updated = events.map((_event) =>
           _event.id === returnedE.id ? returnedE : _event
         );
@@ -96,7 +83,7 @@ export default function InvitationDetail({
                     type="button"
                     className="close"
                     aria-label="Close"
-                    onClick={() => setInviteDetail("")}
+                    onClick={() => setInviteDetail('')}
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -107,23 +94,23 @@ export default function InvitationDetail({
                   Location: {inviteDetail.location}
                 </h5>
                 <p className="card-text">
-                  Date:{" "}
-                  {moment(inviteDetail.date).format("MMMM Do YYYY, h:mm a")}
+                  Date:{' '}
+                  {moment(inviteDetail.date).format('MMMM Do YYYY, h:mm a')}
                 </p>
                 <p className="card-text">Detail: {inviteDetail.description}</p>
                 <p className="card-text">
-                  Invited by{" "}
+                  Invited by{' '}
                   <Link
                     to="/invites"
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
-                    onClick={() => console.log("user")}
+                    onClick={() => console.log('user')}
                   >
                     {inviteDetail.username}
-                  </Link>{" "}
+                  </Link>{' '}
                 </p>
 
-                {inviteDetail.status === "accepted" ? (
+                {inviteDetail.status === 'accepted' ? (
                   <button
                     className="btn btn-primary"
                     onClick={() => {
@@ -131,9 +118,8 @@ export default function InvitationDetail({
                         id: inviteDetail.id,
                         joinedUserId: inviteDetail.joinedUserId,
                         eventId: inviteDetail.eventId,
-                        status: "declined",
+                        status: 'declined',
                       });
-                      //console.log(inviteDetail.id, 'accept invite');
                     }}
                   >
                     decline invite
@@ -146,9 +132,8 @@ export default function InvitationDetail({
                         id: inviteDetail.id,
                         joinedUserId: inviteDetail.joinedUserId,
                         eventId: inviteDetail.eventId,
-                        status: "accepted",
+                        status: 'accepted',
                       });
-                      //console.log(inviteDetail.id, 'accept invite');
                     }}
                   >
                     accept invite

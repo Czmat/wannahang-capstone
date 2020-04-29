@@ -18,10 +18,6 @@ const RenderUserEvents = ({
   const [invitedUser, setInvitedUser] = useState('');
   const [invitedUserEvent, setInvitedUserEvent] = useState('');
   const myEvents = events.filter((e) => e.userId === auth.id);
-  // const userEventsForSelectedEvent = userEvents.filter(
-  //   (ue) => ue.eventId === eventDetail.id
-  // );
-  //console.log(userEventsForSelectedEvent, 'userEventsForSelectedEvent');
 
   useEffect(() => {
     const invitedUserEventDetail = userEvents.find((userEvent) => {
@@ -49,10 +45,7 @@ const RenderUserEvents = ({
       );
       setInvitedUser(invitedUser);
     }
-
-    //console.log(acceptedByUser, 'use effect');
   }, [eventDetail, userEvents]);
-  console.log(eventDetail, 'event Detail', invitedUser);
 
   if (eventDetail) {
     return (

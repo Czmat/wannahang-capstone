@@ -30,7 +30,6 @@ const EventDetail = ({
   useEffect(() => {
     setEventDetail(events.find((e) => e.id === eventId));
   }, []);
-  //console.log(eventDetail, 'event detail inside ED');
 
   useEffect(() => {
     setEventCreator(users.find((u) => u.id === eventDetail.userId));
@@ -38,7 +37,6 @@ const EventDetail = ({
 
   const acceptInvite = (acceptEvent) => {
     //might have to address all userEvents once the event is accepted
-    console.log(acceptEvent, 'acceptInvite');
     if (isNotGoing || savedAsFav) {
       axios
         .put(`/api/user_events/${acceptEvent.id}`, acceptEvent)
@@ -57,7 +55,6 @@ const EventDetail = ({
         })
         .then((response) => {
           const returnedE = response.data;
-          console.log(returnedE, 'new ');
           const updated = events.map((_event) =>
             _event.id === returnedE.id ? returnedE : _event
           );
@@ -65,7 +62,6 @@ const EventDetail = ({
         });
     } else {
       axios.post('/api/user_events', acceptEvent).then((response) => {
-        //console.log(response.data, 'acceptInvite');
         const newUserEvent = response.data;
         setUserEvents([...myUserEvents, newUserEvent]);
         setIsGoing(newUserEvent);
@@ -77,7 +73,6 @@ const EventDetail = ({
         })
         .then((response) => {
           const returnedE = response.data;
-          console.log(returnedE, 'new ');
           const updated = events.map((_event) =>
             _event.id === returnedE.id ? returnedE : _event
           );
@@ -87,7 +82,6 @@ const EventDetail = ({
   };
 
   const declineInvite = (declineEvent) => {
-    console.log(declineEvent, 'declineInvite');
     if (savedAsFav) {
       axios
         .put(`/api/user_events/${isGoing.id}`, declineEvent)
@@ -106,7 +100,6 @@ const EventDetail = ({
         })
         .then((response) => {
           const returnedE = response.data;
-          //console.log(returnedE, 'new ');
           const updated = events.map((_event) =>
             _event.id === returnedE.id ? returnedE : _event
           );
@@ -126,7 +119,6 @@ const EventDetail = ({
         })
         .then((response) => {
           const returnedE = response.data;
-          //console.log(returnedE, 'new ');
           const updated = events.map((_event) =>
             _event.id === returnedE.id ? returnedE : _event
           );
@@ -136,7 +128,6 @@ const EventDetail = ({
   };
 
   const addToFavorites = (addFavObj) => {
-    console.log(addFavObj, 'my fav works');
     if (isGoing) {
       axios
         .put(`/api/user_events/${isGoing.id}`, addFavObj)
@@ -158,7 +149,6 @@ const EventDetail = ({
   };
 
   const removeFromFavorites = (removeFavObj) => {
-    console.log(removeFavObj, 'remove fav obj');
     if (isGoing) {
       axios
         .put(`/api/user_events/${removeFavObj.id}`, removeFavObj)
@@ -179,7 +169,6 @@ const EventDetail = ({
       });
     }
   };
-  //console.log(eventDetail, 'event Detail', savedAsFav);
   return (
     <div>
       {eventCreator ? (

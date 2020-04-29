@@ -20,7 +20,6 @@ const RenderEvents = ({
   const myUserEvents = userEvents.filter(
     (userEvent) => userEvent.joinedUserId === auth.id
   );
-  //console.log(events, 'first inside render Events');
   const favoriteEvents = myUserEvents.filter((ue) => ue.isFavorite);
   const goingEvents = myUserEvents.filter((ue) => ue.status === 'accepted');
   const notGoingEvents = myUserEvents.filter((ue) => ue.status === 'declined');
@@ -28,7 +27,6 @@ const RenderEvents = ({
     .filter((eve) => eve.userId !== auth.id)
     .filter((e) => e.isPublic);
 
-  //console.log('hello');
   const displayEvents = events.filter((event) => {
     if (event.isAccepted) {
       for (let i = 0; i < goingEvents.length; i++) {
@@ -41,13 +39,6 @@ const RenderEvents = ({
       return event;
     }
   });
-
-  // console.log(
-  //   goingEvents,
-  //   'my goingEvents render events',
-  //   displayEvents,
-  //   'display events'
-  // );
 
   return (
     <div>

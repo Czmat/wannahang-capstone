@@ -24,7 +24,6 @@ export default function EditEventDetail({
 
   const updateEvent = (activity) => {
     axios.put(`/api/events/${activity.id}`, activity).then((response) => {
-      console.log(response.data, 'response data');
       setEvent(response.data);
       setEventDetail(response.data);
     });
@@ -36,7 +35,6 @@ export default function EditEventDetail({
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    console.log(event, 'event');
     updateEvent(event);
   };
   return (

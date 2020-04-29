@@ -41,21 +41,16 @@ const UserEventDetail = ({
 }) => {
   const [renderEventEdit, setRenderEventEdit] = useState('');
 
-  useEffect(() => {
-    console.log('useEffect here');
-  }, [renderEventEdit]);
+  useEffect(() => {}, [renderEventEdit]);
 
   const inviteUser = (acceptEvent) => {
     axios.post('/api/user_events', acceptEvent).then((response) => {
-      //console.log(response.data, 'invite user');
       const newUserEvent = response.data;
       setUserEvents([...userEvents, newUserEvent]);
     });
-    // }
   };
 
   const unInviteUser = (invitedUserEventId) => {
-    //console.log(declineEvent, 'declineInvite');
     axios.delete(`/api/user_events/${invitedUserEventId}`).then(() => {
       setUserEvents(
         userEvents.filter((_userEvent) => _userEvent.id !== invitedUserEventId)
@@ -65,7 +60,6 @@ const UserEventDetail = ({
   };
 
   const declineAcceptance = (declineUserEvent) => {
-    //console.log(declineUserEvent, 'declineInvite', eventDetail);
     if (declineUserEvent.isFavorite) {
       axios
         .put(`/api/user_events/${declineUserEvent.id}`, declineUserEvent)
@@ -84,7 +78,6 @@ const UserEventDetail = ({
         })
         .then((response) => {
           const returnedE = response.data;
-          console.log(returnedE, 'new ');
           const updated = events.map((_event) =>
             _event.id === returnedE.id ? returnedE : _event
           );
@@ -106,7 +99,6 @@ const UserEventDetail = ({
         })
         .then((response) => {
           const returnedE = response.data;
-          console.log(returnedE, 'new ');
           const updated = events.map((_event) =>
             _event.id === returnedE.id ? returnedE : _event
           );
@@ -119,11 +111,6 @@ const UserEventDetail = ({
     const userEventsForSelectedEvents = userEvents.filter(
       (ue) => ue.eventId === eventDetail.id
     );
-    // console.log(
-    //   { userEventsForSelectedEvent },
-    //   'userEventsForSelectedEvent',
-    //   eventToDelete
-    // );
     if (userEventsForSelectedEvents.length) {
       axios
         .post(`/api/userEvents/array/delete`, userEventsForSelectedEvents)
@@ -145,9 +132,6 @@ const UserEventDetail = ({
     }
   };
 
-  //console.log(eventDetail, 'event Detail in Detail');
-  // console.log(userEvents, 'userEvents in Detail');
-  // console.log(invitedUser, 'inv user');
   if (renderEventEdit) {
     return (
       <div>

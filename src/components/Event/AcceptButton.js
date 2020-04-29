@@ -13,7 +13,6 @@ export default function AcceptButton({
         <Link
           to="/meetups"
           onClick={() => {
-            //console.log(savedAsFav, 'when there is fav');
             acceptInvite({
               ...savedAsFav,
               status: 'accepted',
@@ -27,7 +26,6 @@ export default function AcceptButton({
         <Link
           to="/meetups"
           onClick={() => {
-            //console.log(savedAsFav, 'when there is no fav');
             acceptInvite({
               joinedUserId: auth.id,
               eventId: eventDetail.id,
