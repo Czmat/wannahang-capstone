@@ -343,6 +343,14 @@ app.get('/api/user_hobbies', (req, res, next) => {
     })
     .catch(next);
 });
+app.get('/api/search/user_hobbies', (req, res, next) => {
+  models.searches
+    .searchHobbiesByUser()
+    .then((hobbies) => {
+      res.send(hobbies);
+    })
+    .catch(next);
+});
 
 app.delete('/api/user_hobbies/:id', (req, res, next) => {
   models.hobbies

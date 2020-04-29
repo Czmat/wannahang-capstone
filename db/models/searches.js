@@ -60,6 +60,18 @@ const searchHobbies = async (hobbies) => {
   WHERE hobbies = $1 returning *`;
   return (await client.query(SQL, [hobbies])).rows[0];
 };
+const searchHobbiesByUser = async () => {
+  // const SQL = `SELECT * FROM user_hobbies
+  // JOIN hobbies ON user_hobbies.hobby_id = hobbies.id
+  // WHERE hobbies = $1`;
+  // return (await client.query(SQL, [])).rows;
+  return (
+    await client.query(
+      `SELECT * FROM user_hobbies
+      JOIN hobbies ON user_hobbies.hobby_id = hobbies.id`
+    )
+  ).rows;
+};
 
 const searchUsersByHobbies = async (hobby) => {
   // const SQL = `SELECT users.username FROM user_hobbies
@@ -199,4 +211,5 @@ module.exports = {
   searchUsersByPoliticalAffiliation,
   searchUsersByReligiousAffiliation,
   searchUsersByZipCode,
+  searchHobbiesByUser,
 };
