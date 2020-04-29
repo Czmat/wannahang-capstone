@@ -188,9 +188,24 @@ app.post('/api/createFavorite', (req, res, next) => {
     .catch(next);
 });
 
+app.post('/api/findfavorites', (req, res, next) => {
+  console.log('fave', req.body);
+  models.favorites
+    .findFavorites(req.body)
+    .then((favorites) => res.send(favorites))
+    .catch(next);
+});
+
 app.get('/api/photos', (req, res, next) => {
   db.readPhotos()
     .then((photos) => res.send(photos))
+    .catch(next);
+});
+
+app.get('/api/favorites', (req, res, next) => {
+  models.favorites
+    .readFavorites()
+    .then((favorites) => res.send(favorites))
     .catch(next);
 });
 app.get('/api/photosBkgd', (req, res, next) => {

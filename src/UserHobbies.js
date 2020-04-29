@@ -9,7 +9,7 @@ const UserHobbies = (auth) => {
   const [selected, setSelected] = useState([]);
 
   const history = useHistory();
-  const goToPeeps = () => history.push('/peeps');
+  const goToPeeps = () => history.push('/findfriends');
 
   // const selectMe = (ev) => {
   const eachHobby = Object.keys(userHobbies);

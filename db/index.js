@@ -628,6 +628,13 @@ const sync = async () => {
     .then((response) => response.id);
 
   Promise.all([
+    favorites.createFavorite({
+      userId: lucyid,
+      favoriteId: moeid,
+    }),
+  ]);
+
+  Promise.all([
     hobbies.createUserHobbies({
       user_id: pattiid,
       hobby_id: booksHobby,

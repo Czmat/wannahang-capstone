@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 
 const Login = ({ login }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const history = useHistory();
   // const goToUpload = () => history.push("/file/upload");
-  const goToUpload = () => history.push("/peeps");
+  const goToUpload = () => history.push('/findfriends');
 
   const onSubmit = (ev) => {
     ev.preventDefault();
@@ -32,8 +32,12 @@ const Login = ({ login }) => {
         </div>
         <div className="header-overlay"></div>
         <div className="header-content text-md-center">
-          <h1>WannaHang</h1>{" "}
-          <p>The online community of friends you have yet to meet!</p>
+          <h1>WannaHang</h1>{' '}
+          <p>
+            The online community of friends you have yet to meet!
+            <br />
+            Login{' '}
+          </p>
           <div className=" ">
             <form className="" onSubmit={onSubmit}>
               {error ? (
@@ -41,7 +45,7 @@ const Login = ({ login }) => {
                   {error}
                 </p>
               ) : (
-                ""
+                ''
               )}
               <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Email address</label>

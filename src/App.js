@@ -33,6 +33,7 @@ import CreateEventWithInvite from './components/Event/CreateEventWithInvite';
 import Home from './Home';
 import Chat from './Chat';
 import UserCreatedInvites from './components/CreatedInvites/UserCreatedInvites';
+import Favorites from './Favorites';
 
 const headers = () => {
   const token = window.localStorage.getItem('token');
@@ -220,12 +221,15 @@ const App = () => {
           {/* <Route path="/search/criteria">
             <SearchCriteria auth={auth} />
           </Route> */}
-          <Route path="/peeps">
+          <Route path="/findfriends">
             <SearchResults
               auth={auth}
               users={users}
               setUserToBeInvited={setUserToBeInvited}
             />
+          </Route>
+          <Route path="/myfriends">
+            <Favorites auth={auth} />
           </Route>
           <Route path="/search/filter">
             <SearchFIlter auth={auth} userProfiles={userProfiles} />

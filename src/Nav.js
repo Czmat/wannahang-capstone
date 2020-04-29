@@ -108,31 +108,41 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                   My Profile
                 </Link>
               </div>
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link className="nav-link" to="/UserInfo" label="UserInfo">
                   Setup My Profile
                 </Link>
+              </div> */}
+              {/* <div className="nav-item">
+                <Link className="nav-link" to="/UserInfo" label="UserInfo">
+                  Setup My Profile
+                </Link>
+              </div> */}
+              <div className="nav-item">
+                <Link className="nav-link" to="/myfriends" label="Favorites">
+                  My Friends
+                </Link>
               </div>
 
               <div className="nav-item">
                 <Link
                   className="nav-link"
-                  to="/UserHobbies"
-                  label="UserHobbies"
+                  to="/findfriends"
+                  label="FindFriends"
                 >
-                  Setup My Hobbies
+                  Find Friends
                 </Link>
               </div>
 
-              {/* <div className="nav-item">
+              <div className="nav-item">
                 <Link
                   className="nav-link"
-                  to="/search/criteria"
-                  label="SearchCriteria"
+                  to="/user/created/invites"
+                  label="/user/created/invites"
                 >
-                  Search Criteria
+                  My Invitations
                 </Link>
-              </div> */}
+              </div>
 
               {/* <div className="nav-item">
                 <Link
@@ -154,11 +164,11 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                 </Link>
               </div> */}
 
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link className="nav-link" to="/file/upload" label="FileUpload">
                   Upload My Photo
                 </Link>
-              </div>
+              </div> */}
               {/* <div className="nav-item">
                 <Link
                   className="nav-link"
