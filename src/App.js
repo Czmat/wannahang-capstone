@@ -64,7 +64,6 @@ const App = () => {
     window.localStorage.setItem('token', token);
     exchangeTokenForAuth();
   };
-
   const exchangeTokenForAuth = async () => {
     const response = await axios.get('/api/auth', headers());
     setAuth(response.data);

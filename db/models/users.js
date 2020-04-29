@@ -37,7 +37,7 @@ const users = {
         await hash(password),
         // birthday,
         // gender,
-        role || null,
+        role || 'USER',
       ])
     ).rows[0];
   },
