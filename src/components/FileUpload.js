@@ -12,7 +12,7 @@ import {
 
 const FileUpload = ({ auth, params }) => {
   const [file, setFile] = useState("");
-  const [filename, setFilename] = useState("Choose File");
+  const [filename, setFilename] = useState("Upload");
   const [uploadedFile, setUploadedFile] = useState({});
   const [message, setMessage] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
@@ -111,7 +111,7 @@ const FileUpload = ({ auth, params }) => {
           <div className="header-content text-md-center">
             <span>
               <div className="container">
-                <h4 className="display-4 text-center mb-4 welcome">
+                <h4 className="display-4 text-center mb-4 welcome mt-0">
                   Welcome, {auth.firstname}!
                 </h4>
                 <h5 className="display-6 text-center mb-4">
@@ -171,17 +171,14 @@ const FileUpload = ({ auth, params }) => {
 
         <section className="section section-a">
           <div className="container">
-            <h2>WannaHang</h2>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde,
-              impedit amet minima iste autem cumque et maiores blanditiis
-              doloribus aut dolorum quaerat non est voluptatum, tempore ut
-              dolorem voluptas quod quae accusantium, ex inventore ducimus.
-              Beatae mollitia exercitationem, quam similique, consectetur
-              ratione reprehenderit delectus neque eligendi facere soluta dolor
-              ducimus!
+            <h2 className="heading">WannaHang</h2>
+            <p className="paragraph-footer">
+              Are you looking for a friend in your area? Someone who shares the
+              same interests as you? Someone who wants to go to the movies or
+              the beach or chat about a book? WannaHang is the online community
+              of friends you have yet to meet. So, come hang with us!
             </p>
-            <p>©2020 The TEC Group</p>
+            <p className="paragraph">©2020 The TEC Group</p>
           </div>
         </section>
       </div>

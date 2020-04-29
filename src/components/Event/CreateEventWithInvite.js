@@ -28,7 +28,7 @@ const CreateEventWithInvite = ({
 
   //once event is created go to a specific page
   const history = useHistory();
-  const goToPeeps = () => history.push('/peeps');
+  const goToPeeps = () => history.push('/findfriends');
 
   useEffect(() => {
     if (!userToBeInvited) {
@@ -158,7 +158,7 @@ const CreateEventWithInvite = ({
           Create Event
         </button>
         {/* Change link once you know where it will go */}
-        <Link to="/peeps" className="btn">
+        <Link to="/findfriends" className="btn">
           Cancel
         </Link>
       </form>

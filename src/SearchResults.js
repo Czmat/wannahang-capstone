@@ -388,8 +388,8 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (profilePicBkgd) {
               {
                 !profilePicBkgd.filename
-                  ? (srcBkgd = '/images/no-bkgd.jpg')
-                  : (srcBkgd = profilePicBkgd.filepath);
+                  ? (srcBkgd = profilePicBkgd.filepath)
+                  : (srcBkgd = '/images/no-bkgd.jpg');
               }
             }
             //career
@@ -404,7 +404,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             );
 
             return (
-              <div key={userProfile.id} className="col-sm-4">
+              <div key={userProfile.id} className="col-sm-3">
                 <div className="card profile-card">
                   <div className="card-body">
                     <div>

@@ -1,20 +1,20 @@
-import React from 'react';
-import qs from 'qs';
+import React from "react";
+import qs from "qs";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   useRouteMatch,
-} from 'react-router-dom';
-import UserInfo from './UserInfo';
-import UserHobbies from './UserHobbies';
-import SearchCriteria from './SearchCriteria';
-import SearchResults from './SearchResults';
-import SearchFIlter from './SearchFIlter';
-import FileUpload from './components/FileUpload';
-import Login from './Login';
-import Home from './Home';
+} from "react-router-dom";
+import UserInfo from "./UserInfo";
+import UserHobbies from "./UserHobbies";
+import SearchCriteria from "./SearchCriteria";
+import SearchResults from "./SearchResults";
+import SearchFIlter from "./SearchFIlter";
+import FileUpload from "./components/FileUpload";
+import Login from "./Login";
+import Home from "./Home";
 
 const Nav = ({ params, logout, auth, login, invitesCount }) => {
   return (
@@ -35,11 +35,12 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
       </button>
       <div className="collapse navbar-collapse" id="navbarText">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item dropdown">
+          {/* <li className="nav-item dropdown">
             <Link
               to="/userinfo"
               className="nav-link dropdown-toggle links-nav"
-              // href="#"
+
+              href="#"
               id="navbarDropdown"
               role="button"
               data-toggle="dropdown"
@@ -48,8 +49,8 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
             >
               My Hangouts
             </Link>
-            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-              {/* <div className="nav-item">
+            <div className="dropdown-menu" aria-labelledby="navbarDropdown"> */}
+          {/* <div className="nav-item">
                 <Link className="nav-link" to="/meetups">
                   Public Meetups
                 </Link>
@@ -69,13 +70,13 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                   Private Invites
                 </Link>
               </div> */}
-              <div className="nav-item">
-                <Link className="nav-link" to="/user/created/invites">
-                  User created Invites
-                </Link>
-              </div>
-            </div>
-          </li>
+          <div className="nav-item">
+            <Link className="nav-link links-nav" to="/user/created/invites">
+              My Hangouts
+            </Link>
+          </div>
+          {/* </div> */}
+          {/* </li> */}
 
           {/* 2nd dropdown */}
 
@@ -107,31 +108,41 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                   My Profile
                 </Link>
               </div>
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link className="nav-link" to="/UserInfo" label="UserInfo">
                   Setup My Profile
                 </Link>
+              </div> */}
+              {/* <div className="nav-item">
+                <Link className="nav-link" to="/UserInfo" label="UserInfo">
+                  Setup My Profile
+                </Link>
+              </div> */}
+              <div className="nav-item">
+                <Link className="nav-link" to="/myfriends" label="Favorites">
+                  My Friends
+                </Link>
               </div>
 
               <div className="nav-item">
                 <Link
                   className="nav-link"
-                  to="/UserHobbies"
-                  label="UserHobbies"
+                  to="/findfriends"
+                  label="FindFriends"
                 >
-                  Setup My Hobbies
+                  Find Friends
                 </Link>
               </div>
 
-              {/* <div className="nav-item">
+              <div className="nav-item">
                 <Link
                   className="nav-link"
-                  to="/search/criteria"
-                  label="SearchCriteria"
+                  to="/user/created/invites"
+                  label="/user/created/invites"
                 >
-                  Search Criteria
+                  My Invitations
                 </Link>
-              </div> */}
+              </div>
 
               {/* <div className="nav-item">
                 <Link
@@ -153,11 +164,11 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                 </Link>
               </div> */}
 
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link className="nav-link" to="/file/upload" label="FileUpload">
                   Upload My Photo
                 </Link>
-              </div>
+              </div> */}
               {/* <div className="nav-item">
                 <Link
                   className="nav-link"
@@ -189,7 +200,14 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
           </li>
         </ul>
         <Link to="/invites">
-          <i className="fas fa-envelope-open-text fa-lg">{invitesCount}</i>
+          <i
+            title="Invitations"
+            className="fas fa-envelope-open-text fa-lg invites"
+          >
+            <span title="invitations" className="invitesNum">
+              {invitesCount}
+            </span>
+          </i>
         </Link>
         <form className="form-inline my-2 my-lg-0">
           <Link
