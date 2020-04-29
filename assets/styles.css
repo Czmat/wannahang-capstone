@@ -132,6 +132,17 @@ h3 {
   left: 30px;
   background: 0%;
 }
+.red-modal {
+  color: red;
+  border: none;
+  z-index: 5;
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  background: 0%;
+  font-size: 48px;
+}
+
 * {
   box-sizing: border-box;
 }

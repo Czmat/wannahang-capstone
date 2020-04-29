@@ -644,6 +644,21 @@ const sync = async () => {
   const moviesHobby = await hobbies
     .findHobbyId("Movies")
     .then((response) => response.id);
+  const sportsHobby = await hobbies
+    .findHobbyId("Sports & Outdoors")
+    .then((response) => response.id);
+  const sewingHobby = await hobbies
+    .findHobbyId("Sewing")
+    .then((response) => response.id);
+  const gardeningHobby = await hobbies
+    .findHobbyId("Gardening")
+    .then((response) => response.id);
+  const shoppingHobby = await hobbies
+    .findHobbyId("Shopping")
+    .then((response) => response.id);
+  const musicHobby = await hobbies
+    .findHobbyId("Music")
+    .then((response) => response.id);
 
   const lucyid = await users.findUserId("lucy").then((response) => response.id);
   const moeid = await users.findUserId("moe").then((response) => response.id);
@@ -708,7 +723,28 @@ const sync = async () => {
     }),
     hobbies.createUserHobbies({
       user_id: willid,
+      hobby_id: sportsHobby,
+    }),
+    hobbies.createUserHobbies({
+      user_id: willid,
       hobby_id: moviesHobby,
+    }),
+    hobbies.createUserHobbies({
+      user_id: georgiaid,
+      hobby_id: sewingHobby,
+    }),
+
+    hobbies.createUserHobbies({
+      user_id: georgiaid,
+      hobby_id: gardeningHobby,
+    }),
+    hobbies.createUserHobbies({
+      user_id: georgiaid,
+      hobby_id: booksHobby,
+    }),
+    hobbies.createUserHobbies({
+      user_id: pattiid,
+      hobby_id: musicHobby,
     }),
   ]);
 
