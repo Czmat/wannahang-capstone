@@ -50,7 +50,9 @@ const CreateEventWithInvite = ({
         status: 'invited',
       };
       if (isInvited) {
-        axios.post(`/api/user_events`, createUserEvent).then((response) => {});
+        axios.post(`/api/user_events`, createUserEvent).then((response) => {
+          goToPeeps();
+        });
       }
     });
     axios
@@ -61,7 +63,7 @@ const CreateEventWithInvite = ({
   const onSubmit = (ev) => {
     ev.preventDefault();
     createEvent(event);
-    goToPeeps();
+    //goToPeeps();
   };
   return (
     <div className="container-sm">
@@ -82,7 +84,7 @@ const CreateEventWithInvite = ({
         <div className="form-group">
           <input
             name="date"
-            value={event.date}
+            value={moment(event.date).format('YYYY-MM-DDTHH:mm')}
             className="form-control"
             type="datetime-local"
             placeholder="Set date"
@@ -127,7 +129,7 @@ const CreateEventWithInvite = ({
         </div>
         <button
           className="btn btn-primary"
-          disabled={!event.name || !event.location}
+          disabled={!event.name || !event.location || !isInvited}
         >
           Create Event
         </button>
