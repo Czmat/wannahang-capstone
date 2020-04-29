@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const SearchFIlter = ({ usersid }) => {
-  const [filter, setFilter] = useState('');
-  const [hobbyFilter, setHobbyFilter] = useState('');
+  const [filter, setFilter] = useState("");
+  const [hobbyFilter, setHobbyFilter] = useState("");
   const [hobbies, setHobbies] = useState([]);
   const [users, setUsers] = useState([]);
   const [photos, setPhotos] = useState([]);
@@ -13,18 +13,18 @@ const SearchFIlter = ({ usersid }) => {
   const [filteredProfiles, setFilteredProfiles] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/users').then((response) => setUsers(response.data));
+    axios.get("/api/users").then((response) => setUsers(response.data));
 
-    axios.get('/api/photos').then((response) => setPhotos(response.data));
-    axios.get('/api/profiles').then((response) => {
+    axios.get("/api/photos").then((response) => setPhotos(response.data));
+    axios.get("/api/profiles").then((response) => {
       const findProfile = response.data.find(
         ({ userId }) => userId === usersid
       );
       setProfile(findProfile);
       setProfiles(response.data);
     });
-    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
-    axios.get('/api/careers').then((response) => setCareers(response.data));
+    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
+    axios.get("/api/careers").then((response) => setCareers(response.data));
   }, []);
 
   const getCareerName = (cid) => {
@@ -63,41 +63,41 @@ const SearchFIlter = ({ usersid }) => {
   const searchCriteria = (input) => {
     setFilter(...filter, input);
     if (filter === userOccupation) {
-      axios.post('/api/search/career', { careerid: input }).then((response) => {
+      axios.post("/api/search/career", { careerid: input }).then((response) => {
         setFilteredProfiles(response.data);
       });
     } else if (filter === userGender) {
       axios
-        .post('/api/search/gender', { gender: input })
+        .post("/api/search/gender", { gender: input })
         .then((response) => setFilteredProfiles(response.data));
     } else if (filter === userBirthday) {
       const bDay = input.substring(0, 4);
       axios
-        .post('/api/search/age', { birthdate: bDay })
+        .post("/api/search/age", { birthdate: bDay })
         .then((response) => setFilteredProfiles(response.data));
     } else if (filter === userPets) {
       axios
-        .post('/api/search/pets', { pets: input })
+        .post("/api/search/pets", { pets: input })
         .then((response) => setFilteredProfiles(response.data));
     } else if (filter === userReligion) {
       axios
-        .post('/api/search/religion', { religiousaffiliation: input })
+        .post("/api/search/religion", { religiousaffiliation: input })
         .then((response) => setFilteredProfiles(response.data));
     } else if (filter === userPolitics) {
       axios
-        .post('/api/search/politics', { politicalaffiliation: input })
+        .post("/api/search/politics", { politicalaffiliation: input })
         .then((response) => setFilteredProfiles(response.data));
     } else if (filter === userEmployment) {
       axios
-        .post('/api/search/employment_status', { employmentstatus: input })
+        .post("/api/search/employment_status", { employmentstatus: input })
         .then((response) => setFilteredProfiles(response.data));
     } else {
-      console.log('no results');
+      console.log("no results");
     }
   };
 
   const searchHobby = (inp) => {
-    axios.post('/api/search/hobbies', { hobby_name: inp }).then((response) => {
+    axios.post("/api/search/hobbies", { hobby_name: inp }).then((response) => {
       const usernamesWithHobby = response.data;
       setFilteredProfiles([...filteredProfiles, usernamesWithHobby]);
     });
@@ -106,18 +106,18 @@ const SearchFIlter = ({ usersid }) => {
   const submitCriteria = (event) => {
     event.preventDefault();
     searchCriteria(filter);
-    console.log('fp', filteredProfiles);
+    console.log("fp", filteredProfiles);
   };
 
   const submitHobby = (event) => {
     event.preventDefault();
     searchHobby(hobbyFilter);
-    console.log('FP', filteredProfiles);
+    console.log("FP", filteredProfiles);
   };
 
   const showAllUsers = () => {
-    const all = document.querySelector('#allUsers');
-    all.className = ' ';
+    const all = document.querySelector("#allUsers");
+    all.className = " ";
   };
 
   const submitAll = (event) => {
@@ -128,37 +128,37 @@ const SearchFIlter = ({ usersid }) => {
   return (
     <div>
       <div
-        class="btn-toolbar"
+        className="btn-toolbar"
         role="toolbar"
         aria-label="Toolbar with button groups"
       >
-        <div class="btn-group mr-2" role="group" aria-label="First group">
-          <button type="button" class="btn btn-secondary">
+        <div className="btn-group mr-2" role="group" aria-label="First group">
+          <button type="button" className="btn btn-secondary">
             1
           </button>
-          <button type="button" class="btn btn-secondary">
+          <button type="button" className="btn btn-secondary">
             2
           </button>
-          <button type="button" class="btn btn-secondary">
+          <button type="button" className="btn btn-secondary">
             3
           </button>
-          <button type="button" class="btn btn-secondary">
+          <button type="button" className="btn btn-secondary">
             4
           </button>
         </div>
-        <div class="btn-group mr-2" role="group" aria-label="Second group">
-          <button type="button" class="btn btn-secondary">
+        <div className="btn-group mr-2" role="group" aria-label="Second group">
+          <button type="button" className="btn btn-secondary">
             5
           </button>
-          <button type="button" class="btn btn-secondary">
+          <button type="button" className="btn btn-secondary">
             6
           </button>
-          <button type="button" class="btn btn-secondary">
+          <button type="button" className="btn btn-secondary">
             7
           </button>
         </div>
-        <div class="btn-group" role="group" aria-label="Third group">
-          <button type="button" class="btn btn-secondary">
+        <div className="btn-group" role="group" aria-label="Third group">
+          <button type="button" className="btn btn-secondary">
             8
           </button>
         </div>

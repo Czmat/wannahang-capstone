@@ -58,12 +58,12 @@ export default function UserCreatedInvites({
     return (
       <div>
         <div className="container-fluid">
-          <div class="row justify-content-center">
+          <div className="row justify-content-center">
             <h3 className="userName">
               I have created {invitations.length} invitations
             </h3>
           </div>
-          <div class="row justify-content-center">
+          <div className="row justify-content-center">
             {invitations.map((invite) => {
               return (
                 <div key={invite.id} className="col-sm-3">
@@ -94,7 +94,7 @@ export default function UserCreatedInvites({
             })}
           </div>
           <div className="event-number">
-            <div class="row justify-content-center">
+            <div className="row justify-content-center">
               {acceptedInvites ? (
                 <AcceptedCreatedInvites
                   acceptedInvites={acceptedInvites}
@@ -105,7 +105,7 @@ export default function UserCreatedInvites({
               )}
             </div>
 
-            <div class="row justify-content-center">
+            <div className="row justify-content-center">
               {declinedInvites ? (
                 <DeclinedCreatedInvites
                   declinedInvites={declinedInvites}

@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useHistory, Link } from "react-router-dom";
 
 const Login = ({ login }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const history = useHistory();
   // const goToUpload = () => history.push("/file/upload");
-  const goToUpload = () => history.push('/findfriends');
+  const goToUpload = () => history.push("/findfriends");
 
   const onSubmit = (ev) => {
     ev.preventDefault();
@@ -32,12 +32,8 @@ const Login = ({ login }) => {
         </div>
         <div className="header-overlay"></div>
         <div className="header-content text-md-center">
-          <h1>WannaHang</h1>{' '}
-          <p>
-            The online community of friends you have yet to meet!
-            <br />
-            Login{' '}
-          </p>
+          <h1>WannaHang</h1>{" "}
+          <p>The online community of friends you have yet to meet!</p>
           <div className=" ">
             <form className="" onSubmit={onSubmit}>
               {error ? (
@@ -45,7 +41,7 @@ const Login = ({ login }) => {
                   {error}
                 </p>
               ) : (
-                ''
+                ""
               )}
               <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Email address</label>
@@ -80,16 +76,14 @@ const Login = ({ login }) => {
 
       <section className="section section-a">
         <div className="container">
-          <h2>WannaHang</h2>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde,
-            impedit amet minima iste autem cumque et maiores blanditiis
-            doloribus aut dolorum quaerat non est voluptatum, tempore ut dolorem
-            voluptas quod quae accusantium, ex inventore ducimus. Beatae
-            mollitia exercitationem, quam similique, consectetur ratione
-            reprehenderit delectus neque eligendi facere soluta dolor ducimus!
+          <h2 className="heading">WannaHang</h2>
+          <p className="paragraph-footer">
+            Are you looking for a friend in your area? Someone who shares the
+            same interests as you? Someone who wants to go to the movies or the
+            beach or chat about a book? WannaHang is the online community of
+            friends you have yet to meet. So, come hang with us!
           </p>
-          <p>©2020 The TEC Group</p>
+          <p className="paragraph">©2020 The TEC Group</p>
         </div>
       </section>
 

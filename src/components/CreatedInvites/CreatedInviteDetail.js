@@ -27,10 +27,10 @@ export default function CreatedInviteDetail({
   return (
     <div>
       <div className="container-fluid">
-        <div class="row justify-content-center">
+        <div className="row justify-content-center">
           <h3 className="userName">The Whens and Wheres</h3>
         </div>{" "}
-        <div class="row justify-content-center">
+        <div className="row justify-content-center">
           <div className="card profile-card invite-body">
             <div className="card-body invite-body">
               <h4 className="card-header invite-head">
