@@ -1,5 +1,5 @@
 const client = require("./client");
-const fs = require("fs");
+//const fs = require('fs');
 
 const { authenticate, compare, findUserFromToken, hash } = require("./auth");
 
@@ -442,7 +442,18 @@ const sync = async () => {
     },
   };
 
-  const [lucy, moe, curly] = await Promise.all(
+  const [
+    lucy,
+    moe,
+    curly,
+    larry,
+    joe,
+    shemp,
+    patti,
+    sally,
+    marcie,
+    will,
+  ] = await Promise.all(
     Object.values(_users).map((user) => users.create(user))
   );
 
@@ -563,6 +574,42 @@ const sync = async () => {
     return acc;
   }, {});
 
+  //seeding favorite
+  const _favorites = {
+    mlucy: {
+      userId: lucy.id,
+      favoriteId: larry.id,
+    },
+    lwill: {
+      userId: lucy.id,
+      favoriteId: will.id,
+    },
+    lpatti: {
+      userId: lucy.id,
+      favoriteId: patti.id,
+    },
+    mwill: {
+      userId: moe.id,
+      favoriteId: will.id,
+    },
+    mmarcie: {
+      userId: lucy.id,
+      favoriteId: marcie.id,
+    },
+  };
+  const [flucy, fwill, fcurly, fjoke, fdog] = await Promise.all(
+    Object.values(_favorites).map((favorite) => favorites.create(favorite))
+  );
+
+  const favoritesMap = (await favorites.show(lucy.id)).reduce(
+    (acc, favorite) => {
+      acc[favorite.userId] = favorite;
+      return acc;
+    },
+    {}
+  );
+  //console.log(favoritesMap, 'fav map');
+
   Promise.all([
     careers.createCareer("Computers and Technology"),
     careers.createCareer("Health Care and Allied Health"),
@@ -627,12 +674,12 @@ const sync = async () => {
     .findUserId("georgia")
     .then((response) => response.id);
 
-  Promise.all([
-    favorites.createFavorite({
-      userId: lucyid,
-      favoriteId: moeid,
-    }),
-  ]);
+  // Promise.all([
+  //   favorites.createFavorite({
+  //     userId: lucyid,
+  //     favoriteId: moeid,
+  //   }),
+  // ]);
 
   Promise.all([
     hobbies.createUserHobbies({
@@ -1060,5 +1107,6 @@ module.exports = {
   readUsernameProfiles,
   readPhotos,
   readPhotosBkgd,
+  changePassword,
   // createUserInfo,
 };
