@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { BrowserRouter as Router, Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { BrowserRouter as Router, Link, useHistory } from "react-router-dom";
 // import { useHistory, Link } from "react-router-dom";
 
 const UserInfo = ({ login, auth }) => {
-  const [userid, setUserid] = useState('');
+  const [userid, setUserid] = useState("");
   const [careers, setCareers] = useState([]);
   const [religions, setReligions] = useState([]);
   const [genders, setGenders] = useState([]);
@@ -13,52 +13,52 @@ const UserInfo = ({ login, auth }) => {
   const [pet, setPet] = useState([]);
   const [educations, setEducations] = useState([]);
 
-  const [birthdate, setBirthdate] = useState('');
-  const [zipCode, setZipCode] = useState('');
-  const [gender, setGender] = useState('');
-  const [education, setEducation] = useState('');
-  const [politicalAffiliation, setPoliticalAffiliation] = useState('');
-  const [religiousAffiliation, setReligiousAffiliation] = useState('');
-  const [careerId, setCareerId] = useState('');
-  const [employmentStatus, setEmploymentStatus] = useState('');
-  const [pets, setPets] = useState('');
-  const [about, setAbout] = useState('');
+  const [birthdate, setBirthdate] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [gender, setGender] = useState("");
+  const [education, setEducation] = useState("");
+  const [politicalAffiliation, setPoliticalAffiliation] = useState("");
+  const [religiousAffiliation, setReligiousAffiliation] = useState("");
+  const [careerId, setCareerId] = useState("");
+  const [employmentStatus, setEmploymentStatus] = useState("");
+  const [pets, setPets] = useState("");
+  const [about, setAbout] = useState("");
 
   const history = useHistory();
-  const goToUpload = () => history.push('/UserHobbies');
+  const goToUpload = () => history.push("/UserHobbies");
 
   useEffect(() => {
-    axios.get('/api/careers').then((response) => setCareers(response.data));
+    axios.get("/api/careers").then((response) => setCareers(response.data));
   }, []);
   useEffect(() => {
-    axios.get('/api/religions').then((response) => setReligions(response.data));
+    axios.get("/api/religions").then((response) => setReligions(response.data));
   }, []);
   useEffect(() => {
-    axios.get('/api/genders').then((response) => setGenders(response.data));
+    axios.get("/api/genders").then((response) => setGenders(response.data));
   }, []);
   useEffect(() => {
     axios
-      .get('/api/employment_status')
+      .get("/api/employment_status")
       .then((response) => setEmployment(response.data));
   }, []);
   useEffect(() => {
     axios
-      .get('/api/political_parties')
+      .get("/api/political_parties")
       .then((response) => setPoliticalParties(response.data));
   }, []);
   useEffect(() => {
-    axios.get('/api/pets').then((response) => setPet(response.data));
+    axios.get("/api/pets").then((response) => setPet(response.data));
   }, []);
   useEffect(() => {
     axios
-      .get('/api/education')
+      .get("/api/education")
       .then((response) => setEducations(response.data));
   }, []);
 
   const createUserInfo = (profile) => {
-    axios.post('/api/createProfile', profile).then((response) => {
-      console.log('USERINFO', response);
-      console.log('USER', profile);
+    axios.post("/api/createProfile", profile).then((response) => {
+      console.log("USERINFO", response);
+      console.log("USER", profile);
     });
   };
 
@@ -188,7 +188,7 @@ const UserInfo = ({ login, auth }) => {
         <div className="row">
           <div className="col">
             <label htmlFor="birthdate">
-              When is your birthday? <span className="red-ast">*</span>{' '}
+              When is your birthday? <span className="red-ast">*</span>{" "}
               <span className="smallType">(Must be 18 and older)</span>
             </label>
             <input
@@ -200,7 +200,7 @@ const UserInfo = ({ login, auth }) => {
           </div>
 
           <div className="col">
-            {' '}
+            {" "}
             <label htmlFor="gender">Your gender?</label>
             <select
               className="form-control"
@@ -221,7 +221,7 @@ const UserInfo = ({ login, auth }) => {
         </div>
         <div className="row mt-3">
           <div className="col">
-            {' '}
+            {" "}
             <label htmlFor="politicalAffiliation">
               What is your political affiliation?
             </label>
@@ -280,18 +280,7 @@ const UserInfo = ({ login, auth }) => {
         {/* <Link to="/userhobbies"> */}
         <button
           className="btn btn-primary"
-          disabled={
-            !about ||
-            !religiousAffiliation ||
-            !politicalAffiliation ||
-            !gender ||
-            !birthdate ||
-            !pets ||
-            !employmentStatus ||
-            !careerId ||
-            !education ||
-            !zipCode
-          }
+          disabled={!birthdate || !careerId || !zipCode}
         >
           Submit
         </button>

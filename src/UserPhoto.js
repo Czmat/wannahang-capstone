@@ -16,7 +16,7 @@ const UserPhoto = ({ logout, auth }) => {
         setPhoto(response.data.find(({ userId }) => userId === auth.id))
       );
   }, []);
-  console.log(photo);
+  console.log("PH", photo);
 
   let myPhotoPath;
   if (photo == undefined) {

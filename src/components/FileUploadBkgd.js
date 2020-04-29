@@ -111,6 +111,7 @@ const FileUploadBkgd = ({ auth, params }) => {
                 type="file"
                 className="custom-file-input"
                 id="customFile"
+                accept="image/png, image/jpeg, image/jpg"
                 onChange={onChange}
               />
               <label className="custom-file-label" htmlFor="customFile">
