@@ -299,12 +299,31 @@ body {
   margin-top: 0;
 }
 .invite-head {
-  background-color: yellowgreen;
+  background: rgb(86, 251, 29);
+  background: linear-gradient(
+    135deg,
+    rgba(86, 251, 29, 1) 0%,
+    rgba(34, 193, 195, 1) 100%
+  );
   width: 100%;
   display: flex;
   align-items: center;
   margin: 0;
 }
+.invite-head-purple {
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    135deg,
+    rgba(34, 193, 195, 1) 27%,
+    rgba(29, 82, 251, 1) 100%
+  );
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
 .invite-body {
   padding: 0;
 }
