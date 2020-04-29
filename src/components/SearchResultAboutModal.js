@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function SearchResultAboutModal({
   aboutMe,
@@ -8,9 +8,10 @@ export default function SearchResultAboutModal({
   goToCreateEvent,
   favorites,
   auth,
+  addToFavorites,
+  removeFromFavorites,
 }) {
   const isFavorite = favorites.find((f) => f.favoriteId === aboutMe.userId);
-
   return (
     <div
       className="modal fade"
@@ -36,11 +37,11 @@ export default function SearchResultAboutModal({
             </div>
             <div className="about-user mb-3 mt-2">
               <h5>
-                Hi! I am{' '}
+                Hi! I am{" "}
                 {aboutMe.username
                   ? aboutMe.username.charAt(0).toUpperCase() +
                     aboutMe.username.slice(1)
-                  : ''}
+                  : ""}
                 .
               </h5>
             </div>
@@ -97,7 +98,7 @@ export default function SearchResultAboutModal({
               ) : (
                 <button
                   type="submit"
-                  className="fas fa-heart fa-lg red-modal"
+                  className="fas fa-heart fa-lg red-modal" //this need a red heart
                   onClick={() =>
                     removeFromFavorites({
                       userId: auth.id,

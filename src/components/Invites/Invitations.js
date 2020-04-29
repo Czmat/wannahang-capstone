@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import moment from 'moment';
-import InvitationDetail from './InvitationDetail';
-import AcceptedInvites from './AcceptedInvites';
-import DeclinedInvites from './DeclinedInvites';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
+import InvitationDetail from "./InvitationDetail";
+import AcceptedInvites from "./AcceptedInvites";
+import DeclinedInvites from "./DeclinedInvites";
 
 export default function Invitations({
   headers,
@@ -16,7 +16,7 @@ export default function Invitations({
 }) {
   const [invites, setInvites] = useState([]);
   //const [showDetail, setShowDetail] = useState('');
-  const [inviteDetail, setInviteDetail] = useState('');
+  const [inviteDetail, setInviteDetail] = useState("");
 
   useEffect(() => {
     //console.log(inviteDetail, 'inviteDetail');
@@ -26,7 +26,7 @@ export default function Invitations({
   }, [inviteDetail]);
   //console.log(invites, 'invites', userEvents);
 
-  const invitations = invites.filter((invite) => invite.status === 'invited');
+  const invitations = invites.filter((invite) => invite.status === "invited");
   //console.log(invitations, 'status invited');
 
   useEffect(() => {
@@ -36,12 +36,12 @@ export default function Invitations({
   }, [invitations]);
 
   const acceptedInvites = invites.filter(
-    (invite) => invite.status === 'accepted'
+    (invite) => invite.status === "accepted"
   );
   // console.log(acceptedInvites, 'status accepted');
 
   const declinedInvites = invites.filter(
-    (invite) => invite.status === 'declined'
+    (invite) => invite.status === "declined"
   );
   //console.log(declinedInvites, 'status declined');
 
@@ -59,25 +59,21 @@ export default function Invitations({
   } else {
     return (
       <div>
-        <h5>You have been invited to {invitations.length} events</h5>
+        <h5>I have been invited to {invitations.length} events</h5>
         {invitations.map((invite) => {
           return (
             <div key={invite.id}>
               <div
                 className="card border-light mb-3"
-                style={{ maxWidth: '18rem' }}
+                style={{ maxWidth: "18rem" }}
               >
                 <div className="card-header">{invite.name}</div>
                 <div className="card-body">
                   <h5 className="card-title">Location: {invite.location}</h5>
                   <p className="card-text">
-                    {moment(invite.date).format('MMMM Do YYYY, h:mm a')}
+                    {moment(invite.date).format("MMMM Do YYYY, h:mm a")}
                   </p>
-                  {invite.isAccepted ? (
-                    <p>You accepted to go</p>
-                  ) : (
-                    <p>not going</p>
-                  )}
+                  {invite.isAccepted ? <p>I accepted </p> : <p>not going</p>}
                   <button
                     className="btn btn-primary"
                     onClick={() => {
@@ -99,7 +95,7 @@ export default function Invitations({
               setInviteDetail={setInviteDetail}
             />
           ) : (
-            <p>You have no accepted invites</p>
+            <p>I have no accepted invites</p>
           )}
         </div>
         <div>
@@ -109,7 +105,7 @@ export default function Invitations({
               setInviteDetail={setInviteDetail}
             />
           ) : (
-            <p>You have no declined invites</p>
+            <p>I have no declined invites</p>
           )}
         </div>
       </div>

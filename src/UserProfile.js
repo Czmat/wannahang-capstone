@@ -164,6 +164,7 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
             <h5 className="card-title">Hobbies</h5>
             <ul className="list-group list-group-flush">
               {usersHobbies.map((userHobby) => {
+                console.log('UH', userHobby);
                 return (
                   // <li key={userHobby.id}>{getHobbyName(userHobby.hobby_id)}</li>
                   <li key={userHobby.id}>{userHobby.hobby_name}</li>
