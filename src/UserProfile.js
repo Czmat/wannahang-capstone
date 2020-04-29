@@ -29,7 +29,7 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
       );
     axios.get('/api/hobbies').then((response) => setHobbies(response.data));
     axios
-      .get('/api/user_hobbies')
+      .get('/api/search/user_hobbies')
       .then((response) =>
         setUsersHobbies(response.data.filter((p) => p.user_id === auth.id))
       );
@@ -42,14 +42,14 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
     myPhotoPath = photo.filepath;
   }
 
-  console.log('hb', hobbies);
+  // console.log('hb', hobbies);
   const getHobbyName = (hobbyId) => {
     const hobNm = hobbies.find((b) => b.id === hobbyId.hobby_id);
     return hobNm.hobby_name;
   };
 
   let birthday = moment(profile.birthdate).format('MMMM Do YYYY');
-  console.log('before', hobbies);
+  // console.log('before', hobbies);
 
   return (
     <div className="container">
@@ -161,13 +161,12 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
         {/* //============HOBBY INFO===============// */}
         <div className="card">
           <div className="card-body">
-            <h5 className="card-title">User Hobbies</h5>
+            <h5 className="card-title">Hobbies</h5>
             <ul className="list-group list-group-flush">
-              <li>Hobbies:</li>
               {usersHobbies.map((userHobby) => {
                 return (
                   // <li key={userHobby.id}>{getHobbyName(userHobby.hobby_id)}</li>
-                  <li key={userHobby.id}>{userHobby.hobby_id}</li>
+                  <li key={userHobby.id}>{userHobby.hobby_name}</li>
                 );
               })}
             </ul>
