@@ -66,7 +66,7 @@ export default function UserCreatedInvites({
           <div className="row justify-content-center">
             {invitations.map((invite) => {
               return (
-                <div key={invite.id} className="col-sm-3">
+                <div key={invite.id} className="row justify-content-center">
                   <div className="card profile-card">
                     <div className="card-body">
                       <div className="card-header">{invite.name}</div>
