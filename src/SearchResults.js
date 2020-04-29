@@ -374,7 +374,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
               username = user.username;
             }
             //photos
-            const profilePic = photos.figitnd(
+            const profilePic = photos.find(
               (photo) => photo.userId === userProfile.userId
             );
             let src;
