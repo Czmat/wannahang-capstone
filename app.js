@@ -180,21 +180,21 @@ app.post('/api/createPhotoBkgd', (req, res, next) => {
     .then((photo) => res.send(photo))
     .catch(next);
 });
-app.post('/api/createFavorite', (req, res, next) => {
-  console.log('fave', req.body);
-  models.favorites
-    .createFavorite(req.body)
-    .then((favorite) => res.send(favorite))
-    .catch(next);
-});
+// app.post('/api/createFavorite', (req, res, next) => {
+//   console.log('fave', req.body);
+//   models.favorites
+//     .createFavorite(req.body)
+//     .then((favorite) => res.send(favorite))
+//     .catch(next);
+// });
 
-app.post('/api/findfavorites', (req, res, next) => {
-  console.log('fave', req.body);
-  models.favorites
-    .findFavorites(req.body)
-    .then((favorites) => res.send(favorites))
-    .catch(next);
-});
+// app.post('/api/findfavorites', (req, res, next) => {
+//   console.log('fave', req.body);
+//   models.favorites
+//     .findFavorites(req.body)
+//     .then((favorites) => res.send(favorites))
+//     .catch(next);
+// });
 
 app.get('/api/photos', (req, res, next) => {
   db.readPhotos()
@@ -202,12 +202,12 @@ app.get('/api/photos', (req, res, next) => {
     .catch(next);
 });
 
-app.get('/api/favorites', (req, res, next) => {
-  models.favorites
-    .readFavorites()
-    .then((favorites) => res.send(favorites))
-    .catch(next);
-});
+// app.get('/api/favorites', (req, res, next) => {
+//   models.favorites
+//     .readFavorites()
+//     .then((favorites) => res.send(favorites))
+//     .catch(next);
+// });
 app.get('/api/photosBkgd', (req, res, next) => {
   db.readPhotosBkgd()
     .then((photos) => res.send(photos))
@@ -484,6 +484,14 @@ app.delete('/api/favorites/:id', (req, res, next) => {
   models.favorites
     .delete(req.params.id)
     .then((items) => res.send(items))
+    .catch(next);
+});
+//get fav profiles
+app.get('/api/fav/profiles/:id', (req, res, next) => {
+  console.log(req.body, 'REQ');
+  models.profiles
+    .getFavoritesProfiles(req.params.id)
+    .then((profiles) => res.send(profiles))
     .catch(next);
 });
 
