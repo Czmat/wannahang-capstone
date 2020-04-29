@@ -143,7 +143,7 @@ const CreateNewUser = ({ login }) => {
               <div>{passwordError}</div>
             </div>
             <button
-              className="btn btn-success my-2 my-sm-0 mr-2"
+              className="btn btn-success my-2 my-sm-0 mr-2 bring-forward"
               disabled={
                 !firstname ||
                 !lastname ||

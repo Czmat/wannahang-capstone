@@ -95,7 +95,9 @@ export default function SearchResultAboutModal({
               <a className="px-2 fa-lg li-ic">
                 <i className="fab fa-linkedin-in"></i>
               </a>
-
+              <a className="px-2 fa-lg ins-ic mr-4">
+                <i className="fab fa-instagram"></i>
+              </a>
               {!isFavorite ? (
                 <button
                   type="submit"

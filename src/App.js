@@ -1,42 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import qs from 'qs';
-import axios from 'axios';
-import Login from './Login';
-import FileUpload from './components/FileUpload';
-import FileUploadPlain from './components/FileUploadPlain';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import qs from "qs";
+import axios from "axios";
+import Login from "./Login";
+import FileUpload from "./components/FileUpload";
+import FileUploadPlain from "./components/FileUploadPlain";
 
-import FileUploadBkgd from './components/FileUploadBkgd';
-import Nav from './Nav';
-import NavTop from './NavTop';
-import CreateNewUser from './components/User/CreateNewUser';
+import FileUploadBkgd from "./components/FileUploadBkgd";
+import Nav from "./Nav";
+import NavTop from "./NavTop";
+import CreateNewUser from "./components/User/CreateNewUser";
 //import Header from "./components/header/Header";
-import UserInfo from './UserInfo';
-import UserHobbies from './UserHobbies';
-import UserAccount from './components/User/UserAccount';
-import EditUserAccount from './components/User/EditUserAccount';
-import ChangeUserPassword from './components/User/ChangeUserPassword';
-import SearchCriteria from './SearchCriteria';
-import RenderEvents from './components/Event/RenderEvents';
-import RenderUsers from './components/User/RenderUsers';
-import CreateEvent from './components/Event/CreateEvent';
-import RenderUserEvents from './components/Event/RenderUserEvents';
+import UserInfo from "./UserInfo";
+import UserHobbies from "./UserHobbies";
+import UserAccount from "./components/User/UserAccount";
+import EditUserAccount from "./components/User/EditUserAccount";
+import ChangeUserPassword from "./components/User/ChangeUserPassword";
+import SearchCriteria from "./SearchCriteria";
+import RenderEvents from "./components/Event/RenderEvents";
+import RenderUsers from "./components/User/RenderUsers";
+import CreateEvent from "./components/Event/CreateEvent";
+import RenderUserEvents from "./components/Event/RenderUserEvents";
 // import UserEvents from './components/Event/UserEvents';
-import UserProfile from './UserProfile';
-import SearchResults from './SearchResults';
-import EventDetail from './components/Event/EventDetatil';
-import UserProfileEdit from './UserProfileEdit';
-import UserHobbiesEdit from './UserHobbiesEdit';
-import SearchFIlter from './SearchFIlter';
-import Invitations from './components/Invites/Invitations';
-import CreateEventWithInvite from './components/Event/CreateEventWithInvite';
-import Home from './Home';
-import Chat from './Chat';
-import UserCreatedInvites from './components/CreatedInvites/UserCreatedInvites';
-import Favorites from './Favorites';
+import UserProfile from "./UserProfile";
+import SearchResults from "./SearchResults";
+import EventDetail from "./components/Event/EventDetatil";
+import UserProfileEdit from "./UserProfileEdit";
+import UserHobbiesEdit from "./UserHobbiesEdit";
+import SearchFIlter from "./SearchFIlter";
+import Invitations from "./components/Invites/Invitations";
+import CreateEventWithInvite from "./components/Event/CreateEventWithInvite";
+import Home from "./Home";
+import Chat from "./Chat";
+import UserCreatedInvites from "./components/CreatedInvites/UserCreatedInvites";
+import Favorites from "./Favorites";
+// import UserPhotos from './UserPhotos';
 
 const headers = () => {
-  const token = window.localStorage.getItem('token');
+  const token = window.localStorage.getItem("token");
   return {
     headers: {
       authorization: token,
@@ -49,28 +50,28 @@ const App = () => {
   const [auth, setAuth] = useState({});
   const [hobbies, setHobbies] = useState([]);
   const [userHobbies, setUserHobbies] = useState([]);
-  const [userCareer, setUserCareer] = useState('');
+  const [userCareer, setUserCareer] = useState("");
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
   const [userProfiles, setUserProfiles] = useState([]);
   const [userEvents, setUserEvents] = useState([]);
-  const [userToBeInvited, setUserToBeInvited] = useState('');
+  const [userToBeInvited, setUserToBeInvited] = useState("");
   const [filteredProfiles, setFilteredProfiles] = useState([]);
   const [invitesCount, setInvitesCount] = useState(0);
 
   const login = async (credentials) => {
-    const token = (await axios.post('/api/auth', credentials)).data.token;
-    window.localStorage.setItem('token', token);
+    const token = (await axios.post("/api/auth", credentials)).data.token;
+    window.localStorage.setItem("token", token);
     exchangeTokenForAuth();
   };
   const exchangeTokenForAuth = async () => {
-    const response = await axios.get('/api/auth', headers());
+    const response = await axios.get("/api/auth", headers());
     setAuth(response.data);
   };
 
   const logout = () => {
-    window.localStorage.removeItem('token');
+    window.localStorage.removeItem("token");
     setAuth({});
   };
 
@@ -81,7 +82,7 @@ const App = () => {
   useEffect(() => {
     if (auth.id) {
       axios
-        .get('/api/events', headers())
+        .get("/api/events", headers())
         .then((response) => setEvents(response.data));
     }
   }, [auth]);
@@ -89,7 +90,7 @@ const App = () => {
   useEffect(() => {
     if (auth.id) {
       axios
-        .get('/api/user_events', headers())
+        .get("/api/user_events", headers())
         .then((response) => setUserEvents(response.data));
     }
   }, [auth]);
@@ -97,7 +98,7 @@ const App = () => {
   useEffect(() => {
     if (auth.id) {
       axios
-        .get('/api/users', headers())
+        .get("/api/users", headers())
         .then((response) => setUsers(response.data));
     }
   }, [auth]);
@@ -108,7 +109,7 @@ const App = () => {
       axios.get(`/api/invites/${auth.id}`).then((response) => {
         const invites = response.data;
         const invitations = invites.filter(
-          (invite) => invite.status === 'invited'
+          (invite) => invite.status === "invited"
         );
         setInvitesCount(invitations.length);
       });
@@ -125,15 +126,15 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get('/api/profiles')
+      .get("/api/profiles")
       .then((response) => setUserProfiles(response.data));
   }, []);
 
   useEffect(() => {
     if (auth.id) {
-      axios.get('/api/hobbies', headers()).then((response) => {
+      axios.get("/api/hobbies", headers()).then((response) => {
         setHobbies(response.data);
-        axios.get('/api/user_hobbies', headers()).then((resp) => {
+        axios.get("/api/user_hobbies", headers()).then((resp) => {
           setUserHobbies(resp.data);
         });
       });
@@ -142,14 +143,14 @@ const App = () => {
 
   useEffect(() => {
     if (auth.id) {
-      axios.get('/api/getCareers', headers()).then((response) => {
+      axios.get("/api/getCareers", headers()).then((response) => {
         setUserCareer(response.data);
       });
     }
   }, [auth]);
 
   useEffect(() => {
-    window.addEventListener('hashchange', () => {
+    window.addEventListener("hashchange", () => {
       setParams(qs.parse(window.location.hash.slice(1)));
     });
   }, []);
