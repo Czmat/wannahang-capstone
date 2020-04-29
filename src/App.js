@@ -229,7 +229,11 @@ const App = () => {
             />
           </Route>
           <Route path="/myfriends">
-            <Favorites auth={auth} />
+            <Favorites
+              auth={auth}
+              users={users}
+              setUserToBeInvited={setUserToBeInvited}
+            />
           </Route>
           <Route path="/search/filter">
             <SearchFIlter auth={auth} userProfiles={userProfiles} />

@@ -118,10 +118,19 @@ const deleteProfile = async (id) => {
     [id]
   );
 };
+const getFavoritesProfiles = async (id) => {
+  return (
+    await client.query(
+      `SELECT * from  user_favorites, user_profiles where "favoriteId"=user_profiles."userId"  and user_favorites."userId"=$1`,
+      [id]
+    )
+  ).rows;
+};
 
 module.exports = {
   readProfiles,
   createProfile,
   updateProfile,
   deleteProfile,
+  getFavoritesProfiles,
 };
