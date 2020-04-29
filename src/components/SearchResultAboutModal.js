@@ -8,9 +8,10 @@ export default function SearchResultAboutModal({
   goToCreateEvent,
   favorites,
   auth,
+  addToFavorites,
+  removeFromFavorites,
 }) {
   const isFavorite = favorites.find((f) => f.favoriteId === aboutMe.userId);
-
   return (
     <div
       className="modal fade"
@@ -97,7 +98,7 @@ export default function SearchResultAboutModal({
               ) : (
                 <button
                   type="submit"
-                  className="fas fa-heart fa-lg red-modal"
+                  className="fas fa-heart fa-lg red red-modal" //this need a red heart
                   onClick={() =>
                     removeFromFavorites({
                       userId: auth.id,

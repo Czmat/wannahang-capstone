@@ -192,37 +192,39 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     return age;
   };
 
-  const saveAsFavorite = async (fave) => {
-    // await axios
-    //   .post('/api/createFavorite', fave)
-    //   .then((response) => setFavorites([response.data, ...favorites]));
-  };
+  // const saveAsFavorite = async (fave) => {
+  //   // await axios
+  //   //   .post('/api/createFavorite', fave)
+  //   //   .then((response) => setFavorites([response.data, ...favorites]));
+  // };
 
-  const onSubmit = (fav) => {
-    const user1 = auth.id;
-    const user2 = fav;
-    const faveUser = {
-      userId: user1,
-      favoriteId: user2,
-    };
-    // saveAsFavorite(faveUser);
-  };
+  // const onSubmit = (fav) => {
+  //   const user1 = auth.id;
+  //   const user2 = fav;
+  //   const faveUser = {
+  //     userId: user1,
+  //     favoriteId: user2,
+  //   };
+  //   // saveAsFavorite(faveUser);
+  // };
 
   const addToFavorites = (favOdj) => {
     console.log(favOdj, 'add to fave');
     axios.post('/api/favorites', favOdj).then((response) => {
-      //setFavorites(...favorites, response.data);
+      console.log(response.data, 'in add to fav resp');
+      setFavorites([...favorites, response.data]);
     });
   };
-  //console.log(favorites, 'favorites');
 
   const removeFromFavorites = (favToRemove) => {
     console.log(favToRemove, 'remove to fave');
     axios
       .delete(`/api/favorites/${favToRemove.favoriteId}`)
       .then((response) => {
+        const fav = response.data;
         console.log(response.data, 'remove resp');
-        //setFavorites();
+        const updated = favorites.filter((f) => f.id !== fav.id);
+        setFavorites(updated);
       });
   };
 
