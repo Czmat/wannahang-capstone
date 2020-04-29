@@ -60,18 +60,16 @@ export default function UserCreatedInvites({
         <div className="container-fluid">
           <div class="row justify-content-center">
             <h3 className="userName">
-              I have sent {invitations.length} invitations
+              I have created {invitations.length} invitations
             </h3>
           </div>
           <div class="row justify-content-center">
             {invitations.map((invite) => {
               return (
                 <div key={invite.id} className="col-sm-3">
-                  <div className="card profile-card invite-body">
-                    <div className="card-body invite-body">
-                      <div className="card-header invite-head">
-                        <h4 className="">{invite.name}</h4>
-                      </div>
+                  <div className="card profile-card">
+                    <div className="card-body">
+                      <div className="card-header">{invite.name}</div>
                       <div className="card-body">
                         <h5 className="card-title">
                           Location: {invite.location}

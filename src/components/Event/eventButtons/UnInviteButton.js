@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function UnInviteButton({
   unInviteUser,
@@ -9,7 +9,7 @@ export default function UnInviteButton({
   return (
     <div>
       <p>
-        You have invited <Link to="/my/meetups">{invitedUser.username}</Link>
+        I have invited <Link to="/my/meetups">{invitedUser.username}</Link>
       </p>
       <button
         className="btn btn-dark"
