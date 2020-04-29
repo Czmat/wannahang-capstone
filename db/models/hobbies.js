@@ -1,6 +1,13 @@
 const client = require('../client');
 
 const readUserHobbies = async () => {
+  return (
+    await client.query(`SELECT * FROM user_hobbies
+  JOIN hobbies ON user_hobbies.hobby_id = hobbies.id`)
+  ).rows;
+};
+
+const getHobbies = async () => {
   return (await client.query('SELECT * from user_hobbies')).rows;
 };
 
@@ -50,4 +57,5 @@ module.exports = {
   showUserHobbies,
   deleteUserHobby,
   deleteHobbies,
+  getHobbies,
 };
