@@ -7,10 +7,7 @@ const UserHobbiesEdit = ({ auth, hobbies }) => {
   const history = useHistory();
   const goToProfile = () => history.push('/UserProfile');
   const [usersHobbies, setUsersHobbies] = useState([]);
-  const [userHobby, setUserHobby] = useState({
-    user_id: auth.id,
-    hobby_id: '',
-  });
+  const [userHobby, setUserHobby] = useState({});
   useEffect(() => {
     axios
       .get('/api/user_hobbies')
@@ -35,6 +32,11 @@ const UserHobbiesEdit = ({ auth, hobbies }) => {
       .then((response) => console.log(response.data));
   };
 
+  const handleChange = (evt) => {
+    const { name, value } = evt.target;
+    setUserHobby({ [name]: value });
+  };
+
   const onSubmit = (event) => {
     event.preventDefault(event);
     console.log('click');
@@ -56,7 +58,7 @@ const UserHobbiesEdit = ({ auth, hobbies }) => {
             <ul className="list-group list-group-flush">
               {usersHobbies.map((userhobby) => (
                 <li key={userhobby.id}>
-                  {userhobby.hobby_id}
+                  {userhobby.hobby_name}
                   <button
                     type="button"
                     onClick={() => deleteUserHobby(userhobby)}
@@ -72,12 +74,20 @@ const UserHobbiesEdit = ({ auth, hobbies }) => {
                 <select
                   className="form-control"
                   id="hobbies"
-                  onChange={(ev) => setUserHobby(ev.target.value)}
+                  name="hobby_id"
+                  onChange={handleChange}
                 >
-                  <option value=""> --select your option-- </option>
+                  <option name="hobby_id" value="hobby_id">
+                    {' '}
+                    --select your option--{' '}
+                  </option>
                   {hobbies.map((hobby) => {
                     return (
-                      <option key={hobby.id} value={hobby.hobby_id}>
+                      <option
+                        name="hobby_id"
+                        key={hobby.id}
+                        value={hobby.hobby_id}
+                      >
                         {hobby.hobby_name}
                       </option>
                     );
