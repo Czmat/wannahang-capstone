@@ -16,7 +16,6 @@ export default function FavButton({
           className="btn btn-dark"
           onClick={() => {
             removeFromFavorites({ ...savedAsFav, isFavorite: false });
-            //setSavedAsFav({ ...savedAsFav, isFavorite: false });
           }}
         >
           Favorite remove
@@ -26,7 +25,6 @@ export default function FavButton({
           {isGoing ? (
             <button
               onClick={() => {
-                // setSavedAsFav({ ...isGoing, isFavorite: true });
                 addToFavorites({ ...isGoing, isFavorite: true });
               }}
               className="btn btn-dark"
@@ -36,7 +34,6 @@ export default function FavButton({
           ) : (
             <button
               onClick={() => {
-                //setSavedAsFav({ ...savedAsFav, isFavorite: true });
                 addToFavorites({
                   joinedUserId: auth.id,
                   eventId: eventDetail.id,

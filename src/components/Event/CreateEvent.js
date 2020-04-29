@@ -25,7 +25,6 @@ const CreateEvent = ({ auth, setAuth, setEvents, events, headers }) => {
 
   const createEvent = (activity) => {
     axios.post(`/api/events`, activity).then((response) => {
-      console.log(response.data, 'response data');
       setEvent(response.data);
     });
     axios
@@ -35,10 +34,8 @@ const CreateEvent = ({ auth, setAuth, setEvents, events, headers }) => {
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    console.log(event, 'event');
     createEvent(event);
   };
-  //console.log(new Date().toLocaleString(), 'event');
   return (
     <div className="container-sm">
       <h1>Create Event</h1>

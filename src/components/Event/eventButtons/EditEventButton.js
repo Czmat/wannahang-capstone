@@ -8,7 +8,6 @@ export default function EditEventButton({ eventDetail, setRenderEventEdit }) {
         className="btn btn-warning"
         onClick={() => {
           setRenderEventEdit(true);
-          console.log(eventDetail, 'edit event button');
         }}
       >
         Edit

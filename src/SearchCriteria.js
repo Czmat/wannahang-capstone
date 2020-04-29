@@ -102,7 +102,7 @@ const SearchCriteria = ({ auth }) => {
     await axios
       .post('/api/search/user_search_criteria', input)
       .then((response) => {
-        console.log('criteria', response);
+        // console.log('criteria', response);
       });
     // login({ email, password }).catch((ex) =>
     //   setError(ex.response.data.message)

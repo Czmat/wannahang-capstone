@@ -9,7 +9,6 @@ export default function InviteButton({
   users,
 }) {
   const [selectedUserId, setSelectedUserId] = useState('');
-  //console.log(selectedUserId, 'user');
   return (
     <div>
       <form>
@@ -24,7 +23,6 @@ export default function InviteButton({
           >
             <option value={''}>select a friend</option>
             {users.map((user) => {
-              //console.log(user);
               return (
                 <option key={user.id} value={user.id}>
                   {user.username}
@@ -46,7 +44,6 @@ export default function InviteButton({
             status: 'invited',
           });
         }}
-        // className="card-link"
       >
         Invite
       </button>

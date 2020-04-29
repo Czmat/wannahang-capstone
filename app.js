@@ -103,12 +103,12 @@ app.post('/upload', (req, res) => {
 //============PHOTO UPLOAD END=================//
 
 app.post('/api/createProfile', (req, res, next) => {
-  console.log(req.body, 'REQ');
+  // console.log(req.body, 'REQ');
   models.profiles
     .createProfile(req.body)
     .then((profile) => res.send(profile))
     .catch((error) => {
-      console.log('resp', error.response);
+      //console.log('resp', error.response);
     });
 });
 
@@ -121,7 +121,7 @@ app.get('/api/profiles', (req, res, next) => {
 });
 //PUT
 app.put('/api/updateProfile/:id', (req, res, next) => {
-  console.log(req.body, 'user put');
+  //console.log(req.body, 'user put');
   models.profiles
     .updateProfile({ ...req.body, id: req.body.id })
     .then((profile) => res.send(profile))
@@ -146,7 +146,7 @@ app.post('/api/search/user_search_criteria', (req, res, next) => {
     .createUserSearchCriteria(req.body)
     .then((searchCriteria) => res.send(searchCriteria))
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
     });
 });
 
@@ -167,14 +167,14 @@ app.post('/api/search/zipcode', (req, res, next) => {
 //     .catch(next);
 // });
 app.post('/api/createPhoto', (req, res, next) => {
-  console.log(req.body, 'REQ');
+  // console.log(req.body, 'REQ');
   models.photos
     .createPhoto(req.body)
     .then((photo) => res.send(photo))
     .catch(next);
 });
 app.post('/api/createPhotoBkgd', (req, res, next) => {
-  console.log(req.body, 'REQ');
+  // console.log(req.body, 'REQ');
   models.photosBkgd
     .createPhotoBkgd(req.body)
     .then((photo) => res.send(photo))
@@ -311,11 +311,11 @@ app.post('/api/search/hobbies', (req, res, next) => {
 });
 
 app.get('/api/find/user_hobbies', (req, res, next) => {
-  console.log('body', req.body);
-  console.log('body.id', req.body.userid);
-  console.log('body.userid', req.body.user_id);
-  console.log('params.id', req.params.id);
-  console.log('param', req.param.id);
+  // console.log('body', req.body);
+  // console.log('body.id', req.body.userid);
+  // console.log('body.userid', req.body.user_id);
+  // console.log('params.id', req.params.id);
+  // console.log('param', req.param.id);
   models.hobbies
     .findUserHobbies(req.body.id)
     .then((hobbies) => res.send(hobbies))
@@ -413,7 +413,6 @@ app.put('/api/user/password/:id', (req, res, next) => {
 //delete array of userEvents
 app.post('/api/userEvents/array/delete', (req, res, next) => {
   const userEvents = req.body;
-  //console.log(req.params.id, 'user event delete', req.body);
   userEvents.map((userEvent) =>
     models.user_events
       .delete(userEvent.id)
@@ -488,7 +487,6 @@ app.delete('/api/favorites/:id', (req, res, next) => {
 });
 //get fav profiles
 app.get('/api/fav/profiles/:id', (req, res, next) => {
-  console.log(req.body, 'REQ');
   models.profiles
     .getFavoritesProfiles(req.params.id)
     .then((profiles) => res.send(profiles))
@@ -496,7 +494,6 @@ app.get('/api/fav/profiles/:id', (req, res, next) => {
 });
 
 Object.keys(models).forEach((key) => {
-  //console.log(models);
   app.get(`/api/${key}`, isLoggedIn, (req, res, next) => {
     models[key]
       .read({ user: req.user })
@@ -504,28 +501,24 @@ Object.keys(models).forEach((key) => {
       .catch(next);
   });
   app.post(`/api/${key}`, (req, res, next) => {
-    //console.log(req.body, 'user post');
     models[key]
       .create(req.body)
       .then((items) => res.send(items))
       .catch(next);
   });
   app.put(`/api/${key}/:id`, (req, res, next) => {
-    //console.log(req.body, 'user put');
     models[key]
       .update(req.body, req.params.id)
       .then((items) => res.send(items))
       .catch(next);
   });
   app.delete(`/api/${key}/:id`, (req, res, next) => {
-    //console.log(req.params.id, 'user delet');
     models[key]
       .delete(req.params.id)
       .then(() => res.sendStatus(204))
       .catch(next);
   });
   app.get(`/api/${key}/:id`, (req, res, next) => {
-    //console.log(req.body, 'user put');
     models[key]
       .show(req.params.id)
       .then((items) => res.send(items))

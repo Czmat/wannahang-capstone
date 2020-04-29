@@ -1,14 +1,14 @@
 /* eslint-disable max-statements */
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
-import SearchResultAboutModal from "./components/SearchResultAboutModal";
-import FavModal from "./components/FavModal";
-import NotFavModal from "./components/NotFavModal";
-import SearchFilter from "./SearchFIlter";
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
+import SearchResultAboutModal from './components/SearchResultAboutModal';
+import FavModal from './components/FavModal';
+import NotFavModal from './components/NotFavModal';
+import SearchFilter from './SearchFIlter';
 
 const SearchResults = ({ auth, setUserToBeInvited }) => {
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState('');
   const [users, setUsers] = useState([]);
   const [profile, setProfile] = useState([]);
   const [profiles, setProfiles] = useState([]);
@@ -21,11 +21,11 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [hobbies, setHobbies] = useState([]);
   const [userHobbies, setUserHobbies] = useState([]);
   const [usersHobbies, setUsersHobbies] = useState([]);
-  const [hobbyFilter, setHobbyFilter] = useState("");
-  const [aboutMe, setAboutMe] = useState("");
+  const [hobbyFilter, setHobbyFilter] = useState('');
+  const [aboutMe, setAboutMe] = useState('');
 
   const history = useHistory();
-  const goToCreateEvent = () => history.push("/create/invite/event");
+  const goToCreateEvent = () => history.push('/create/invite/event');
 
   const inviteUser = (userToInvite) => {
     setUserToBeInvited(userToInvite);
@@ -43,28 +43,27 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     }
   };
 
-  console.log(auth.id);
   useEffect(() => {
-    axios.get("/api/users").then((response) => setUsers(response.data));
+    axios.get('/api/users').then((response) => setUsers(response.data));
 
-    axios.get("/api/photos").then((response) => setPhotos(response.data));
+    axios.get('/api/photos').then((response) => setPhotos(response.data));
     axios
-      .get("/api/photosBkgd")
+      .get('/api/photosBkgd')
       .then((response) => setPhotosBkgd(response.data));
 
-    axios.get("/api/profiles").then((response) => {
+    axios.get('/api/profiles').then((response) => {
       const findProfile = response.data.find(
         ({ userId }) => userId === auth.id
       );
       setProfile(findProfile);
       setProfiles(response.data);
     });
-    axios.get("/api/careers").then((response) => setCareers(response.data));
+    axios.get('/api/careers').then((response) => setCareers(response.data));
 
-    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
+    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
 
     axios
-      .get("/api/user_hobbies")
+      .get('/api/user_hobbies')
       .then((response) => setUserHobbies(response.data));
     axios.get(`/api/favorites/${auth.id}`).then((response) => {
       setFavorites(response.data);
@@ -81,7 +80,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const userBirthday = profile.birthdate;
 
   const searchZipCriteria = () => {
-    axios.get("/api/profiles").then((response) => {
+    axios.get('/api/profiles').then((response) => {
       const rd = response.data;
       setUserProfiles(
         rd.filter((up) => up.zipcode === userZip && up.userId !== auth.id)
@@ -90,14 +89,14 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   };
 
   const searchHobby = (inp) => {
-    axios.post("/api/search/hobbies", { hobby_name: inp }).then((response) => {
+    axios.post('/api/search/hobbies', { hobby_name: inp }).then((response) => {
       const rd = response.data;
       setUserProfiles(rd.filter((up) => up.userId !== auth.id));
     });
   };
 
   const searchAll = () => {
-    axios.get("/api/profiles").then((response) => {
+    axios.get('/api/profiles').then((response) => {
       const rd = response.data;
       setUserProfiles(rd.filter((up) => up.userId !== auth.id));
     });
@@ -116,49 +115,49 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   const searchCriteria = (input) => {
     setFilter(...filter, input);
     if (filter === userOccupation) {
-      axios.post("/api/search/career", { careerid: input }).then((response) => {
+      axios.post('/api/search/career', { careerid: input }).then((response) => {
         const rd = response.data;
         setUserProfiles(rd.filter((up) => up.userId !== auth.id));
       });
     } else if (filter === userGender) {
-      axios.post("/api/search/gender", { gender: input }).then((response) => {
+      axios.post('/api/search/gender', { gender: input }).then((response) => {
         const rd = response.data;
         setUserProfiles(rd.filter((up) => up.userId !== auth.id));
       });
     } else if (filter === userBirthday) {
       const bDay = input.substring(0, 4);
-      axios.post("/api/search/age", { birthdate: bDay }).then((response) => {
+      axios.post('/api/search/age', { birthdate: bDay }).then((response) => {
         const rd = response.data;
         setUserProfiles(rd.filter((up) => up.userId !== auth.id));
       });
     } else if (filter === userPets) {
-      axios.post("/api/search/pets", { pets: input }).then((response) => {
+      axios.post('/api/search/pets', { pets: input }).then((response) => {
         const rd = response.data;
         setUserProfiles(rd.filter((up) => up.userId !== auth.id));
       });
     } else if (filter === userReligion) {
       axios
-        .post("/api/search/religion", { religiousaffiliation: input })
+        .post('/api/search/religion', { religiousaffiliation: input })
         .then((response) => {
           const rd = response.data;
           setUserProfiles(rd.filter((up) => up.userId !== auth.id));
         });
     } else if (filter === userPolitics) {
       axios
-        .post("/api/search/politics", { politicalaffiliation: input })
+        .post('/api/search/politics', { politicalaffiliation: input })
         .then((response) => {
           const rd = response.data;
           setUserProfiles(rd.filter((up) => up.userId !== auth.id));
         });
     } else if (filter === userEmployment) {
       axios
-        .post("/api/search/employment_status", { employmentstatus: input })
+        .post('/api/search/employment_status', { employmentstatus: input })
         .then((response) => {
           const rd = response.data;
           setUserProfiles(rd.filter((up) => up.userId !== auth.id));
         });
     } else {
-      console.log("Sorry, no results");
+      console.log('Sorry, no results');
     }
   };
 
@@ -193,25 +192,8 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     return age;
   };
 
-  // const saveAsFavorite = async (fave) => {
-  //   // await axios
-  //   //   .post('/api/createFavorite', fave)
-  //   //   .then((response) => setFavorites([response.data, ...favorites]));
-  // };
-
-  // const onSubmit = (fav) => {
-  //   const user1 = auth.id;
-  //   const user2 = fav;
-  //   const faveUser = {
-  //     userId: user1,
-  //     favoriteId: user2,
-  //   };
-  //   // saveAsFavorite(faveUser);
-  // };
-
   const addToFavorites = (favOdj) => {
-    axios.post("/api/favorites", favOdj).then((response) => {
-      // console.log(response.data, 'in add to fav resp');
+    axios.post('/api/favorites', favOdj).then((response) => {
       setFavorites([...favorites, response.data]);
     });
   };
@@ -221,21 +203,17 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       .delete(`/api/favorites/${favToRemove.favoriteId}`)
       .then((response) => {
         const fav = response.data;
-        // console.log(response.data, 'remove resp');
         const updated = favorites.filter((f) => f.id !== fav.id);
         setFavorites(updated);
       });
   };
-  // console.log('prof', profiles);
   useEffect(() => {
-    // console.log(profiles, 'pr');
     const zipProfs = profiles.filter(
       (p) => p.zipcode === userZip && p.userId !== auth.id
     );
     setUserProfiles(zipProfs);
   }, [profiles]);
 
-  // console.log('up', userProfiles);
   if (!users || !photos || !profiles || !userProfiles) {
     return <p>Loading</p>;
   } else {
@@ -382,7 +360,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (profilePic) {
               {
                 !profilePic.filename
-                  ? (src = "/images/avatar.jpg")
+                  ? (src = '/images/avatar.jpg')
                   : (src = profilePic.filepath);
               }
             }
@@ -395,7 +373,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (profilePicBkgd) {
               {
                 !profilePicBkgd.filename
-                  ? (srcBkgd = "/images/no-bkgd.jpg")
+                  ? (srcBkgd = '/images/no-bkgd.jpg')
                   : (srcBkgd = profilePicBkgd.filepath);
               }
             }
@@ -425,10 +403,10 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                       <h5 className="card-title d-inline p-2 card-name">
                         {username
                           ? username.charAt(0).toUpperCase() + username.slice(1)
-                          : ""}
+                          : ''}
                       </h5>
                       <p className="card-text d-inline p-2 card-age">
-                        {findAge(userProfile.birthdate)}{" "}
+                        {findAge(userProfile.birthdate)}{' '}
                       </p>
                     </div>
                     <button
@@ -436,12 +414,12 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                       id="heart"
                       className={
                         isFavorite
-                          ? "fas fa-heart fa-lg red"
-                          : "fas fa-heart fa-lg gray"
+                          ? 'fas fa-heart fa-lg red'
+                          : 'fas fa-heart fa-lg gray'
                       }
                       data-toggle="modal"
                       data-target={
-                        isFavorite ? "#exampleModalNotFav" : "#exampleModalFav"
+                        isFavorite ? '#exampleModalNotFav' : '#exampleModalFav'
                       }
                       data-dismiss="modal"
                       onClick={() => {
@@ -461,7 +439,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                         });
                       }}
                     >
-                      {" "}
+                      {' '}
                     </button>
                     <div className="side-by-side">
                       <button
