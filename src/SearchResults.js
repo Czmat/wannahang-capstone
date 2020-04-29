@@ -6,7 +6,6 @@ import SearchResultAboutModal from './components/SearchResultAboutModal';
 import FavModal from './components/FavModal';
 import NotFavModal from './components/NotFavModal';
 import SearchFilter from './SearchFIlter';
-import { response } from 'express';
 
 const SearchResults = ({ auth, setUserToBeInvited }) => {
   const [filter, setFilter] = useState('');
@@ -504,6 +503,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
           addToFavorites={addToFavorites}
           removeFromFavorites={removeFromFavorites}
           auth={auth}
+          favorites={favorites}
         />
         <FavModal
           aboutMe={aboutMe}
