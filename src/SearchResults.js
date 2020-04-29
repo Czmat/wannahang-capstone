@@ -43,6 +43,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     }
   };
 
+  console.log(auth.id);
   useEffect(() => {
     axios.get('/api/users').then((response) => setUsers(response.data));
 
