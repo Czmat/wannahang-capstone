@@ -37,7 +37,7 @@ const Nav = ({ params, logout, auth, login }) => {
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className="nav-right">
+      <div className="nav-right d-none d-sm-block">
         <div>
           <a className="px-2 fa-lg fb-ic">
             <i className="fab fa-facebook-f"></i>

@@ -16,6 +16,8 @@ import FileUpload from "./components/FileUpload";
 import Login from "./Login";
 import Home from "./Home";
 
+import UserPhoto from "./UserPhoto";
+
 const Nav = ({ params, logout, auth, login, invitesCount }) => {
   return (
     <nav className="navbar navbar-expand-lg bg-dark">
@@ -70,7 +72,7 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                   Private Invites
                 </Link>
               </div> */}
-          <div className="nav-item">
+          <div className="nav-item  col-xs-12">
             <Link className="nav-link links-nav" to="/user/created/invites">
               My Hangouts
             </Link>
@@ -80,7 +82,7 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
 
           {/* 2nd dropdown */}
 
-          <li className="nav-item dropdown">
+          <li className="nav-item dropdown  col-xs-12">
             <Link
               to="/userinfo"
               className="nav-link dropdown-toggle links-nav"
@@ -199,28 +201,31 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
             </div>
           </li>
         </ul>
-        <Link to="/invites">
-          <i
-            title="Invitations"
-            className="fas fa-envelope-open-text fa-lg invites"
-          >
-            <span title="invitations" className="invitesNum">
-              {invitesCount}
-            </span>
-          </i>
-        </Link>
-        <form className="form-inline my-2 my-lg-0">
-          <Link
-            to="/login"
-            className="btn btn-primary btn-sm"
-            type="button"
-            onClick={logout}
-          >
-            <span className="btn-nav">
-              Logout {auth.firstname} {auth.lastname}
-            </span>
+        <div className="user-area-nav col-md-4 col-xs-12">
+          <Link to="/invites">
+            <i
+              title="Invitations"
+              className="fas fa-envelope-open-text fa-lg invites"
+            >
+              <span title="invitations" className="invitesNum">
+                {invitesCount}
+              </span>
+            </i>
           </Link>
-        </form>
+          <div className="mr-2">
+            <UserPhoto auth={auth} />
+          </div>
+          <form className="form-inline my-2 my-lg-0">
+            <Link
+              to="/login"
+              className="btn btn-primary btn-sm"
+              type="button"
+              onClick={logout}
+            >
+              <span className="btn-nav smaller">Logout {auth.firstname}</span>
+            </Link>
+          </form>
+        </div>
       </div>
     </nav>
   );

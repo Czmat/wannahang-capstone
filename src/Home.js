@@ -5,7 +5,7 @@ import qs from "qs";
 
 const Home = () => {
   return (
-    <div>
+    <div className="container-fluid">
       <header className="v-header container-wrap w-50 d-flex justify-content-center">
         <div className="fullscreen-video-wrap">
           <video
@@ -29,8 +29,8 @@ const Home = () => {
             WannaHang */}
           </p>
           <div className="btn-group" role="group" aria-label="Basic example">
-            <form className=" my-2 my-lg-0">
-              <Link className="btn btn-outline-success mr-2" to="/register">
+            <form className=" my-2 my-lg-0 bring-forward">
+              <Link className="btn btn-outline-success mr-2 " to="/register">
                 Create New Account
               </Link>
               <Link
