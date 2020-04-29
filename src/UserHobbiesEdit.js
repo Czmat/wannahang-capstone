@@ -15,7 +15,7 @@ const UserHobbiesEdit = ({ auth, hobbies }) => {
         setUsersHobbies(response.data.filter((p) => p.user_id === auth.id))
       );
   }, []);
-  console.log(usersHobbies);
+
   const deleteUserHobby = (userHobbyToDestroy) => {
     axios
       .delete(`/api/user_hobbies/${userHobbyToDestroy.id}`)
@@ -29,17 +29,17 @@ const UserHobbiesEdit = ({ auth, hobbies }) => {
   const createUserHobby = (userhobby) => {
     axios
       .post('/api/createUserHobbies', userhobby)
-      .then((response) => console.log(response.data));
+      .then((response) => setUsersHobbies([response.data, ...usersHobbies]));
   };
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
-    setUserHobby({ [name]: value });
+    const newVal = hobbies.find((h) => h.hobby_name === value);
+    setUserHobby({ [name]: newVal.id, user_id: userid });
   };
 
   const onSubmit = (event) => {
     event.preventDefault(event);
-    console.log('click');
     createUserHobby(userHobby);
   };
   const onReturn = (event) => {
