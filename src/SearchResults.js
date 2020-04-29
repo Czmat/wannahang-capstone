@@ -215,14 +215,15 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       //setFavorites(...favorites, response.data);
     });
   };
-  console.log(favorites, 'favorites');
+  //console.log(favorites, 'favorites');
+
   const removeFromFavorites = (favToRemove) => {
     console.log(favToRemove, 'remove to fave');
     axios
       .delete(`/api/favorites/${favToRemove.favoriteId}`)
       .then((response) => {
         console.log(response.data, 'remove resp');
-        setFavorites();
+        //setFavorites();
       });
   };
 
