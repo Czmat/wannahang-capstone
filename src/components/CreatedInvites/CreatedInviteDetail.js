@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import moment from 'moment';
-import UserDetailPopUp from '../User/UserDetailPopUp';
-import DeleteCreatedInvitePopUp from './DeleteCreatedInvitePopUp';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
+import UserDetailPopUp from "../User/UserDetailPopUp";
+import DeleteCreatedInvitePopUp from "./DeleteCreatedInvitePopUp";
 
 export default function CreatedInviteDetail({
   inviteDetail,
@@ -11,7 +11,7 @@ export default function CreatedInviteDetail({
   events,
   setEvents,
 }) {
-  const [isGoing, setIsGoing] = useState('');
+  const [isGoing, setIsGoing] = useState("");
   //console.log(isGoing, 'isGoing', inviteDetail);
   const deleteInvite = (userEventId) => {
     axios.delete(`/api/user_events/${inviteDetail.id}`).then(() => {
@@ -20,56 +20,68 @@ export default function CreatedInviteDetail({
       // );
       axios
         .delete(`/api/events/${inviteDetail.eventId}`)
-        .then(() => setInviteDetail(''));
+        .then(() => setInviteDetail(""));
     });
   };
 
   return (
     <div>
-      <h5>Created Invite Detail</h5>
+      <div className="container-fluid">
+        <div class="row justify-content-center">
+          <h3 className="userName">The Whens and Wheres</h3>
+        </div>{" "}
+        <div class="row justify-content-center">
+          <div className="card profile-card invite-body">
+            <div className="card-body invite-body">
+              <h4 className="card-header invite-head">
+                {inviteDetail.name}
+                <div className=" theX">
+                  <button
+                    type="button"
+                    className="close"
+                    aria-label="Close"
+                    onClick={() => setInviteDetail("")}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </h4>
 
-      <div className="card border-light mb-3" style={{ maxWidth: '20rem' }}>
-        <div className="card-header">
-          {inviteDetail.name}{' '}
-          <button
-            type="button"
-            className="close"
-            aria-label="Close"
-            onClick={() => setInviteDetail('')}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <div className="card-body">
-          <h5 className="card-title">Location: {inviteDetail.location}</h5>
-          <p className="card-text">
-            Date: {moment(inviteDetail.date).format('MMMM Do YYYY, h:mm a')}
-          </p>
-          <p className="card-text">Detail: {inviteDetail.description}</p>
-          <p className="card-text">
-            You invited{' '}
-            <Link
-              to="/invites"
-              data-toggle="modal"
-              data-target="#exampleModalCenter"
-              onClick={() => console.log('user')}
-            >
-              {inviteDetail.username}
-            </Link>{' '}
-          </p>
-          <button
-            type="button"
-            className="btn btn-primary"
-            data-toggle="modal"
-            data-target="#exampleModal"
-          >
-            Delete invite
-          </button>
+              <div className="card-body">
+                <h5 className="card-title">
+                  Location: {inviteDetail.location}
+                </h5>
+                <p className="card-text">
+                  Date:{" "}
+                  {moment(inviteDetail.date).format("MMMM Do YYYY, h:mm a")}
+                </p>
+                <p className="card-text">Detail: {inviteDetail.description}</p>
+                <p className="card-text">
+                  I invited{" "}
+                  <Link
+                    to="/invites"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    onClick={() => console.log("user")}
+                  >
+                    {inviteDetail.username}
+                  </Link>{" "}
+                </p>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Delete invite
+                </button>
+              </div>
+            </div>
+            <UserDetailPopUp inviteDetail={inviteDetail} />
+            <DeleteCreatedInvitePopUp deleteInvite={deleteInvite} />
+          </div>
         </div>
       </div>
-      <UserDetailPopUp inviteDetail={inviteDetail} />
-      <DeleteCreatedInvitePopUp deleteInvite={deleteInvite} />
     </div>
   );
 }
