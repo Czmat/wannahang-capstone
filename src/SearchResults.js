@@ -209,28 +209,33 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
   // };
 
   const addToFavorites = (favOdj) => {
-    console.log(favOdj, "add to fave");
     axios.post("/api/favorites", favOdj).then((response) => {
-      console.log(response.data, "in add to fav resp");
+      // console.log(response.data, 'in add to fav resp');
       setFavorites([...favorites, response.data]);
     });
   };
 
   const removeFromFavorites = (favToRemove) => {
-    console.log(favToRemove, "remove to fave");
     axios
       .delete(`/api/favorites/${favToRemove.favoriteId}`)
       .then((response) => {
         const fav = response.data;
-        console.log(response.data, "remove resp");
+        // console.log(response.data, 'remove resp');
         const updated = favorites.filter((f) => f.id !== fav.id);
         setFavorites(updated);
       });
   };
+  // console.log('prof', profiles);
+  useEffect(() => {
+    // console.log(profiles, 'pr');
+    const zipProfs = profiles.filter(
+      (p) => p.zipcode === userZip && p.userId !== auth.id
+    );
+    setUserProfiles(zipProfs);
+  }, [profiles]);
 
-  const usersid = auth.id;
-
-  if (!users || !photos || !profiles) {
+  // console.log('up', userProfiles);
+  if (!users || !photos || !profiles || !userProfiles) {
     return <p>Loading</p>;
   } else {
     return (
@@ -369,7 +374,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
               username = user.username;
             }
             //photos
-            const profilePic = photos.find(
+            const profilePic = photos.figitnd(
               (photo) => photo.userId === userProfile.userId
             );
             let src;
@@ -389,10 +394,14 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             if (profilePicBkgd) {
               {
                 !profilePicBkgd.filename
-                  ? (srcBkgd = profilePicBkgd.filepath)
-                  : (srcBkgd = "/images/no-bkgd.jpg");
+                  ? (srcBkgd = "/images/no-bkgd.jpg")
+                  : (srcBkgd = profilePicBkgd.filepath);
               }
             }
+            //hobbies
+            const userHobby = userHobbies.filter((h) => {
+              return h.user_id === userProfile.userId;
+            });
             //career
             const career = careers.find((c) => c.id === userProfile.careerid);
             let careerName;
@@ -440,6 +449,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                           username,
                           src,
                           srcBkgd,
+                          userHobby,
                           careerName,
                           about: userProfile.about,
                           pets: userProfile.pets,
@@ -464,6 +474,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                             username,
                             src,
                             srcBkgd,
+                            userHobby,
                             careerName,
                             about: userProfile.about,
                             pets: userProfile.pets,

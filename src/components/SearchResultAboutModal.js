@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function SearchResultAboutModal({
   aboutMe,
@@ -12,6 +12,7 @@ export default function SearchResultAboutModal({
   removeFromFavorites,
 }) {
   const isFavorite = favorites.find((f) => f.favoriteId === aboutMe.userId);
+  const uHobby = aboutMe.userHobby;
   return (
     <div
       className="modal fade"
@@ -37,11 +38,11 @@ export default function SearchResultAboutModal({
             </div>
             <div className="about-user mb-3 mt-2">
               <h5>
-                Hi! I am{" "}
+                Hi! I am{' '}
                 {aboutMe.username
                   ? aboutMe.username.charAt(0).toUpperCase() +
                     aboutMe.username.slice(1)
-                  : ""}
+                  : ''}
                 .
               </h5>
             </div>
@@ -52,7 +53,19 @@ export default function SearchResultAboutModal({
               My interests:
               <br />
               {/* ========REPLACE WITH HOBBIES========= */}
-              <i>I like </i>
+              <i>
+                I like{' '}
+                {aboutMe
+                  ? uHobby.map((h) => {
+                      return (
+                        <i key={h.id}>
+                          {h.hobby_name}
+                          &nbsp;&bull;&nbsp;
+                        </i>
+                      );
+                    })
+                  : ''}
+              </i>
             </div>
             <div className="about-user mb-2">
               My stats:
