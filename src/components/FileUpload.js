@@ -30,7 +30,15 @@ const FileUpload = ({ auth, params }) => {
   // console.log("AUTH", auth.id);
   let userId = auth.id;
   // console.log("USER", userId);
-
+  function ValidateSize(file) {
+    var FileSize = file.files[0].size / 1024 / 1024; // in MB
+    if (FileSize > 2) {
+      alert("File size exceeds 2 MB");
+      // $(file).val(''); //for clearing with Jquery
+    } else {
+      console.log("OKAY");
+    }
+  }
   const createUserPhoto = (fileName, filePath, userId) => {
     axios
       .post("/api/createPhoto", fileName, filePath, userId)
@@ -39,6 +47,8 @@ const FileUpload = ({ auth, params }) => {
       });
   };
   const onChange = (e) => {
+    onchange = "ValidateSize(this)";
+
     setFile(e.target.files[0]);
     setFilename(e.target.files[0].name);
   };
