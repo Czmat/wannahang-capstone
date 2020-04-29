@@ -19,7 +19,7 @@ import Home from "./Home";
 const Nav = ({ params, logout, auth, login }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light  top-nav-bkgd">
-      <Link className="navbar-brand nav-link" to="/home">
+      <Link className="navbar-brand nav-link" to="/findfriends">
         <img
           src="/images/WannaHang.png"
           alt="WannaHang Logo"

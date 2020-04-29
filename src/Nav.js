@@ -21,7 +21,7 @@ import UserPhoto from "./UserPhoto";
 const Nav = ({ params, logout, auth, login, invitesCount }) => {
   return (
     <nav className="navbar navbar-expand-lg bg-dark">
-      <Link className="navbar-brand nav-link" to="/home">
+      <Link className="navbar-brand nav-link" to="/findfriends">
         <h2 className="logo-word">WannaHang</h2>
       </Link>
       <button
