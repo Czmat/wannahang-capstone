@@ -210,7 +210,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
 
   const addToFavorites = (favOdj) => {
     axios.post('/api/favorites', favOdj).then((response) => {
-      console.log(response.data, 'in add to fav resp');
+      // console.log(response.data, 'in add to fav resp');
       setFavorites([...favorites, response.data]);
     });
   };
@@ -220,15 +220,22 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
       .delete(`/api/favorites/${favToRemove.favoriteId}`)
       .then((response) => {
         const fav = response.data;
-        console.log(response.data, 'remove resp');
+        // console.log(response.data, 'remove resp');
         const updated = favorites.filter((f) => f.id !== fav.id);
         setFavorites(updated);
       });
   };
+  // console.log('prof', profiles);
+  useEffect(() => {
+    // console.log(profiles, 'pr');
+    const zipProfs = profiles.filter(
+      (p) => p.zipcode === userZip && p.userId !== auth.id
+    );
+    setUserProfiles(zipProfs);
+  }, [profiles]);
 
-  const usersid = auth.id;
-
-  if (!users || !photos || !profiles) {
+  // console.log('up', userProfiles);
+  if (!users || !photos || !profiles || !userProfiles) {
     return <p>Loading</p>;
   } else {
     return (
