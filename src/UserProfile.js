@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import axios from 'axios';
-import DeleteAccountPopUp from './components/User/DeleteAccountPopUp';
-import FileUploadPlain from './components/FileUploadPlain';
-import FileUploadBkgd from './components/FileUploadBkgd';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import axios from "axios";
+import DeleteAccountPopUp from "./components/User/DeleteAccountPopUp";
+import FileUploadPlain from "./components/FileUploadPlain";
+import FileUploadBkgd from "./components/FileUploadBkgd";
 
 const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
   const deleteAccount = () => {
@@ -18,18 +18,18 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
   const [usersHobbies, setUsersHobbies] = useState([]);
   useEffect(() => {
     axios
-      .get('/api/profiles')
+      .get("/api/profiles")
       .then((response) =>
         setProfile(response.data.find(({ userId }) => userId === auth.id))
       );
     axios
-      .get('/api/photos')
+      .get("/api/photos")
       .then((response) =>
         setPhoto(response.data.find(({ userId }) => userId === auth.id))
       );
-    axios.get('/api/hobbies').then((response) => setHobbies(response.data));
+    axios.get("/api/hobbies").then((response) => setHobbies(response.data));
     axios
-      .get('/api/search/user_hobbies')
+      .get("/api/search/user_hobbies")
       .then((response) =>
         setUsersHobbies(response.data.filter((p) => p.user_id === auth.id))
       );
@@ -37,7 +37,7 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
 
   let myPhotoPath;
   if (photo == undefined) {
-    myPhotoPath = '/uploads/avatar.jpg';
+    myPhotoPath = "/uploads/avatar.jpg";
   } else {
     myPhotoPath = photo.filepath;
   }
@@ -48,13 +48,13 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
     return hobNm.hobby_name;
   };
 
-  let birthday = moment(profile.birthdate).format('MMMM Do YYYY');
+  let birthday = moment(profile.birthdate).format("MMMM Do YYYY");
   // console.log('before', hobbies);
 
   return (
     <div className="container">
       <h3 className="userName">
-        All About {auth.username}{' '}
+        All About {auth.username}{" "}
         <button
           type="button"
           className="btn btn-primary btn-sm"
@@ -92,7 +92,7 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">
-            Would you like to reset your password?{' '}
+            Would you like to reset your password?{" "}
             <Link to="/useraccount/password" className="btn btn-primary btn-sm">
               Change password
             </Link>
@@ -141,7 +141,7 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
           >
             Edit
           </Link>
-        </div>{' '}
+        </div>{" "}
       </div>
       <div className="container-fluid">
         <div className="row">
@@ -164,7 +164,7 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
             <h5 className="card-title">Hobbies</h5>
             <ul className="list-group list-group-flush">
               {usersHobbies.map((userHobby) => {
-                console.log('UH', userHobby);
+                console.log("UH", userHobby);
                 return (
                   // <li key={userHobby.id}>{getHobbyName(userHobby.hobby_id)}</li>
                   <li key={userHobby.id}>{userHobby.hobby_name}</li>
