@@ -674,12 +674,12 @@ const sync = async () => {
     .findUserId('georgia')
     .then((response) => response.id);
 
-  Promise.all([
-    favorites.createFavorite({
-      userId: lucyid,
-      favoriteId: moeid,
-    }),
-  ]);
+  // Promise.all([
+  //   favorites.createFavorite({
+  //     userId: lucyid,
+  //     favoriteId: moeid,
+  //   }),
+  // ]);
 
   Promise.all([
     hobbies.createUserHobbies({
