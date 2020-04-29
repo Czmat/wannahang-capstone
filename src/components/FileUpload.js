@@ -112,7 +112,7 @@ const FileUpload = ({ auth, params }) => {
             <span>
               <div className="container">
                 <h4 className="display-4 text-center mb-4 welcome mt-0">
-                  Welcome, {auth.firstname}!
+                  Hiya, {auth.firstname}!
                 </h4>
                 <h5 className="display-6 text-center mb-4">
                   Add a photo so people know who you are
