@@ -1103,5 +1103,6 @@ module.exports = {
   readUsernameProfiles,
   readPhotos,
   readPhotosBkgd,
+  changePassword,
   // createUserInfo,
 };
