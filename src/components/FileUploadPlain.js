@@ -110,6 +110,7 @@ const FileUploadPlain = ({ auth, params }) => {
               <input
                 type="file"
                 className="custom-file-input"
+                accept="image/png, image/jpeg, image/jpg"
                 id="customFile"
                 onChange={onChange}
               />

@@ -231,7 +231,7 @@ body {
 }
 
 .header-content {
-  margin-top: -100px;
+  margin-top: 0;
   z-index: 1;
 }
 
@@ -312,6 +312,7 @@ body {
   padding-top: 3px;
   padding-bottom: 3px;
   margin-top: 0;
+  z-index: 10;
 }
 .invite-head {
   background: rgb(86, 251, 29);
