@@ -130,11 +130,11 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                   to="/findfriends"
                   label="FindFriends"
                 >
-                  Find Friends
+                  Find New Friends
                 </Link>
               </div>
 
-              <div className="nav-item">
+              {/* <div className="nav-item">
                 <Link
                   className="nav-link"
                   to="/user/created/invites"
@@ -142,7 +142,7 @@ const Nav = ({ params, logout, auth, login, invitesCount }) => {
                 >
                   My Invitations
                 </Link>
-              </div>
+              </div> */}
 
               {/* <div className="nav-item">
                 <Link

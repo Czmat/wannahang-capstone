@@ -70,7 +70,7 @@ export default function UserCreatedInvites({
                   <div className="card profile-card invite-body">
                     <div className="card-body invite-body">
                       <div className="card-header invite-head">
-                        <h4 className="">{invite.name}</h4>
+                        <h4>{invite.name}</h4>
                       </div>
                       <div className="card-body">
                         <h5 className="card-title">

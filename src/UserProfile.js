@@ -161,18 +161,20 @@ const UserProfile = ({ logout, auth, hobbies, setHobbies }) => {
         {/* //============HOBBY INFO===============// */}
         <div className="card">
           <div className="card-body">
-            <h5 className="card-title">Hobbies</h5>
+            <h5 className="card-title">My Hobbies</h5>
             <ul className="list-group list-group-flush">
               {usersHobbies.map((userHobby) => {
                 console.log("UH", userHobby);
                 return (
                   // <li key={userHobby.id}>{getHobbyName(userHobby.hobby_id)}</li>
-                  <li key={userHobby.id}>{userHobby.hobby_name}</li>
+                  <li className="ml-4" key={userHobby.id}>
+                    {userHobby.hobby_name}
+                  </li>
                 );
               })}
             </ul>
             <Link
-              className="card-link"
+              className="card-link btn btn-primary btn-xs ml-4 mt-4"
               to="/userhobbies/edit"
               label="UserHobbiesEdit"
               auth={auth}
