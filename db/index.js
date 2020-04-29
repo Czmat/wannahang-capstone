@@ -1,5 +1,5 @@
 const client = require('./client');
-const fs = require('fs');
+//const fs = require('fs');
 
 const { authenticate, compare, findUserFromToken, hash } = require('./auth');
 
