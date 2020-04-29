@@ -234,18 +234,18 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
     return (
       <div className="container-fluid ">
         <h3>Search for future friends by:</h3>
-        <div class="form-inline search-btn-group">
+        <div className="form-inline search-btn-group">
           <form
             onSubmit={(e) => submitCriteria(e)}
-            class="form-inline mt-3 col-xs-12"
+            className="form-inline mt-3 col-xs-12"
           >
             <div className="form-group col-xs-6">
-              {/* <label htmlFor="about" class="col-form-label">
+              {/* <label htmlFor="about" className="col-form-label">
                 Search:
               </label> */}
 
               <select
-                class="btn btn-secondary search-btn search-criteria"
+                className="btn btn-secondary search-btn search-criteria"
                 type="text"
                 id="searchFilter"
                 name="searchFilter"
@@ -269,7 +269,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
                 </option>
               </select>
               <div className="form-group col-xs-5 mr-4">
-                <button type="submit" class="btn btn-info search-btn show2">
+                <button type="submit" className="btn btn-info search-btn show2">
                   Show
                 </button>
               </div>
@@ -278,17 +278,17 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
           {/* PART 2 */}
 
           <form
-            class="form-inline mt-3  col-xs-12"
+            className="form-inline mt-3  col-xs-12"
             onSubmit={(e) => onSubmitHobby(e)}
           >
             <div className="form-group  col-xs-5">
-              {/* <label htmlFor="about" class="col-xs-2 col-form-label">
+              {/* <label htmlFor="about" className="col-xs-2 col-form-label">
                 Hobby:
               </label> */}
 
-              <div class="">
+              <div className="">
                 <select
-                  class="btn btn-secondary search-btn "
+                  className="btn btn-secondary search-btn "
                   type="text"
                   id="hobbies"
                   defaultValue
@@ -306,7 +306,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
               </div>
               <div className="form-group col-xs-5">
                 <button
-                  class="btn btn-info search-btn mr-4 show2"
+                  className="btn btn-info search-btn mr-4 show2"
                   type="submit"
                 >
                   Show
@@ -315,16 +315,16 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             </div>
           </form>
           {/* PART 3 */}
-          <div class="form-inline col-xs-12">
+          <div className="form-inline col-xs-12">
             <div className="form-group   col-xs-6">
-              {/* <label htmlFor="about" class="col-sm-2 col-form-label">
+              {/* <label htmlFor="about" className="col-sm-2 col-form-label">
                 NearBy:
               </label> */}
 
               {/* <div className="form-group mr-2"> */}
               <div className="form-group col-xs-6">
                 <button
-                  class="btn btn-secondary search-btn mr-4"
+                  className="btn btn-secondary search-btn mr-4"
                   type="button"
                   onClick={(e) => onSubmitZip(e)}
                 >
@@ -339,7 +339,7 @@ const SearchResults = ({ auth, setUserToBeInvited }) => {
             <div className="form-group  col-xs-6">
               <button
                 type="button"
-                class="btn btn-secondary search-btn mr-4"
+                className="btn btn-secondary search-btn mr-4"
                 onClick={(e) => onSubmitAll(e)}
               >
                 Everyone
