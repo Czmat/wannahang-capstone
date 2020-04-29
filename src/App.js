@@ -26,6 +26,7 @@ import UserProfile from './UserProfile';
 import SearchResults from './SearchResults';
 import EventDetail from './components/Event/EventDetatil';
 import UserProfileEdit from './UserProfileEdit';
+import UserHobbiesEdit from './UserHobbiesEdit';
 import SearchFIlter from './SearchFIlter';
 import Invitations from './components/Invites/Invitations';
 import CreateEventWithInvite from './components/Event/CreateEventWithInvite';
@@ -33,6 +34,7 @@ import Home from './Home';
 import Chat from './Chat';
 import UserCreatedInvites from './components/CreatedInvites/UserCreatedInvites';
 import Favorites from './Favorites';
+
 const headers = () => {
   const token = window.localStorage.getItem('token');
   return {
@@ -46,6 +48,7 @@ const App = () => {
   const [params, setParams] = useState(qs.parse(window.location.hash.slice(1)));
   const [auth, setAuth] = useState({});
   const [hobbies, setHobbies] = useState([]);
+  const [userHobbies, setUserHobbies] = useState([]);
   const [userCareer, setUserCareer] = useState('');
   const [events, setEvents] = useState([]);
   const [users, setUsers] = useState([]);
@@ -129,8 +132,11 @@ const App = () => {
 
   useEffect(() => {
     if (auth.id) {
-      axios.get('/api/getHobbies', headers()).then((response) => {
+      axios.get('/api/hobbies', headers()).then((response) => {
         setHobbies(response.data);
+        axios.get('/api/user_hobbies', headers()).then((resp) => {
+          setUserHobbies(resp.data);
+        });
       });
     }
   }, [auth]);
@@ -186,14 +192,27 @@ const App = () => {
             <FileUploadPlain />
           </Route>
           <Route path="/userprofile" exact>
-            <UserProfile logout={logout} auth={auth} setAuth={setAuth} />
-          </Route>
-          <Route path="/userprofile/edit" exact>
-            <UserProfileEdit
+            <UserProfile
+              logout={logout}
               auth={auth}
               setAuth={setAuth}
-              // userProfile={userProfile}
-              // setUserProfile={setUserProfile}
+              hobbies={hobbies}
+              setHobbies={setHobbies}
+              userHobbies={userHobbies}
+              setUserHobbies={setUserHobbies}
+            />
+          </Route>
+          <Route path="/userprofile/edit" exact>
+            <UserProfileEdit auth={auth} setAuth={setAuth} />
+          </Route>
+          <Route path="/userhobbies/edit" exact>
+            <UserHobbiesEdit
+              auth={auth}
+              setAuth={setAuth}
+              hobbies={hobbies}
+              setHobbies={setHobbies}
+              userHobbies={userHobbies}
+              setUserHobbies={setUserHobbies}
             />
           </Route>
           <Route path="/UserInfo">
